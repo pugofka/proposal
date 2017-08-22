@@ -51,3 +51,7 @@ if (token) {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+require('bootstrap-material-design');
+
+$.material.init();
