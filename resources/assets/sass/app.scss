@@ -7,3 +7,11 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+// Boostrap Material
+@import "node_modules/bootstrap-material-design/dist/css/bootstrap-material-design";
+@import "node_modules/bootstrap-material-design/dist/css/ripples";
+
+// My styles
+@import "main";

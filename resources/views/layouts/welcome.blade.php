@@ -70,12 +70,6 @@
                 </div>
             </div>
         </nav>
-        <ul class="nav nav-pills nav-stacked" style="width: 240px; float: left;">
-          <li class="active"><a href="javascript:void(0)">Этапы</a></li>
-          <li><a href="javascript:void(0)">Выбор шаблона</a></li>
-          <li><a href="javascript:void(0)">Вопросы</a></li>
-          <li><a href="javascript:void(0)">Настройки</a></li>
-        </ul>
 
         @yield('content')
     </div>

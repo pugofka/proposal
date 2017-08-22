@@ -1,0 +1,30 @@
+html, body {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+.nav.nav-pills.nav-stacked {
+  width: 240px !important;
+  float: left;
+  border-radius: 4px;
+  background-color: #009688;
+  color: #fff !important;
+  height: 100%;
+
+  & > .active a {
+    background-color: #fff;
+    color: #009688;
+  }
+
+  & a {
+    color: #fff;
+
+    &:hover {
+      background-color: #fff;
+      color: #009688;
+    }
+  }
+}
