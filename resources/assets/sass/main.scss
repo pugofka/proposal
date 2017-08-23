@@ -10,8 +10,14 @@ section {
   height: 100%;
   display: grid;
   grid-template-columns: 300px 1fr;
+  grid-template-rows: 65px 100%;
   align-items: flex-start;
   align-content: flex-start;
+}
+
+.sidebar {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
 }
 
 .nav.nav-pills.nav-stacked {
@@ -22,7 +28,8 @@ section {
   padding: 0 !important;
   margin-left: 15px;
   margin-bottom: 15px;
-  grid-column: 1 / 2;
+  height: 100%;
+  margin-top: 15px;
 
   & > .active a {
     background-color: #fff;
