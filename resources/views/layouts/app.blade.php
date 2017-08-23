@@ -28,7 +28,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class ="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </nav>
-        <ul class="nav nav-pills nav-stacked" style="width: 240px; float: left;">
+        <ul class="nav nav-pills nav-stacked">
           <li class="active"><a href="javascript:void(0)">Этапы</a></li>
           <li><a href="javascript:void(0)">Выбор шаблона</a></li>
           <li><a href="javascript:void(0)">Вопросы</a></li>
