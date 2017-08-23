@@ -16,8 +16,8 @@ class CreateStagesTable extends Migration
         Schema::create('stages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('sort');
-            $table->string('active');
+            $table->integer('sort')->default(100);
+            $table->boolean('active')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });
