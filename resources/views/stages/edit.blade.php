@@ -17,6 +17,12 @@
     </fieldset>
     {{ Form::close() }}
 
-    {{ Form::reset('Удалить', ['class' => 'btn btn-default']) }}
+    {{ Form::open(['url' => route('stages.destroy', ['íd' => $stage->id]), 'method'=> 'delete', 'class' => 'form__delete' ]) }}
+
+    {{ Form::submit('Удалить', ['class' => 'btn btn-default']) }}
+
+    {{Form::close()}}
+
+    {{--{{ Form::reset('Удалить', ['class' => 'btn btn-default']) }}--}}
   </section>
 @endsection
