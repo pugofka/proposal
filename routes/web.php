@@ -20,3 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('stages', 'StageController');
+
+Route::get('/questions', function () {
+    return view('questions.index');
+});

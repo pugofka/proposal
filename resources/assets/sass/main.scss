@@ -9,12 +9,13 @@ section {
 #app {
   height: 100%;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 200px 1fr;
   grid-template-rows: 65px 100%;
   align-items: flex-start;
   align-content: flex-start;
 }
 
+// Bootstrap styles
 .sidebar {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
@@ -51,23 +52,40 @@ section {
   background-color: $brand-primary;
 }
 
-.stages {
-  grid-column: 2 / 3;
-  margin-left: 40px;
+.form-group.is-focused .form-control {
+  background-image: linear-gradient($brand-primary, $brand-primary), linear-gradient(#D2D2D2, #D2D2D2) !important;
+}
 
-  &__btn {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;  
-  }
+.form-group.is-focused label,
+.form-group.is-focused label.control-label {
+color: $brand-primary;
+}
 
-  &__title {
-    margin: 15px 0 !important;
-  }
+input:checked + .toggle,
+input:checked + .toggle:after {
+  background-color: $brand-primary !important;
+}
 
-  &__wrap {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.btn.btn-primary {
+  color: $brand-primary !important;
+}
+
+form {
+    background-color: #fff !important;
+    padding: 20px !important;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    margin-bottom: 40px;
+}
+
+.togglebutton.form-group {
+  margin-top: 75px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.toggle {
+  margin-left: 25px;
+  position: relative;
+  top: 10px;
 }

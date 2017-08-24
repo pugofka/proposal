@@ -1,0 +1,75 @@
+.stages {
+  grid-column: 2 / 3;
+  margin-left: 40px;
+
+  &__btn {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important; 
+  }
+
+  &__title {
+    margin: 15px 0 !important;
+  }
+
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__btn {
+    width: 56px !important;
+    height: 56px !important;
+    position: relative;
+    margin: 0 !important;
+
+      .material-icons {
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 56px !important;
+        height: 56px !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+  }
+
+  .material-icons img {
+      width: 40px;
+      position: absolute;
+      height: 40px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      fill: #fff;
+    }
+
+  }
+    &__modify-btn {
+      min-width: 30px !important;
+      width: 30px !important;
+      height: 30px !important;
+      margin: 0 !important;
+
+      .material-icons {
+            top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 30px !important;
+      height: 30px !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      }
+
+      .material-icons img {
+        position: absolute;
+        height: 20px !important;
+        width: 20px !important;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        }
+    }
+}
