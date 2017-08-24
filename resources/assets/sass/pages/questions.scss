@@ -1,0 +1,49 @@
+.questions {
+  legend {
+    margin-bottom: 0 !important;
+  }
+
+  &__form {
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 1fr 1fr 250px 50px;
+    margin-bottom: 30px;
+  }
+
+  &__wrap {
+    margin: 0 30px !important;
+  }
+
+  &__del {
+    display: flex;
+  }
+
+  &__btn {
+    width: 24px !important;
+    height: 24px !important;
+    max-width: 24px !important;
+    min-width: 24px !important;
+    margin: 15px !important;
+    padding: 15px !important;
+  }
+
+  & .material-icons {
+    position: relative;
+    width: 24px;
+    height: 24px;
+  }
+
+  & .material-icons img {
+      width: 20px;
+      position: absolute;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      fill: #fff;
+    }
+
+  legend {
+    font-style: normal;
+  }
+}
