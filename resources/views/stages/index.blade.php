@@ -5,7 +5,7 @@
     <div class="row">
       <div class="stages__wrap">
         <h1 class="stages__title">Этапы</h1>
-        <a href="{{ route('stages.create') }}" class="stages__create-btn btn btn-raised btn-warning">
+        <a href="{{ route('stages.create') }}" class="stages__btn btn btn-warning btn-fab">
           <i class="material-icons">
             <img src="{{ URL::asset('/img/plus.svg') }}" alt="">
           </i>
@@ -23,7 +23,9 @@
           <tr>
             <td>{{ $stage->name }}</td>
             <td>
-              <a href="{{ route('stages.edit', ['íd' => $stage->id]) }}" class="stages__btn btn btn-warning btn-fab">
+
+
+              <a href="{{ route('stages.edit', ['íd' => $stage->id]) }}" class="stages__modify-btn btn btn-warning btn-fab">
                 <i class="material-icons">
                   <img src="{{URL::asset('/img/pen.svg')}}" alt="">
                 </i>
