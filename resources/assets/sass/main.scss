@@ -61,8 +61,8 @@ section {
 color: $brand-primary;
 }
 
-.toggle,
-.toggle:after {
+input:checked + .toggle,
+input:checked + .toggle:after {
   background-color: $brand-primary !important;
 }
 
