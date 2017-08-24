@@ -2,8 +2,9 @@
 
 @section('content')
   <section class="create">
-    {{--<form class="form-horizontal">--}}
-    {{ Form::open(array('url' => route('stages.store'))) }}
+  <a href="javascript:void(0)" class="create__btn btn btn-warning btn-fab"><i class="material-icons"><img src="http://localhost/img/back.svg" alt=""></i></a>
+    {{--<form class="create__form form-horizontal">--}}
+    {{ Form::open(['url' => route('stages.store'), 'class' => 'create__form form-horizontal']) }}
     <fieldset>
       <legend>Создание нового этапа</legend>
 

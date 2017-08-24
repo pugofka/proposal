@@ -3,7 +3,7 @@
 @section('content')
 <section class="questions">
 <form class="form-horizontal">
-<legend>Проектирование</legend>
+<legend class="questions__step questions__step--active js-open-form">Проектирование</legend>
   <fieldset>
   <div class="questions__form">
     <div class="form-group questions__wrap">
@@ -55,7 +55,7 @@
 </form>
 
 <form class="form-horizontal">
-<legend>ТЗ</legend>
+<legend class="questions__step js-open-form">ТЗ</legend>
   <fieldset>
   <div class="questions__form">
     <div class="form-group questions__wrap">
@@ -98,7 +98,7 @@
 </form>
 
 <form class="form-horizontal">
-<legend>Верстка</legend>
+<legend class="questions__step js-open-form">Верстка</legend>
   <fieldset>
   <div class="questions__form">
     <div class="form-group questions__wrap">

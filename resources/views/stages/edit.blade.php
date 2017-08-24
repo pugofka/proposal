@@ -11,11 +11,12 @@
 
       <div class="form-group">
         <div class="col-md-10 col-md-offset-2">
-          {{ Form::reset('Удалить', ['class' => 'btn btn-default']) }}
           {{ Form::submit('Сохранить изменения', ['class' => 'btn btn-primary']) }}
         </div>
       </div>
     </fieldset>
     {{ Form::close() }}
+
+    {{ Form::reset('Удалить', ['class' => 'btn btn-default']) }}
   </section>
 @endsection

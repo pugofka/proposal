@@ -78,5 +78,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script> 
 </body>
 </html>
