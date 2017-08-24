@@ -56,9 +56,8 @@ class StageController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Stage $stage)
     {
-        $stage = Stage::findOrFail($id);
         return view('stages.edit', compact('stage'));
     }
 

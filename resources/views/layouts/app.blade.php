@@ -70,14 +70,8 @@
                 </div>
             </div>
         </nav>
-        <nav class="sidebar">
-        <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a href="javascript:void(0)">Этапы</a></li>
-          <li><a href="javascript:void(0)">Выбор шаблона</a></li>
-          <li><a href="javascript:void(0)">Вопросы</a></li>
-          <li><a href="javascript:void(0)">Настройки</a></li>
-        </ul>
-        </nav>
+
+        @include('layouts._nav')
 
         @yield('content')
     </div>
