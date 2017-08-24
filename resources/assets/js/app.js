@@ -21,3 +21,8 @@ const app = new Vue({
     el: '#app'
 });
 
+$(document).ready(function() {
+	$(".js-open-form").click(function() {
+		$(this).siblings("").slideToggle();
+	});
+});

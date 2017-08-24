@@ -77,8 +77,12 @@ form {
     margin-bottom: 40px;
 }
 
+.form-group {
+  margin-top: 15px !important;
+}
+
 .togglebutton.form-group {
-  margin-top: 75px;
+  margin-top: 65px !important;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;

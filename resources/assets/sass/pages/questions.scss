@@ -1,6 +1,23 @@
 .questions {
-  legend {
+
+    &__step {
+    position: relative;
     margin-bottom: 0 !important;
+    display: inline-block;
+    width: inherit;
+    cursor: pointer;
+    padding-right: 30px;
+
+    &:after {
+      content: "";
+      position: absolute;
+      background-image: url(http://localhost/img/down.svg);
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0;
+    }
   }
 
   &__form {
