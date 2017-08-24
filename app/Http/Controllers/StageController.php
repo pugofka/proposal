@@ -36,7 +36,11 @@ class StageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Stage::create([
+            'name' => $request->name,
+            'sort' => $request->number,
+            'active' => $request->active
+        ]);
     }
 
     /**
@@ -68,9 +72,20 @@ class StageController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Stage $stage)
     {
-        //
+        if ($request->active)
+            $active = 1;
+        else
+            $active = 0;
+
+        $stage->name = $request->name;
+        $stage->sort = $request->number;
+        $stage->active = $active;
+
+        $stage->save();
+
+       return redirect(url()->previous())->with('status', 'Успешно обновлено');
     }
 
     /**
