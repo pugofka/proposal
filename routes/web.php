@@ -23,4 +23,4 @@ Route::resource('stages', 'StageController');
 
 Route::get('/questions', function () {
     return view('questions.index');
-});
+})->name('questions.index');

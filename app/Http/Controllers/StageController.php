@@ -52,7 +52,7 @@ class StageController extends Controller
         else
             $active = 0;
 
-        dd($request->all());
+//        dd($request->all());
 
         Stage::create([
             'name' => $request->name,
