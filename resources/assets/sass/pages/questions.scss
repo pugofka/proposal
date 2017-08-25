@@ -1,6 +1,10 @@
 .questions {
 
-    &__step {
+  form:not(:first-child) fieldset {
+    display: none;
+  }
+
+  &__step {
     position: relative;
     margin-bottom: 0 !important;
     display: inline-block;
@@ -51,14 +55,14 @@
   }
 
   & .material-icons img {
-      width: 20px;
-      position: absolute;
-      height: 20px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      fill: #fff;
-    }
+    width: 20px;
+    position: absolute;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fill: #fff;
+  }
 
   legend {
     font-style: normal;

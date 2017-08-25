@@ -1,19 +1,29 @@
 .create {
-	display: flex;
-    width: 100%;
+  display: flex;
 
-&__form {
-	width: 100%;
-	margin-left: 30px;
-}
+  &__wrapper {
+    background-color: #fff !important;
+    padding: 20px !important;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    margin-bottom: 40px;
+    width: 100%;
+    margin-left: 30px;
+    position: relative;
+  }
+
+  &__form {
+    margin-left: 30px;
+    width: 100%;
+  }
 
   fieldset {
     max-width: 600px;
   }
 
   &__btns {
-  	display: flex;
-  	justify-content: center;
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 0 !important;
   }
 
   &__btn {
@@ -21,20 +31,20 @@
     height: 56px !important;
     position: relative;
     margin: 0 !important;
-        box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 
-      .material-icons {
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        width: 56px !important;
-        height: 56px !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-  }
+    .material-icons {
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 56px !important;
+      height: 56px !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+    }
 
-  .material-icons img {
+    .material-icons img {
       width: 40px;
       position: absolute;
       height: 40px;
@@ -43,6 +53,17 @@
       transform: translate(-50%, -50%);
       fill: #fff;
     }
+  }
 
+  form + input[type="reset"] {
+    position: absolute;
+    bottom: 25px;
+  }
+
+  &__alert-edit {
+    background-color: #fff !important;
+    border: 1px solid #4caf50;
+    color: #4caf50 !important;
+    border-radius: 5px;
   }
 }
