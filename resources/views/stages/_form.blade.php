@@ -1,25 +1,26 @@
-<div class="form-group">
+<div class="form-group {{ $errors->has('sort') ?  'has-error' : ''}}">
   {{ Form::label('name', 'Название этапа', ['class' => 'col-md-3 control-label']) }}
 
   <div class="col-md-9">
-    {{ Form::text('name', null, $errors->has('name') ? ['class'=>'form-control error'] : ['class'=>'form-control']) }}
+    {{ Form::text('name', null, ['class'=>'form-control']) }}
 
     @if ($errors->has('name'))
-      {!!  $errors->first('name', '<small class=error>:message</small>') !!}
+      {!!  $errors->first('name', '<span class="help-block">:message</span>') !!}
     @endif
+
   </div>
 </div>
-<div class="form-group">
+<div class="form-group {{ $errors->has('sort') ?  'has-error' : ''}}">
   {{ Form::label('sort', 'Номер этапа', ['class' => 'col-md-3 control-label']) }}
 
   <div class="col-md-9">
-    {{ Form::number('sort', null, $errors->has('sort') ? ['class'=>'form-control error'] : ['class'=>'form-control']) }}
+    {{ Form::number('sort', null, ['class'=>'form-control']) }}
     @if ($errors->has('sort'))
-      {!!  $errors->first('sort', '<small class=error>:message</small>') !!}
+      {!!  $errors->first('sort', '<span class="help-block">:message</span>') !!}
     @endif
-
   </div>
 </div>
+
 
 <div class="togglebutton form-group">
   {{ Form::label('active', 'Активность этапа', ['class' => 'col-md-3 control-label']) }}

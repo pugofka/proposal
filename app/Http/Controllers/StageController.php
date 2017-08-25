@@ -43,7 +43,7 @@ class StageController extends Controller
 
 
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|string|min:1',
             'sort' => 'required|numeric',
         ], $messages);
 
@@ -93,6 +93,17 @@ class StageController extends Controller
      */
     public function update(Request $request, Stage $stage)
     {
+        $messages = [
+            'required' => 'Поле :attribute обязательно к заполнению.',
+            'numeric' => 'Поле :attribute должно быть числом',
+        ];
+
+
+        $this->validate($request, [
+            'name' => 'required|string|min:1',
+            'sort' => 'required|numeric',
+        ], $messages);
+
         if ($request->active)
             $active = 1;
         else

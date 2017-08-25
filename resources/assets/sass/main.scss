@@ -58,7 +58,7 @@ section {
 
 .form-group.is-focused label,
 .form-group.is-focused label.control-label {
-color: $brand-primary;
+  color: $brand-primary;
 }
 
 input:checked + .toggle,
@@ -70,19 +70,11 @@ input:checked + .toggle:after {
   color: $brand-primary !important;
 }
 
-form {
-    background-color: #fff !important;
-    padding: 20px !important;
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
-    margin-bottom: 40px;
-}
-
 .form-group {
   margin-top: 15px !important;
 }
 
 .togglebutton.form-group {
-  margin-top: 65px !important;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
@@ -92,4 +84,10 @@ form {
   margin-left: 25px;
   position: relative;
   top: 10px;
+}
+
+.form-group.has-error .help-block {
+  display: block;
+  position: relative;
+  color: $brand-primary;
 }

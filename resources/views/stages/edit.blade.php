@@ -2,7 +2,15 @@
 
 @section('content')
   <section class="create">
-    {{--<form class="form-horizontal">--}}
+    <a href="javascript:void(0)" class="create__btn btn btn-warning btn-fab"><i class="material-icons"><img src="http://localhost/img/back.svg" alt=""></i></a>
+    <div class="create__wrapper">
+      @if (session('status'))
+        <div class="alert alert-success create__alert-edit">
+          {{ session('status') }}
+        </div>
+      @endif
+
+      {{--<form class="form-horizontal">--}}
     {{ Form::model($stage, ['route' => ['stages.update', $stage->id], 'method' => 'put', 'class' => 'create__form form-horizontal'])  }}
     <fieldset>
       <legend>Редактирование этапа "{{ $stage->name }}"</legend>
@@ -16,13 +24,10 @@
       </div>
     </fieldset>
     {{ Form::close() }}
-
+    
     {{ Form::open(['url' => route('stages.destroy', ['íd' => $stage->id]), 'method'=> 'delete', 'class' => 'form__delete' ]) }}
-
-    {{ Form::submit('Удалить', ['class' => 'btn btn-default']) }}
-
+      {{ Form::submit('Удалить', ['class' => 'btn btn-default']) }}
     {{Form::close()}}
-
-    {{--{{ Form::reset('Удалить', ['class' => 'btn btn-default']) }}--}}
+    </div>
   </section>
 @endsection
