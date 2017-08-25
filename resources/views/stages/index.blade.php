@@ -19,12 +19,11 @@
         </tr>
         </thead>
         <tbody>
+
         @foreach($stages as $stage)
           <tr>
             <td>{{ $stage->name }}</td>
             <td>
-
-
               <a href="{{ route('stages.edit', ['íd' => $stage->id]) }}" class="stages__modify-btn btn btn-warning btn-fab">
                 <i class="material-icons">
                   <img src="{{URL::asset('/img/pen.svg')}}" alt="">
@@ -32,6 +31,7 @@
               </a>
             </td>
           </tr>
+
         @endforeach
         </tbody>
       </table>

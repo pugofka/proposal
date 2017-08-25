@@ -36,11 +36,30 @@ class StageController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'required' => 'Поле :attribute обязательно к заполнению.',
+            'numeric' => 'Поле :attribute должно быть числом',
+        ];
+
+
+        $this->validate($request, [
+            'name' => 'required',
+            'sort' => 'required|numeric',
+        ], $messages);
+
+        if ($request->active)
+            $active = 1;
+        else
+            $active = 0;
+
+        dd($request->all());
+
         Stage::create([
             'name' => $request->name,
-            'sort' => $request->number,
-            'active' => $request->active
+            'sort' => $request->sort,
+            'active' =>$active
         ]);
+        return redirect(route('stages.index'))->with('status', 'Этап успешно создан');
     }
 
     /**
@@ -80,12 +99,12 @@ class StageController extends Controller
             $active = 0;
 
         $stage->name = $request->name;
-        $stage->sort = $request->number;
+        $stage->sort = $request->sort;
         $stage->active = $active;
 
         $stage->save();
 
-       return redirect(url()->previous())->with('status', 'Успешно обновлено');
+        return redirect(url()->previous())->with('status', 'Успешно обновлено');
     }
 
     /**
@@ -97,5 +116,6 @@ class StageController extends Controller
     public function destroy(Stage $stage)
     {
         $stage->delete();
+        return redirect(route('stages.index'))->with('status', 'Этап удалён с возможностью восстановления.');
     }
 }

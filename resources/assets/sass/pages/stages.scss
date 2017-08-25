@@ -18,18 +18,18 @@
     position: relative;
     margin: 0 !important;
 
-      .material-icons {
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        width: 56px !important;
-        height: 56px !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-  }
+    .material-icons {
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 56px !important;
+      height: 56px !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+    }
 
-  .material-icons img {
+    .material-icons img {
       width: 40px;
       position: absolute;
       height: 40px;
@@ -40,14 +40,14 @@
     }
 
   }
-    &__modify-btn {
-      min-width: 30px !important;
-      width: 30px !important;
-      height: 30px !important;
-      margin: 0 !important;
+  &__modify-btn {
+    min-width: 30px !important;
+    width: 30px !important;
+    height: 30px !important;
+    margin: 0 !important;
 
-      .material-icons {
-            top: 50% !important;
+    .material-icons {
+      top: 50% !important;
       left: 50% !important;
       transform: translate(-50%, -50%) !important;
       width: 30px !important;
@@ -55,15 +55,15 @@
       top: 50% !important;
       left: 50% !important;
       transform: translate(-50%, -50%) !important;
-      }
-
-      .material-icons img {
-        position: absolute;
-        height: 20px !important;
-        width: 20px !important;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        }
     }
+
+    .material-icons img {
+      position: absolute;
+      height: 20px !important;
+      width: 20px !important;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 }
