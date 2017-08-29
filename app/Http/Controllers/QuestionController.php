@@ -37,7 +37,13 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd($request->all());
+        Question::create([
+            'name' => $request->question,
+            'stage_id' => $request->stage_id
+        ]);
+        return redirect(route('stages.index'))->with('status', 'Этап успешно создан');
+
     }
 
     /**

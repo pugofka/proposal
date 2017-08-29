@@ -2,6 +2,20 @@
 {{--{{ dd($stages) }}--}}
 @section('content')
 <section class="questions">
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      {{ Form::model(['route' => ['questions.store'], 'method' => 'post'])  }}
+      <input type="text" name="question" placeholder="Stage name">
+      <input type="text" name="stage_id" placeholder="stage id">
+      <input type="submit" value="send">
+      <input name="csrf-token" type="hidden" value="{{ csrf_token() }}">
+
+      {{Form::close()}}
+    </div>
+  </div>
+</div>
+
 
   @foreach($stages as $stage)
 <form class="form-horizontal">
@@ -23,14 +37,14 @@
       <label for="" class="control-label">Варианты</label>
 
       <div class="questions__del">
-        <input type="text" class="form-control" id="" data-question-id="1">
+        <input type="text" class="form-control" id="">
         <a href="javascript:void(0)" class="questions__btn btn btn-warning btn-fab"><i class="material-icons">
         <img src="{{URL::asset('/img/minus.svg')}}" alt="">
          </i></a>
       </div>
 
       <div class="questions__del">
-        <input type="text" class="form-control" id="" data-question-id="1">
+        <input type="text" class="form-control" id="">
         <a href="javascript:void(0)" class="questions__btn btn btn-warning btn-fab"><i class="material-icons">
         <img src="{{URL::asset('/img/minus.svg')}}" alt="">
         </i></a>
