@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Template extends Model
 {
-    public function questions()
+    public function tasks()
     {
-        return $this->belongsToMany(Question::class);
+        return $this->belongsToMany(Task::class);
     }
 }

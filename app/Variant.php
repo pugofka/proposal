@@ -8,6 +8,6 @@ class Variant extends Model
 {
     public function questions()
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Task::class);
     }
 }

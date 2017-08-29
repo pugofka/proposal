@@ -14,13 +14,13 @@ class TasksTemplates extends Migration
     public function up()
     {
         Schema::create('tasks_templates', function (Blueprint $table) {
+            $table->integer('task_id')->unsigned();
+            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+
             $table->integer('template_id')->unsigned();
-            $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
+            $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
 
-            $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-
-            $table->primary(['cart_id', 'product_id']);
+            $table->primary(['task_id', 'template_id']);
         });
     }
 
@@ -31,6 +31,6 @@ class TasksTemplates extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('tasks_templates');
     }
 }
