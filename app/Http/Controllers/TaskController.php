@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use Illuminate\Http\Request;
 use App\Stage;
+use Illuminate\Support\Facades\Input;
 
 class TaskController extends Controller
 {
@@ -28,12 +29,22 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
         Task::create([
             'name' => $request->question,
             'stage_id' => $request->stage_id
         ]);
         return redirect(route('stages.index'))->with('status', 'Этап успешно создан');
+
+    }
+
+    public function storeFromApi (Request $request)
+    {
+//        dd($request->all());
+        $task = Task::create([
+            'name' => $request->name,
+            'stage_id' => $request->stage
+        ]);
+        return response(['message'=> 'ok', 'task' => $task], 201);
 
     }
 

@@ -2,21 +2,6 @@
 {{--{{ dd($stages) }}--}}
 @section('content')
 <section class="questions">
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      {{ Form::model(['route' => ['questions.store'], 'method' => 'post'])  }}
-      <input type="text" name="question" placeholder="Stage name">
-      <input type="text" name="stage_id" placeholder="stage id">
-      <input type="submit" value="send">
-      <input name="csrf-token" type="hidden" value="{{ csrf_token() }}">
-
-      {{Form::close()}}
-    </div>
-  </div>
-</div>
-
-
   @foreach($stages as $stage)
 <form class="form-horizontal">
   <input type="hidden" name="stage_id" value="{{ $stage->id }}">
