@@ -15,49 +15,20 @@
     export default {	
     	data: function () {
         return {
-          tasks: [
-          	{
-	          name: 'Разработать прототип',
-	          id: 1,
-	          variants: [
-	            { 
-	              name: 'Адаптивный',
-	              id: 1
-	            },
-	            { 
-	              name: 'Анимированный',
-	              id: 2
-	            }
-	          ],
-	      	},
-	      	{
-	          name: 'Разработать',
-	          id: 2,
-	          variants: [
-	            { 
-	              name: 'Адаптивный',
-	              id: 1
-	            },
-	            { 
-	              name: 'Анимированный',
-	              id: 2
-	            }
-	          ],
-	      	}
-	      ],
-          templates:  [
-            { 
-              name: 'Лендинг',
-              id: 1
-            },
-            { 
-              name: 'Корпор сайт',
-              id: 2
-            }
-          ],
+          tasks: this.tasksData,
+          templates: this.templatesData,
           isAddBtn: true,
         }
       }, 
+
+      props: {
+      	tasksData: {
+      		type: Array
+      	},
+      	templatesData: {
+      		type: Array
+      	}
+      },
 
 
       methods: {

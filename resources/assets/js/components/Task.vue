@@ -1,9 +1,9 @@
 <template>
   <div class="questions__form">
     <div class="form-group questions__wrap">
-      <label class="control-label">Вопрос</label>
+      <label class="control-label">Задачи</label>
       <div class="">
-        <input type="text" class="form-control" v-model='taskData.name'>
+        <input type="text" class="form-control" v-model='taskData.name' @change="changeTask">
       </div>
     </div>
     <list-variants :variants='taskData.variants'></list-variants>
@@ -38,6 +38,27 @@
       methods: {
         click: function(data) {
           this.callback(data);
+        },
+        changeTask: _.debounce(function () {
+          axios.put('http://localhost/tasks/'+this.taskData.id, {
+            "name": this.taskData.name,
+            "stage": this.taskData.stage_id,
+            "id": this.taskData.id
+          })
+            .then(function(response){
+              console.log(response)
+            })
+            .catch(function(error){
+              console.error(error);
+            })
+        }, 500)
+      },
+      watch: {
+        taskData: {
+          handler: function() {
+            this.changeTask();
+          },
+          deep: true
         }
       },
       components: {

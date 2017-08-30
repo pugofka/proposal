@@ -34,11 +34,13 @@
         	this.variants.splice(this.variants.indexOf(data), 1);
         },
         checkVariants: function(data) {
-        	if(!data[data.length - 1].name) this.isAddBtn = false;
-			else this.isAddBtn = true;
+          if(data.length !== 0) {
+            if(!data[data.length - 1].name) this.isAddBtn = false;
+            else this.isAddBtn = true;
 
-			if(data.length <= 1) this.removeBtn = false;
-			else this.removeBtn = true;
+            if(data.length <= 1) this.removeBtn = false;
+            else this.removeBtn = true;
+          }
         }
     },
 	watch: {
