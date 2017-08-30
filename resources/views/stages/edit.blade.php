@@ -2,7 +2,11 @@
 
 @section('content')
   <section class="create">
-    <a href="javascript:void(0)" class="create__btn btn btn-warning btn-fab"><i class="material-icons"><img src="http://localhost/img/back.svg" alt=""></i></a>
+    <a href="{{ route('stages.index') }}" class="create__btn btn btn-warning btn-fab">
+      <i class="material-icons">
+        <img src="{{URL::asset('/img/back.svg')}}" alt="">
+      </i>
+    </a>
     <div class="create__wrapper">
       @if (session('status'))
         <div class="alert alert-success create__alert-edit">

@@ -1,17 +1,23 @@
-<div class="form-group">
+<div class="form-group {{ $errors->has('sort') ?  'has-error' : ''}}">
   {{ Form::label('name', 'Название этапа', ['class' => 'col-md-3 control-label']) }}
 
   <div class="col-md-9">
-    {{ Form::text('name', (isset($stage->name)) ? $stage->name : '', ['class' => 'form-control']) }}
-    <span class="help-block">Please enter a valid email address</span>
+    {{ Form::text('name', null, ['class'=>'form-control']) }}
+
+    @if ($errors->has('name'))
+      {!!  $errors->first('name', '<span class="help-block">:message</span>') !!}
+    @endif
+
   </div>
 </div>
-<div class="form-group">
-  {{ Form::label('number', 'Номер этапа', ['class' => 'col-md-3 control-label']) }}
+<div class="form-group {{ $errors->has('sort') ?  'has-error' : ''}}">
+  {{ Form::label('sort', 'Номер этапа', ['class' => 'col-md-3 control-label']) }}
 
   <div class="col-md-9">
-    {{ Form::number('number', (isset($stage->sort)) ? $stage->sort : '', ['class' => 'form-control']) }}
-    <span class="help-block">Please enter a valid email address</span>
+    {{ Form::number('sort', null, ['class'=>'form-control']) }}
+    @if ($errors->has('sort'))
+      {!!  $errors->first('sort', '<span class="help-block">:message</span>') !!}
+    @endif
   </div>
 </div>
 
