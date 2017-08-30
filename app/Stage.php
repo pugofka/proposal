@@ -18,4 +18,9 @@ class Stage extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

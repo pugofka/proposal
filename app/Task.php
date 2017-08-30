@@ -23,4 +23,9 @@ class Task extends Model
     {
         return $this->hasMany(Variant::class);
     }
+
+    public function stage()
+    {
+        return $this->belongsTo(Stage::class);
+    }
 }
