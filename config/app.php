@@ -178,7 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //custom
-        Collective\Html\HtmlServiceProvider::class
+        Collective\Html\HtmlServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -231,7 +232,8 @@ return [
 
         //custom
         'Form' => 'Collective\Html\FormFacade',
-        'Html' => 'Collective\Html\HtmlFacade'
+        'Html' => 'Collective\Html\HtmlFacade',
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 

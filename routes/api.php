@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
+
+//Route::post('/tasks', '\App\Http\Controllers\TaskController@storeFromApi');
+//Route::delete('/tasks', '\App\Http\Controllers\TaskController@destroyFromApi');
+//Route::post('/variants', '\App\Http\Controllers\VariantController@storeFromApi');
+//Route::delete('/variants', '\App\Http\Controllers\VariantController@destroyFromApi');
