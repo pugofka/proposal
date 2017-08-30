@@ -21,6 +21,3 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('stages', 'StageController');
 Route::resource('tasks', 'TaskController');
-//Route::get('/questions', function () {
-//    return view('questions.index');
-//})->name('questions.index');

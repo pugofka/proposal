@@ -18,4 +18,9 @@ class Task extends Model
     {
         return $this->belongsToMany(Template::class);
     }
+
+    public function variants()
+    {
+        return $this->hasMany(Variant::class);
+    }
 }

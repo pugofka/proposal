@@ -17,4 +17,7 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-Route::post('/tasks', '\App\Http\Controllers\TaskController@storeFromApi');
+//Route::post('/tasks', '\App\Http\Controllers\TaskController@storeFromApi');
+//Route::delete('/tasks', '\App\Http\Controllers\TaskController@destroyFromApi');
+//Route::post('/variants', '\App\Http\Controllers\VariantController@storeFromApi');
+//Route::delete('/variants', '\App\Http\Controllers\VariantController@destroyFromApi');

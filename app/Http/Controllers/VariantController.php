@@ -2,30 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Task;
 use App\Variant;
 use Illuminate\Http\Request;
 
 class VariantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,30 +17,23 @@ class VariantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->ajax()) {
+            Validator::make($request->all(), [
+                'name' => 'required|min:3',
+                'task' => 'required',
+            ])->validate();
+
+            $task = Task::find($request->task);
+            if (!$task)
+                return response('task not found', 404);
+            $variant = Variant::create([
+                'name' => $request->name,
+                'task_id' => $request->task
+            ]);
+            return response(['message'=> 'ok', 'id' => $variant->id], 201);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Variant  $variant
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Variant $variant)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Variant  $variant
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Variant $variant)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +44,19 @@ class VariantController extends Controller
      */
     public function update(Request $request, Variant $variant)
     {
-        //
+        if($request->ajax()) {
+            Validator::make($request->all(), [
+                'name' => 'required|min:3',
+                'task' => 'required',
+                'id' => 'required',
+            ])->validate();
+
+            $variant->name = $request->name;
+            $variant->task_id = $request->task;
+            $variant->save();
+
+            return response(['message'=> 'ok', 'id' => $variant->id], 201);
+        }
     }
 
     /**
@@ -78,8 +65,13 @@ class VariantController extends Controller
      * @param  \App\Variant  $variant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Variant $variant)
+    public function destroy(Variant $variant, Request $request)
     {
-        //
+        $variant->delete();
+        if($request->ajax()) {
+            return response('Variant deleted', 200);
+        }
+
     }
+
 }
