@@ -3,16 +3,26 @@
     <div class="form-group questions__wrap">
       <label class="control-label">Задачи</label>
       <div>
-        <input type="text" class="form-control" v-model='taskData.name' @change="changeTask">
+        <input type="text" class="form-control" v-model='taskData.name' @keyup="changeTask">
         <p v-if="isTaskInvalid" class="help-block">Название должно содержать не меньше 3 символов</p>
       </div>
     </div>
-    <list-variants v-if="!isTaskInvalid" :variants='taskData.variants'></list-variants>
+    <list-variants
+      v-if="!isTaskInvalid"
+      :variants="taskData.variants"
+      :task-id="taskData.id"
+    />
     <div class="form-group  questions__wrap">
       <label class="control-label">Шаблоны</label>
       <div class="">
         <select multiple="" class="form-control">
-          <option v-for="item in templateData" :key="item.id" :value="item.id">{{ item.name }}</option>
+          <option
+            v-for="template in templateData"
+            :key="template.id"
+            :value="template.id"
+          >
+            {{ template.name }}
+          </option>
         </select>
       </div>
     </div>
@@ -114,103 +124,8 @@
 
     },
 
-    watch: {
-
-      taskData: {
-        handler: function() {
-          this.changeTask();
-        },
-        deep: true
-      }
-
-    },
-
     mounted() {
       this.validateName();
     }
   }
 </script>
-
-<style>
-.questions {
-  margin: 0 30px;
-}
-
-.questions__step:not(:first-child) div {
-  display: none;
-}
-
-.questions__step {
-  position: relative;
-  display: inline-block;
-  width: inherit;
-  cursor: pointer;
-  padding-right: 30px;
-  margin-bottom: 20px;
-}
-
-.questions__step:after {
-  content: "";
-  position: absolute;
-  background-image: url(http://localhost/img/down.svg);
-  width: 20px;
-  height: 20px;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  right: 0;
-}
-
-.questions__form {
-  display: grid;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  grid-template-columns: 1fr 1fr 250px 50px;
-  margin-bottom: 30px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  padding: 10px;
-}
-
-.questions__wrap {
-  margin: 0 30px !important;
-}
-
-.questions__del {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.questions__btn {
-  width: 24px !important;
-  height: 24px !important;
-  max-width: 24px !important;
-  min-width: 24px !important;
-  margin: 15px !important;
-  padding: 15px !important;
-}
-
-.questions .material-icons {
-  position: relative;
-  width: 24px;
-  height: 24px;
-}
-
-.questions .material-icons img {
-  width: 20px;
-  position: absolute;
-  height: 20px;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  fill: #fff;
-}
-
-.questions legend {
-  font-style: normal;
-}
-</style>

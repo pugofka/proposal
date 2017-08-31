@@ -101,3 +101,81 @@
     }
   }
 </script>
+
+<style lang="scss">
+.questions {
+  margin: 0;
+
+  &__step:not(:first-child) div {
+    display: none;
+  }
+
+  &__step {
+    position: relative;
+    display: inline-block;
+    width: inherit;
+    cursor: pointer;
+    padding-right: 30px;
+    margin-bottom: 20px;
+  }
+
+  &__step:after {
+    content: "";
+    position: absolute;
+    background-image: url('http://localhost/img/down.svg');
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    right: 0;
+  }
+
+  &__form {
+    display: grid;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    grid-template-columns: 1fr 1fr 250px 50px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px;
+  }
+
+  &__wrap {
+    margin: 0 30px !important;
+  }
+
+  &__btn {
+    width: 24px !important;
+    height: 24px !important;
+    max-width: 24px !important;
+    min-width: 24px !important;
+    margin: 15px !important;
+    padding: 15px !important;
+  }
+
+  & .material-icons {
+    position: relative;
+    width: 24px;
+    height: 24px;
+  }
+
+  & .material-icons img {
+    width: 20px;
+    position: absolute;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    fill: #fff;
+  }
+
+  & legend {
+    font-style: normal;
+  }
+}
+</style>

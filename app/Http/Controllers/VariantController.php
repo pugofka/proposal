@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use App\Variant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class VariantController extends Controller
 {

@@ -19,11 +19,11 @@ Vue.component('example', require('./components/Example.vue'));
 Vue.component('list-tasks', require('./components/ListTasks.vue'));
 
 const app = new Vue({
-    el: '#app'
+  el: '#app'
 });
 
 $(document).ready(function() {
-	$(".js-open-form").click(function() {
-		$(this).siblings("").slideToggle();
-	});
+  $(".js-open-form").click(function() {
+    $(this).next(".js-open-form-pan").slideToggle();
+  });
 });
