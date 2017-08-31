@@ -14,7 +14,8 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        //
+        $templates=Template::get();
+        return view('templates.index', compact('templates'));
     }
 
     /**

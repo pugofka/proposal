@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
 //           'password' => bcrypt('secret'),
 //       ]);
 
-        $this->call(StagesSeeder::class);
+//        $this->call(StagesSeeder::class);
+        $this->call(TemplatesTableSeeder::class);
     }
 }

@@ -46,15 +46,26 @@ class TaskController extends Controller
                 'stage_id' => $request->stage
             ]);
 
-            // @todo add updates templates
+            try {
+                $task->templates()->attach($request->templates);
+            }
+            catch (\PDOException  $e) {
+                return response('Не верные параметры шаблона', 400);
+            }
+            catch (\Exception  $e) {
+                return response('some error', 400);
+            }
+
             return response(['message' => 'ok', 'id' => $task->id], 201);
         }
 
-        Task::create([
-            'name' => $request->question,
+        $task = Task::create([
+            'name' => $request->task,
             'stage_id' => $request->stage_id
         ]);
-        // @todo add updates templates
+
+
+        $task->templates()->attach($request->templates);
 
         return redirect(route('stages.index'))->with('status', 'Этап успешно создан');
     }
@@ -64,7 +75,7 @@ class TaskController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Task $question
+     * @param  \App\Task task
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -88,9 +99,16 @@ class TaskController extends Controller
             $task->stage_id = $request->stage;
 
             $task->save();
+            try {
+                $task->templates()->sync($request->templates);
+            }
+            catch (\PDOException  $e) {
+                return response('Не верные параметры шаблона', 400);
+            }
+            catch (\Exception  $e) {
+                return response('some error', 400);
+            }
 
-            // @todo add updates templates
-            //
 
             return response(['message' => 'ok', 'id' => $task->id], 201);
         }

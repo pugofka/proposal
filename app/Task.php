@@ -16,7 +16,7 @@ class Task extends Model
 
     public function templates()
     {
-        return $this->belongsToMany(Template::class);
+        return $this->belongsToMany(Template::class, 'tasks_templates');
     }
 
     public function variants()
