@@ -16,4 +16,9 @@ class Template extends Model
     {
         return $this->belongsToMany(Task::clas, 'tasks_templates');
     }
+
+    public function templates_data()
+    {
+        return $this->hasMany(TemplateData::class);
+    }
 }

@@ -13,8 +13,12 @@ class CreateTemplateDatasTable extends Migration
      */
     public function up()
     {
-        Schema::create('template_datas', function (Blueprint $table) {
+        Schema::create('templates_data', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('template_id');
+            $table->integer('task_id');
+            $table->integer('variant_id');
+            $table->decimal('task_time');
             $table->timestamps();
         });
     }

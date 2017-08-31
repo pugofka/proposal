@@ -28,4 +28,9 @@ class Task extends Model
     {
         return $this->belongsTo(Stage::class);
     }
+
+    public function templates_data()
+    {
+        return $this->hasMany(TemplateData::class);
+    }
 }

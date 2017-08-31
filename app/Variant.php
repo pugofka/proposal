@@ -17,4 +17,9 @@ class Variant extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function templates_data()
+    {
+        return $this->hasMany(TemplateData::class);
+    }
 }
