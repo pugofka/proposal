@@ -25,7 +25,7 @@ class TemplateController extends Controller
      */
     public function create()
     {
-        //
+        return view('templates.create');
     }
 
     /**
@@ -36,7 +36,22 @@ class TemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $messages = [
+            'required' => 'Поле :attribute обязательно к заполнению.',
+            'numeric' => 'Поле :attribute должно быть числом',
+        ];
+
+
+        $this->validate($request, [
+            'name' => 'required|string|min:1',
+        ], $messages);
+
+//        dd($request->all());
+
+        Template::create([
+            'name' => $request->name
+        ]);
+        return redirect(route('templates.index'))->with('status', 'Шаблон успешно создан');
     }
 
     /**
@@ -58,7 +73,7 @@ class TemplateController extends Controller
      */
     public function edit(Template $template)
     {
-        //
+        return view('templates.edit', compact('template'));
     }
 
     /**
@@ -81,6 +96,7 @@ class TemplateController extends Controller
      */
     public function destroy(Template $template)
     {
-        //
+        $template->delete();
+        return redirect(route('templates.index'))->with('status', 'Шаблон deleted!');
     }
 }

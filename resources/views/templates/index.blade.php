@@ -3,9 +3,9 @@
 @section('content')
   <section class="templates">
     <div class="row">
-      <div class="templstes__wrap">
+      <div class="templates__wrap">
         <h1 class="templates__title">Шаблоны</h1>
-        <a href="{{ route('stages.create') }}" class="templstes__btn btn btn-warning btn-fab">
+        <a href="{{ route('templates.create') }}" class="templates__btn btn btn-warning btn-fab">
           <i class="material-icons">
             <img src="{{ URL::asset('/img/plus.svg') }}" alt="">
           </i>
@@ -24,7 +24,7 @@
           <tr>
             <td>{{ $template->name }}</td>
             <td>
-              <a href="javascript:void(0);" class="templates__modify-btn btn btn-warning btn-fab">
+              <a href="{{ route('templates.edit', [$template->id]) }}" class="templates__modify-btn btn btn-warning btn-fab">
                 <i class="material-icons">
                   <img src="{{URL::asset('/img/pen.svg')}}" alt="">
                 </i>
