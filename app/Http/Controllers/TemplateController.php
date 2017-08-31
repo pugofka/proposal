@@ -38,7 +38,6 @@ class TemplateController extends Controller
     {
         $messages = [
             'required' => 'Поле :attribute обязательно к заполнению.',
-            'numeric' => 'Поле :attribute должно быть числом',
         ];
 
 
@@ -85,7 +84,20 @@ class TemplateController extends Controller
      */
     public function update(Request $request, Template $template)
     {
-        //
+        $messages = [
+            'required' => 'Поле :attribute обязательно к заполнению.',
+        ];
+
+
+        $this->validate($request, [
+            'name' => 'required|string|min:1',
+        ], $messages);
+
+        $template->name = $request->name;
+
+        $template->save();
+
+        return redirect(url()->previous())->with('status', 'Успешно обновлено');
     }
 
     /**
