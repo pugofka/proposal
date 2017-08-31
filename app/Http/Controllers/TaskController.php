@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use Illuminate\Http\Request;
 use App\Stage;
+use App\Template;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,9 +18,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::with('variants')->get();
-        $stages = Stage::all();
-        return view('tasks.index', compact('stages', 'tasks'));
+        $templates = Template::get();
+        $stages = Stage::with('tasks', 'tasks.variants')->get();
+        return view('tasks.index', compact('stages', 'templates'));
     }
 
 
@@ -59,9 +60,10 @@ class TaskController extends Controller
             return response(['message' => 'ok', 'id' => $task->id], 201);
         }
 
+
         $task = Task::create([
-            'name' => $request->task,
-            'stage_id' => $request->stage_id
+            'name' => $request->name,
+            'stage_id' => $request->stage
         ]);
 
 
@@ -84,7 +86,7 @@ class TaskController extends Controller
             Validator::make($request->all(), [
                 'name' => 'required|min:3',
                 'stage' => 'required',
-                'id' => 'reqiured'
+                'id' => 'required'
             ])->validate();
 
             $task = Task::find($id);

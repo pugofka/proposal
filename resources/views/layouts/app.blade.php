@@ -28,7 +28,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class ="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -71,13 +71,20 @@
             </div>
         </nav>
 
-        @include('layouts._nav')
+        <main class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-2">
+                    @include('layouts._nav')
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-10">
+                    @yield('content')
+                </div>
+            </div>
+        </main>
 
-        @yield('content')
     </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="http://code.jquery.com/jquery-3.2.1.js"></script> 
 </body>
 </html>
