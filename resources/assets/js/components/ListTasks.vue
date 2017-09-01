@@ -4,12 +4,12 @@
       <task
         :taskData='task'
         :templateData='templates'
-        :callback="removeTask"
+        :callback='removeTask'
       />
     </div>
     <button class="questions__btn btn btn-warning btn-fab" @click="addTask" v-if="isShowAddBtn">
       <i class="material-icons">
-        <img src='/img/plus.svg' alt="">
+        <img src='/img/plus.svg'>
       </i>
     </button>
   </div>

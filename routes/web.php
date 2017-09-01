@@ -22,3 +22,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('stages', 'StageController');
 Route::resource('tasks', 'TaskController');
 Route::resource('variants', 'VariantController');
+Route::resource('templates', 'TemplateController');

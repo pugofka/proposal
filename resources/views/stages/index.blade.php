@@ -26,7 +26,7 @@
             <td>
               <a href="{{ route('stages.edit', ['íd' => $stage->id]) }}" class="stages__modify-btn btn btn-warning btn-fab">
                 <i class="material-icons">
-                  <img src="{{URL::asset('/img/pen.svg')}}" alt="">
+                  <img src ="{{URL::asset('/img/pen.svg')}}" alt="">
                 </i>
               </a>
             </td>

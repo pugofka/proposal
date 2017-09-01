@@ -20,6 +20,7 @@ class TaskController extends Controller
     {
         $templates = Template::get();
         $stages = Stage::with('tasks', 'tasks.variants')->get();
+
         return view('tasks.index', compact('stages', 'templates'));
     }
 
@@ -36,6 +37,7 @@ class TaskController extends Controller
             Validator::make($request->all(), [
                 'name' => 'required|min:3',
                 'stage' => 'required',
+                'templates' => 'array'
             ])->validate();
 
             $stage = Stage::find($request->stage);
@@ -47,15 +49,27 @@ class TaskController extends Controller
                 'stage_id' => $request->stage
             ]);
 
-            // @todo add updates templates
+            try {
+                $task->templates()->attach($request->templates);
+            }
+            catch (\PDOException  $e) {
+                return response('Не верные параметры шаблона', 400);
+            }
+            catch (\Exception  $e) {
+                return response('some error', 400);
+            }
+
             return response(['message' => 'ok', 'id' => $task->id], 201);
         }
 
-        Task::create([
+
+        $task = Task::create([
             'name' => $request->name,
             'stage_id' => $request->stage
         ]);
-        // @todo add updates templates
+
+
+        $task->templates()->attach($request->templates);
 
         return redirect(route('stages.index'))->with('status', 'Этап успешно создан');
     }
@@ -65,7 +79,7 @@ class TaskController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Task $question
+     * @param  \App\Task task
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -74,7 +88,8 @@ class TaskController extends Controller
             Validator::make($request->all(), [
                 'name' => 'required|min:3',
                 'stage' => 'required',
-                'id' => 'required'
+                'id' => 'required',
+                'templates' => 'array'
             ])->validate();
 
             $task = Task::find($id);
@@ -89,11 +104,18 @@ class TaskController extends Controller
             $task->stage_id = $request->stage;
 
             $task->save();
+            try {
+                $task->templates()->sync($request->templates);
+            }
+            catch (\PDOException  $e) {
+                return response('Не верные параметры шаблона', 400);
+            }
+            catch (\Exception  $e) {
+                return response('some error', 400);
+            }
 
-            // @todo add updates templates
-            //
 
-            return response(['message' => 'ok', 'id' => $task->id], 201);
+            return response(['message' => 'ok', 'id' => $task->id], 200);
         }
     }
 

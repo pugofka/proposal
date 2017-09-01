@@ -14,7 +14,8 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        
+        $templates=Template::get();
+        return view('templates.index', compact('templates'));
     }
 
     /**
@@ -24,7 +25,7 @@ class TemplateController extends Controller
      */
     public function create()
     {
-        //
+        return view('templates.create');
     }
 
     /**
@@ -33,9 +34,21 @@ class TemplateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request )
     {
-        //
+        $messages = [
+            'required' => 'Поле :attribute обязательно к заполнению.',
+        ];
+
+        $this->validate($request, [
+            'name' => 'required|string|min:1',
+        ], $messages);
+
+        $template = Template::create([
+            'name' => $request->name
+        ]);
+
+        return redirect(route('templates.edit', ['id' => $template->id]))->with('status', 'Шаблон '.$template->name.' успешно создан');
     }
 
     /**
@@ -57,7 +70,7 @@ class TemplateController extends Controller
      */
     public function edit(Template $template)
     {
-        //
+        return view('templates.edit', compact('template'));
     }
 
     /**
@@ -69,7 +82,20 @@ class TemplateController extends Controller
      */
     public function update(Request $request, Template $template)
     {
-        //
+        $messages = [
+            'required' => 'Поле :attribute обязательно к заполнению.',
+        ];
+
+
+        $this->validate($request, [
+            'name' => 'required|string|min:1',
+        ], $messages);
+
+        $template->name = $request->name;
+
+        $template->save();
+
+        return redirect(url()->previous())->with('status', 'Успешно обновлено');
     }
 
     /**
@@ -80,6 +106,7 @@ class TemplateController extends Controller
      */
     public function destroy(Template $template)
     {
-        //
+        $template->delete();
+        return redirect(route('templates.index'))->with('status', 'Шаблон deleted!');
     }
 }
