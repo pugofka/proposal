@@ -14,6 +14,13 @@ class Task extends Model
         'stage_id'
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['templates_array'];
+
     public function templates()
     {
         return $this->belongsToMany(Template::class, 'tasks_templates');
@@ -32,5 +39,10 @@ class Task extends Model
     public function templates_data()
     {
         return $this->hasMany(TemplateData::class);
+    }
+
+    public function getTemplatesArrayAttribute()
+    {
+        return $this->templates->pluck('id')->toArray();
     }
 }

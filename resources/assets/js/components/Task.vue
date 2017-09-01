@@ -17,6 +17,7 @@
       <div class="">
         <select multiple class="form-control"
           @change="changeTemplates"
+          v-model="selectedTemplates"
         >
           <option
             v-for="template in templateData"
@@ -43,7 +44,7 @@
     data: function () {
       return {
         isTaskInvalid: true,
-        selectedTemplates: []
+        selectedTemplates: this.taskData.templates_array
       }
     },
 
@@ -132,11 +133,6 @@
       }, 500),
 
       changeTemplates: function (e) {
-        this.selectedTemplates = [];
-        var selected = e.target.selectedOptions;
-        for (var i = 0; selected.length > i; i++) {
-          this.selectedTemplates.push(selected[i].value)
-        }
         if(this.taskData.name) this.postTask();
       }
 

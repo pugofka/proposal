@@ -19,8 +19,9 @@ class TaskController extends Controller
     public function index()
     {
         $templates = Template::get();
-        $stages = Stage::with('tasks', 'tasks.variants', 'tasks.templates')->get();
-        return view('tasks.index', compact('stages', 'templates', 'tasks'));
+        $stages = Stage::with('tasks', 'tasks.variants')->get();
+
+        return view('tasks.index', compact('stages', 'templates'));
     }
 
 
