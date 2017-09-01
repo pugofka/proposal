@@ -34,23 +34,21 @@ class TemplateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request )
     {
         $messages = [
             'required' => 'Поле :attribute обязательно к заполнению.',
         ];
 
-
         $this->validate($request, [
             'name' => 'required|string|min:1',
         ], $messages);
 
-//        dd($request->all());
-
-        Template::create([
+        $template = Template::create([
             'name' => $request->name
         ]);
-        return redirect(route('templates.index'))->with('status', 'Шаблон успешно создан');
+
+        return redirect(route('templates.edit', ['id' => $template->id]))->with('status', 'Шаблон '.$template->name.' успешно создан');
     }
 
     /**
