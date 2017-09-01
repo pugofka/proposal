@@ -15,7 +15,9 @@
     <div class="form-group  questions__wrap">
       <label class="control-label">Шаблоны</label>
       <div class="">
-        <select multiple="" class="form-control">
+        <select multiple class="form-control"
+          @change="changeTemplates"
+        >
           <option
             v-for="template in templateData"
             :key="template.id"
@@ -40,7 +42,8 @@
 
     data: function () {
       return {
-        isTaskInvalid: true
+        isTaskInvalid: true,
+        selectedTemplates: []
       }
     },
 
@@ -90,37 +93,52 @@
         }
       },
 
+      postTask: function () {
+        var t = this;
+        if(this.taskData.id) {
+          axios.put(API_URL+'/tasks/'+this.taskData.id, {
+            "name": this.taskData.name,
+            "stage": this.taskData.stage_id,
+            "templates": this.selectedTemplates,
+            "id": this.taskData.id
+          })
+            .then(function(response){
+              var id = response.data.id;
+              t.taskData.id = id;
+            })
+            .catch(function(error){
+              console.error(error);
+            })
+        } else {
+          axios.post(API_URL+'/tasks/', {
+            "name": this.taskData.name,
+            "templates": this.selectedTemplates,
+            "stage": this.taskData.stage_id
+          })
+            .then(function(response){
+              var id = response.data.id;
+              t.taskData.id = id;
+            })
+            .catch(function(error){
+              console.error(error);
+            })
+        }
+      },
+
       changeTask: _.debounce(function () {
         if(this.validateName()) {
-          var t = this;
-          if(this.taskData.id) {
-            axios.put(API_URL+'/tasks/'+this.taskData.id, {
-              "name": this.taskData.name,
-              "stage": this.taskData.stage_id,
-              "id": this.taskData.id
-            })
-              .then(function(response){
-                var id = response.data.id;
-                t.taskData.id = id;
-              })
-              .catch(function(error){
-                console.error(error);
-              })
-          } else {
-            axios.post(API_URL+'/tasks/', {
-              "name": this.taskData.name,
-              "stage": this.taskData.stage_id
-            })
-              .then(function(response){
-                var id = response.data.id;
-                t.taskData.id = id;
-              })
-              .catch(function(error){
-                console.error(error);
-              })
-          }
+          this.postTask();
         }
-      }, 500)
+      }, 500),
+
+      changeTemplates: function (e) {
+        this.selectedTemplates = [];
+        var selected = e.target.selectedOptions;
+        for (var i = 0; selected.length > i; i++) {
+          this.selectedTemplates.push(selected[i].value)
+        }
+        if(this.taskData.name) this.postTask();
+      }
 
     },
 

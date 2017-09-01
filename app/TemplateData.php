@@ -16,17 +16,17 @@ class TemplateData extends Model
 
     ];
 
-    public function templates()
+    public function template()
     {
         return $this->belongsTo(Template::class);
     }
 
-    public function tasks()
+    public function task()
     {
         return $this->belongsTo(Task::class);
     }
 
-    public function variants()
+    public function variant()
     {
         return $this->belongsTo(Variant::class);
     }

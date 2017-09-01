@@ -13,9 +13,9 @@ class Variant extends Model
         'task_id'
     ];
 
-    public function questions()
+    public function task()
     {
-        return $this->hasMany(Task::class);
+        return $this->belongsTo(Task::class);
     }
 
     public function templates_data()

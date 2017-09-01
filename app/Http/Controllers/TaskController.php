@@ -19,8 +19,8 @@ class TaskController extends Controller
     public function index()
     {
         $templates = Template::get();
-        $stages = Stage::with('tasks', 'tasks.variants')->get();
-        return view('tasks.index', compact('stages', 'templates'));
+        $stages = Stage::with('tasks', 'tasks.variants', 'tasks.templates')->get();
+        return view('tasks.index', compact('stages', 'templates', 'tasks'));
     }
 
 
@@ -36,6 +36,7 @@ class TaskController extends Controller
             Validator::make($request->all(), [
                 'name' => 'required|min:3',
                 'stage' => 'required',
+                'templates' => 'array'
             ])->validate();
 
             $stage = Stage::find($request->stage);
@@ -86,7 +87,8 @@ class TaskController extends Controller
             Validator::make($request->all(), [
                 'name' => 'required|min:3',
                 'stage' => 'required',
-                'id' => 'required'
+                'id' => 'required',
+                'templates' => 'array'
             ])->validate();
 
             $task = Task::find($id);
@@ -112,7 +114,7 @@ class TaskController extends Controller
             }
 
 
-            return response(['message' => 'ok', 'id' => $task->id], 201);
+            return response(['message' => 'ok', 'id' => $task->id], 200);
         }
     }
 
