@@ -53,6 +53,7 @@
             id: null,
             name: null,
             stage_id: this.stageId,
+            templates_array: [],
             variants: [
               {
                 id: null,
