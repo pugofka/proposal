@@ -22,7 +22,7 @@
         required: true
       },
       idData: {
-        type: number,
+        type: Number,
         required: true
       }
     },

@@ -14,23 +14,29 @@
         </div>
       @endif
 
-    {{ Form::model($template, ['route' => ['templates.update', $template->id], 'method' => 'put', 'class' => 'create__form form-horizontal'])  }}
-    <fieldset>
-      <legend>Редактирование шаблона "{{ $template->name }}"</legend>
+        <template-name
+            :name-data="{{ json_encode($template->name) }}"
+            :id-data="{{ json_encode($template->id) }}"
+        />
 
-      @include('templates._form')
+      @foreach($stages as $stage)
+        <b>{{ ($stage->name) }}</b>
+        <div class="col-md-12">Задачи</div>
+          @foreach($stage->tasks as $task)
+            <div class="col-md-12" style="display: flex; margin-left: 15px;">
+              <input name="checkbox" type="checkbox" @if ($task->isActive($template->id)) checked="checked" @endif>
+              <div style="margin-left: 5px">{{ $task->name }}</div>
+            </div>
+            @foreach($task->variants as $variant)
+              <div style="margin-left: 45px;">
+                {{ $variant->name }}
+                <input type="number" placeholder="Время (ч)" style="margin-left: 10px; width: 80px;">
+              </div>
+            @endforeach
+          @endforeach
+      @endforeach
 
-      <div class="form-group">
-        <div class="col-md-10 col-md-offset-2">
-          {{ Form::submit('Сохранить изменения', ['class' => 'btn btn-primary']) }}
-        </div>
-      </div>
-    </fieldset>
-    {{ Form::close() }}
-    
-    {{ Form::open(['url' => route('templates.destroy', ['íd' => $template->id]), 'method'=> 'delete', 'class' => 'form__delete' ]) }}
-      {{ Form::submit('Удалить', ['class' => 'btn btn-default']) }}
-    {{Form::close()}}
+
     </div>
   </section>
 @endsection

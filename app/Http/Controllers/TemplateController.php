@@ -72,7 +72,8 @@ class TemplateController extends Controller
      */
     public function edit(Template $template)
     {
-        return view('templates.edit', compact('template'));
+        $stages = Stage::with('tasks', 'tasks.variants', 'tasks.templates_data')->get();
+        return view('templates.edit', compact('template', 'stages'));
     }
 
     /**
