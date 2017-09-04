@@ -18,7 +18,8 @@
     <fieldset>
       <legend>Редактирование шаблона "{{ $template->name }}"</legend>
 
-      @include('templates._form')
+      <!-- @include('templates._form') -->
+      <template-item></template-item>
 
       <div class="form-group">
         <div class="col-md-10 col-md-offset-2">
