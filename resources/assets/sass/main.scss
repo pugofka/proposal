@@ -21,7 +21,7 @@ section {
   padding: 0 !important;
   margin-bottom: 15px;
   height: 100%;
-  margin-top: 15px;
+  margin-top: 15px; 
 
   & > .active a {
     background-color: #fff;
@@ -53,11 +53,11 @@ section {
 
 input:checked + .toggle,
 input:checked + .toggle:after {
-  background-color: $brand-primary !important;
+  background-color: $brand-primary !important; 
 }
 
 .btn.btn-primary {
-  color: $brand-primary !important;
+  color: $brand-primary !important; 
 }
 
 .form-group {
@@ -73,11 +73,15 @@ input:checked + .toggle:after {
 .toggle {
   margin-left: 25px;
   position: relative;
-  top: 10px;
+  top: 10px; 
 }
 
 .form-group.has-error .help-block {
   display: block;
   position: relative;
   color: $brand-primary;
+}
+
+.form-group .help-block {
+    position: relative !important; 
 }

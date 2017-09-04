@@ -4,7 +4,7 @@
     <div class="questions">
         @foreach($stages as $stage)
             <div>
-                <h2 class="questions__step questions__step--active js-open-form">{{ $stage->name }}</h2>
+                <h2 class="questions__step js-open-form">{{ $stage->name }}</h2>
                 <div class="js-open-form-pan">
                     <list-tasks
                         :tasks-data="{{ json_encode($stage->tasks) }}"
