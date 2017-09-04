@@ -107,6 +107,10 @@
 .questions {
   margin: 0;
 
+  &__wrapper {
+  	position: relative;
+  }
+
   &__step:not(:first-child) div {
     display: none;
   }
@@ -118,19 +122,34 @@
     cursor: pointer;
     padding-right: 30px;
     margin-bottom: 20px;
-  }
 
-  &__step:after {
-    content: "";
-    position: absolute;
-    background-image: url('http://localhost/img/down.svg');
-    width: 20px;
-    height: 20px;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-            transform: translateY(-50%);
-    right: 0;
-  }
+    &:after {
+	    content: "";
+	    position: absolute;
+	    background-image: url('http://localhost/img/down.svg');
+	    width: 20px;
+	    height: 20px;
+	    top: 50%;
+	    -webkit-transform: translateY(-50%);
+	            transform: translateY(-50%);
+	    right: 0;
+	}
+
+	    &--active {
+	    	&:after {
+	    		top: 10px;
+	    		transform: rotate(180deg);
+	    		right: -3px;
+	    }
+	  }
+	}
+
+	&__btn-del-task {
+		position: absolute !important;
+		bottom: 0;
+		right: 0;
+		margin-right: 15px !important;
+	}
 
   &__form {
     display: grid;
@@ -154,7 +173,7 @@
     height: 24px !important;
     max-width: 24px !important;
     min-width: 24px !important;
-    margin: 15px !important;
+    margin-bottom: 15px !important;
     padding: 15px !important;
   }
 

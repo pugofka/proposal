@@ -15,8 +15,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
 Vue.component('list-tasks', require('./components/ListTasks.vue'));
+Vue.component('template-item', require('./components/Template.vue'));
 
 const app = new Vue({
   el: '#app'
@@ -24,6 +25,7 @@ const app = new Vue({
 
 $(document).ready(function() {
   $(".js-open-form").click(function() {
+  	$(this).toggleClass("questions__step--active");
     $(this).next(".js-open-form-pan").slideToggle();
   });
 });

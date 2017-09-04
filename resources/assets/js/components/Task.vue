@@ -29,7 +29,7 @@
         </select>
       </div>
     </div>
-    <button href="javascript:void(0)" class="questions__btn btn btn-warning btn-fab" @click="remove(taskData)">
+    <button href="javascript:void(0)" class="questions__btn btn btn-warning btn-fab questions__btn-del-task" @click="remove(taskData)">
       <i class="material-icons"><img src='/img/minus.svg'></i>
     </button>
   </div>
