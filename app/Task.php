@@ -45,4 +45,11 @@ class Task extends Model
     {
         return $this->templates->pluck('id')->toArray();
     }
+
+    public function isActive($templateId)
+    {
+        if ($this->templates->whereIn('id', $templateId)->count() > 0)
+            return true;
+        return false;
+    }
 }
