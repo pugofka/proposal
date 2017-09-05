@@ -98,7 +98,7 @@ class TemplateController extends Controller
 
         $template->save();
 
-        return redirect(url()->previous())->with('status', 'Успешно обновлено');
+//        return redirect(url()->previous())->with('status', 'Успешно обновлено');
     }
 
     /**

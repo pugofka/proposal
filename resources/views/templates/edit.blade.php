@@ -17,7 +17,7 @@
         <template-name
             :name-data="{{ json_encode($template->name) }}"
             :id-data="{{ json_encode($template->id) }}"
-        />
+        ></template-name>
 
       @foreach($stages as $stage)
         <b>{{ ($stage->name) }}</b>
