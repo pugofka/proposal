@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Stage;
 use App\Template;
 use Illuminate\Http\Request;
 
@@ -59,7 +60,8 @@ class TemplateController extends Controller
      */
     public function show(Template $template)
     {
-        //
+        $stages = Stage::with('tasks', 'tasks.variants', 'tasks.templates_data')->get();
+        return view('templates.show', compact('template', 'stages'));
     }
 
     /**
@@ -70,7 +72,8 @@ class TemplateController extends Controller
      */
     public function edit(Template $template)
     {
-        return view('templates.edit', compact('template'));
+        $stages = Stage::with('tasks', 'tasks.variants', 'tasks.templates_data')->get();
+        return view('templates.edit', compact('template', 'stages'));
     }
 
     /**
@@ -95,7 +98,7 @@ class TemplateController extends Controller
 
         $template->save();
 
-        return redirect(url()->previous())->with('status', 'Успешно обновлено');
+//        return redirect(url()->previous())->with('status', 'Успешно обновлено');
     }
 
     /**

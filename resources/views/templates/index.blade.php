@@ -22,7 +22,7 @@
 
         @foreach($templates as $template)
           <tr>
-            <td>{{ $template->name }}</td>
+            <td><a href="{{ route('templates.show', [$template->id]) }}">{{ $template->name }}</a></td>
             <td>
               <a href="{{ route('templates.edit', [$template->id]) }}" class="templates__modify-btn btn btn-warning btn-fab">
                 <i class="material-icons">

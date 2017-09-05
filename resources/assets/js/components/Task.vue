@@ -4,7 +4,7 @@
       <label class="control-label">Задачи</label>
       <div>
         <input type="text" class="form-control" v-model='taskData.name' @keyup="changeTask">
-        <p v-if="isTaskInvalid" class="help-block">Название должно содержать не меньше 3 символов</p>
+        <p v-if="isTaskInvalid" class="help-block">Название должно содержать не меньше 4 символов</p>
       </div>
     </div>
     <list-variants
@@ -61,7 +61,6 @@
       callback: {
         type: Function
       }
-
     },
 
     methods: {
