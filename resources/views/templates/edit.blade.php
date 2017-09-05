@@ -14,26 +14,38 @@
         </div>
       @endif
 
-        <template-name
-            :name-data="{{ json_encode($template->name) }}"
-            :id-data="{{ json_encode($template->id) }}"
-        ></template-name>
+      <template-name
+          :name-data="{{ json_encode($template->name) }}"
+          :id-data="{{ json_encode($template->id) }}"
+      ></template-name>
 
       @foreach($stages as $stage)
-        <b>{{ ($stage->name) }}</b>
+        <div class="col-md-12">
+          <b>{{ ($stage->name) }}</b>
+        </div>
         <div class="col-md-12">Задачи</div>
-          @foreach($stage->tasks as $task)
-            <div class="col-md-12" style="display: flex; margin-left: 15px;">
-              <input name="checkbox" type="checkbox" @if ($task->isActive($template->id)) checked="checked" @endif>
-              <div style="margin-left: 5px">{{ $task->name }}</div>
-            </div>
-            @foreach($task->variants as $variant)
-              <div style="margin-left: 45px;">
-                {{ $variant->name }}
-                <input type="number" placeholder="Время (ч)" style="margin-left: 10px; width: 80px;">
-              </div>
-            @endforeach
-          @endforeach
+        {{--<template-list-tasks--}}
+        {{--:tasks-data="{{ json_encode($stage->tasks) }}"--}}
+        {{--></template-list-tasks>--}}
+        @foreach($stage->tasks as $task)
+
+          <template-task
+              :task-data="{{ json_encode($task) }}"
+              :active-data="{{ json_encode($task->isActive($template->id)) }}"
+          ></template-task>
+
+          {{--<div class="col-md-12" style="display: flex; margin-left: 15px;">--}}
+          {{--{{ dd($task->isActive($template->id)) }}--}}
+{{--          <input name="checkbox" type="checkbox" @if ($task->isActive($template->id)) checked="checked" @endif>--}}
+          {{--<div style="margin-left: 5px">{{ $task->name }}</div>--}}
+          {{--</div>--}}
+          {{--@foreach($task->variants as $variant)--}}
+          {{--<div style="margin-left: 45px;">--}}
+          {{--{{ $variant->name }}--}}
+          {{--<input type="number" placeholder="Время (ч)" style="margin-left: 10px; width: 80px;">--}}
+          {{--</div>--}}
+          {{--@endforeach--}}
+        @endforeach
       @endforeach
 
 

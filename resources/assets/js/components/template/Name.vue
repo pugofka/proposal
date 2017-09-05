@@ -1,8 +1,10 @@
 <template>
-  <input type="text" placeholder="Имя шаблона"
-         @keyup="update"
-         v-model="name"
-  >
+  <div class="col-md-12">
+    <input type="text" placeholder="Имя шаблона"
+           @keyup="update"
+           v-model="name"
+    >
+  </div>
 </template>
 
 <script>
@@ -28,8 +30,8 @@
     },
 
     methods: {
-      update: _.debounce(function() {
-        axios.put(API_URL+'/templates/' + this.idData, {
+      update: _.debounce(function () {
+        axios.put(API_URL + "/templates/" + this.idData, {
           "name": this.name
         })
           .catch(function (error) {
