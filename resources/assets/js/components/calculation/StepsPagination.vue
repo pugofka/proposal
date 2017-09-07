@@ -11,7 +11,7 @@
     data: function () {
       return {
         steps: this.stepsData,
-        status: 'firstPage'
+        status: null
       }
     },
 
@@ -23,24 +23,34 @@
     },
 
     methods: {
+
       setNextPage: function () {
         this.steps.current += 1;
       },
+
       setPreviousPage: function () {
         this.steps.current -= 1;
+      },
+
+      checkStepPosition(e) {
+        const lastIndex = e.list.length-1;
+        this.status = null;
+        if(e.current == 0) this.status = 'firstPage';
+        if(e.current == lastIndex) this.status = 'lastPage';
       }
     },
 
     watch: {
       steps: {
         handler: function (e) {
-          const lastIndex = e.list.length-1;
-          this.status = null;
-          if(e.current == 0) this.status = 'firstPage';
-          if(e.current == lastIndex) this.status = 'lastPage';
+          this.checkStepPosition(e);
         },
         deep: true
       }
+    },
+
+    mounted() {
+      this.checkStepPosition(this.steps)
     }
 
   }
