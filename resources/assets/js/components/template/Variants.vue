@@ -40,7 +40,7 @@
     },
 
     methods: {
-      sendVariantTime: function (index) {
+      sendVariantTime: _.debounce(function (index) {
         console.log("update time by axios");
         axios.put(API_URL + "/templates/" + this.templateIdData + "/edit/update-time", {
           "task_id": this.taskData.id,
@@ -48,7 +48,7 @@
           "variant_id": this.variantsData[index].id,
           "variant_time": this.variantsData[index].templates_data[0].variant_time
         })
-      }
+      }, 500)
     },
 
     watch: {},
