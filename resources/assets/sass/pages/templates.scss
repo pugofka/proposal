@@ -77,3 +77,38 @@
   left: 50% !important;
   transform: translate(-50%, -50%) !important;
 }
+
+.templates__task-variant {
+  transform: translate(130px, -30px);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.task-variants-wrapper {
+  position: relative;
+  left: 100px;
+  bottom: 35px;
+}
+
+.templates__task-variants {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  & > * {
+    width: auto;
+  }
+
+  & > .templates__variant-name {
+    max-width: 200px;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+.templates__variant-time {
+  max-width: 100px;
+  width: 100%;
+}

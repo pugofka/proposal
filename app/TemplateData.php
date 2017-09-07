@@ -12,7 +12,7 @@ class TemplateData extends Model
         'template_id',
         'task_id',
         'variant_id',
-        'task_time',
+        'variant_time',
 
     ];
 
