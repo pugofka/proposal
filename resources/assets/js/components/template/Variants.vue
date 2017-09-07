@@ -48,7 +48,7 @@
           "variant_id": this.variantsData[index].id,
           "variant_time": this.variantsData[index].templates_data[0].variant_time
         })
-      }, 500)
+      }, 100)
     },
 
     watch: {},
