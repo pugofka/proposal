@@ -11,6 +11,10 @@
       :clientData="client"
     />
 
+    <pagination
+      :stepsData="steps"
+    />
+
   </div>
 </template>
 
@@ -18,6 +22,7 @@
   export default {
     components: {
       'steps': require('./Steps.vue'),
+      'pagination': require('./StepsPagination.vue'),
       'start': require('./Start.vue')
     },
 
