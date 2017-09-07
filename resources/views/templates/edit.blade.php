@@ -28,15 +28,18 @@
         {{--:tasks-data="{{ json_encode($stage->tasks) }}"--}}
         {{--></template-list-tasks>--}}
         @foreach($stage->tasks as $task)
+          {{--          {{ dd($task->templates_data) }}--}}
 
           <template-task
               :task-data="{{ json_encode($task) }}"
               :active-data="{{ json_encode($task->isActive($template->id)) }}"
+              :template-id="{{ json_encode($template->id) }}"
+              :variants-data="{{ json_encode($task->variants) }}"
           ></template-task>
 
           {{--<div class="col-md-12" style="display: flex; margin-left: 15px;">--}}
           {{--{{ dd($task->isActive($template->id)) }}--}}
-{{--          <input name="checkbox" type="checkbox" @if ($task->isActive($template->id)) checked="checked" @endif>--}}
+          {{--          <input name="checkbox" type="checkbox" @if ($task->isActive($template->id)) checked="checked" @endif>--}}
           {{--<div style="margin-left: 5px">{{ $task->name }}</div>--}}
           {{--</div>--}}
           {{--@foreach($task->variants as $variant)--}}
