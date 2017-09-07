@@ -42,7 +42,7 @@
     methods: {
       sendVariantTime: _.debounce(function (index) {
         console.log("update time by axios");
-        axios.put(API_URL + "/templates/" + this.templateIdData + "/edit/update-time", {
+        axios.put("/templates/" + this.templateIdData + "/edit/update-time", {
           "task_id": this.taskData.id,
           "template_id": this.templateIdData,
           "variant_id": this.variantsData[index].id,
