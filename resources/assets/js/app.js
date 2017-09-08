@@ -22,6 +22,8 @@ Vue.component('template-name', require('./components/template/Name.vue'));
 Vue.component('template-task', require('./components/template/Task.vue'));
 Vue.component('task-variants', require('./components/template/Variants.vue'));
 
+// Vue.config.devtools = true;
+
 const app = new Vue({
   el: '#app'
 });

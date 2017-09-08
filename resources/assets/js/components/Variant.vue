@@ -52,8 +52,9 @@
       change: _.debounce(function () {
         if (this.validateName()) {
           var t = this;
-          if (this.variantData.id) {
-            axios.put(API_URL + "/variants/" + this.variantData.id, {
+          if(this.variantData.id) {
+            axios.put('/variants/'+this.variantData.id, {
+
               "id": this.variantData.id,
               "name": this.variantData.name,
               "task": this.taskId
@@ -66,7 +67,8 @@
                 console.error(error);
               })
           } else {
-            axios.post(API_URL + "/variants/", {
+            axios.post('/variants/', {
+
               "name": this.variantData.name,
               "task": this.taskId
             })
@@ -93,9 +95,8 @@
 
       remove: function (data) {
         this.callback(data);
-
-        if (this.variantData.id) {
-          axios.delete(API_URL + "/variants/" + this.variantData.id, {
+        if(this.variantData.id) {
+          axios.delete('/variants/'+this.variantData.id, {
             "id": this.variantData.id,
             "name": this.variantData.name,
             "task": this.taskId

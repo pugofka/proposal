@@ -44,7 +44,7 @@
 
     methods: {
       update: _.debounce(function () {
-        axios.put(API_URL + "/templates/" + this.idData, {
+        axios.put("/templates/" + this.idData, {
           "name": this.name
         })
           .catch(function (error) {
