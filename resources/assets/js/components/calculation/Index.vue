@@ -23,6 +23,11 @@
       :hourPriceData="calculate.hourPrice"
     />
 
+    <expenses-customers
+      v-if="steps.current == 3"
+      :expensesCustomersData="expensesCustomers"
+    />
+
     <pagination
       :stepsData="steps"
     />
@@ -37,13 +42,14 @@
       'pagination': require('./StepsPagination.vue'),
       'start': require('./Start.vue'),
       'stages': require('./StagesList.vue'),
-      'other-tasks': require('./OtherTasks.vue')
+      'other-tasks': require('./OtherTasks.vue'),
+      'expenses-customers': require('./ExpensesCustomers.vue')
     },
 
     data: function () {
       return {
         steps: {
-          current: 2,
+          current: 3,
           list: [
             'Начало',
             'Задачи',
@@ -137,7 +143,8 @@
             ]
           }
         ],
-        otherTasks: []
+        otherTasks: [],
+        expensesCustomers: []
       }
     }
 
