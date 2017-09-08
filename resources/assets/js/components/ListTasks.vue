@@ -149,13 +149,13 @@
     margin: 0 30px !important;
   }
 
-  &__btn {
-    width: 24px !important;
-    height: 24px !important;
-    max-width: 24px !important;
-    min-width: 24px !important;
-    margin: 15px !important;
-    padding: 15px !important;
+  &__btn.btn {
+    width: 24px;
+    height: 24px;
+    max-width: 24px;
+    min-width: 24px;
+    margin: 15px;
+    padding: 15px;
   }
 
   & .material-icons {

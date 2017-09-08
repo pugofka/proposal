@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-  <section class="create">
-    <a href="{{ route('templates.index') }}" class="create__btn btn btn-warning btn-fab">
+  <section class="templates__edit-section">
+    <a href="{{ route('templates.index') }}" class="btn__back btn btn-warning btn-fab">
       <i class="material-icons">
         <img src="{{URL::asset('/img/back.svg')}}" alt="">
       </i>
     </a>
-    <div class="create__wrapper">
+    <div class="templates__edit-wrapper">
       @if (session('status'))
         <div class="alert alert-success create__alert-edit">
           {{ session('status') }}
@@ -19,39 +19,41 @@
           :id-data="{{ json_encode($template->id) }}"
       ></template-name>
 
-      @foreach($stages as $stage)
-        <div class="col-md-12">
-          <b>{{ ($stage->name) }}</b>
-        </div>
-        <div class="col-md-12">Задачи</div>
-        {{--<template-list-tasks--}}
-        {{--:tasks-data="{{ json_encode($stage->tasks) }}"--}}
-        {{--></template-list-tasks>--}}
-        @foreach($stage->tasks as $task)
-          {{--          {{ dd($task->templates_data) }}--}}
+    </div>
 
+    @foreach($stages as $stage)
+      <div class="row">
+        <div class="col-md-12">
+          <h2>{{ ($stage->name) }}</h2>
+        </div>
+      </div>
+      {{--<template-list-tasks--}}
+      {{--:tasks-data="{{ json_encode($stage->tasks) }}"--}}
+      {{--></template-list-tasks>--}}
+      @foreach($stage->tasks as $task)
+        {{--          {{ dd($task->templates_data) }}--}}
+        <div class="templates__edit-wrapper">
           <template-task
               :task-data="{{ json_encode($task) }}"
               :active-data="{{ json_encode($task->isActive($template->id)) }}"
               :template-id="{{ json_encode($template->id) }}"
               :variants-data="{{ json_encode($task->variants) }}"
           ></template-task>
-
-          {{--<div class="col-md-12" style="display: flex; margin-left: 15px;">--}}
-          {{--{{ dd($task->isActive($template->id)) }}--}}
-          {{--          <input name="checkbox" type="checkbox" @if ($task->isActive($template->id)) checked="checked" @endif>--}}
-          {{--<div style="margin-left: 5px">{{ $task->name }}</div>--}}
-          {{--</div>--}}
-          {{--@foreach($task->variants as $variant)--}}
-          {{--<div style="margin-left: 45px;">--}}
-          {{--{{ $variant->name }}--}}
-          {{--<input type="number" placeholder="Время (ч)" style="margin-left: 10px; width: 80px;">--}}
-          {{--</div>--}}
-          {{--@endforeach--}}
-        @endforeach
+        </div>
+        {{--<div class="col-md-12" style="display: flex; margin-left: 15px;">--}}
+        {{--{{ dd($task->isActive($template->id)) }}--}}
+        {{--          <input name="checkbox" type="checkbox" @if ($task->isActive($template->id)) checked="checked" @endif>--}}
+        {{--<div style="margin-left: 5px">{{ $task->name }}</div>--}}
+        {{--</div>--}}
+        {{--@foreach($task->variants as $variant)--}}
+        {{--<div style="margin-left: 45px;">--}}
+        {{--{{ $variant->name }}--}}
+        {{--<input type="number" placeholder="Время (ч)" style="margin-left: 10px; width: 80px;">--}}
+        {{--</div>--}}
+        {{--@endforeach--}}
       @endforeach
+    @endforeach
 
 
-    </div>
   </section>
 @endsection

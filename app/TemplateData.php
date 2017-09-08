@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\Helper;
 
 class TemplateData extends Model
 {
@@ -29,5 +30,10 @@ class TemplateData extends Model
     public function variant()
     {
         return $this->belongsTo(Variant::class);
+    }
+
+    public function getVariantTimeAttribute($value)
+    {
+        return Helper::formatNumber($value);
     }
 }

@@ -1,17 +1,19 @@
 <template>
-  <div class="templates__task-wrapper col-md-12">
-    <div class="templates__task">
-      <input class="templates__task-checkbox" type="checkbox" :id="taskData.name+taskData.id"
-             v-model="active"
-             @change="sendActiveStatus"
-      >
-      <label class="templates__task-name" :for="taskData.name+taskData.id">{{ taskData.name }}</label>
+  <div class="row">
+    <div class="templates__task-wrapper col-md-12">
+      <div class="templates__task">
+        <input class="templates__task-checkbox" type="checkbox" :id="taskData.name+taskData.id"
+               v-model="active"
+               @change="sendActiveStatus"
+        >
+        <label class="templates__task-name" :for="taskData.name+taskData.id">{{ taskData.name }}</label>
+      </div>
+      <task-variants v-if="active"
+                     :variants-data=taskData.variants
+                     :template-id-data=templateId
+                     :task-data=taskData
+      ></task-variants>
     </div>
-    <task-variants v-if="active"
-                  :variants-data=taskData.variants
-                  :template-id-data=templateId
-                  :task-data=taskData
-    ></task-variants>
   </div>
 </template>
 
