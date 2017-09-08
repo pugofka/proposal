@@ -2,7 +2,7 @@
   <div class="questions__del form-group ">
     <div>
       <input type="text" class="form-control" v-model="variantData.name" @keyup="change">
-      <p v-if="isVariantInvalid" class="help-block">Название должно содержать не меньше 2 символов</p>
+      <p v-if="isVariantInvalid" class="help-block variant__incorrect">Название должно содержать не меньше 2 символов</p>
     </div>
     <button href="javascript:void(0)" class="questions__btn btn btn-warning btn-fab" @click="remove(variantData)" v-if="isShowRemoveBtn">
       <i class="material-icons"><img src='/img/minus.svg'></i>
@@ -79,6 +79,16 @@
                 console.error(error);
               })
           }
+        }
+        else {
+
+          if(this.variantData.id) {
+            this.remove(this.variantData)
+          }
+          else{
+            this.variantData.name = '';
+          }
+
         }
       }, 500),
 

@@ -81,3 +81,7 @@ input:checked + .toggle:after {
   position: relative;
   color: $brand-primary;
 }
+
+.variant__incorrect {
+  color: crimson;
+}
