@@ -1,8 +1,8 @@
 <template>
-  <div class="questions__del">
+  <div class="questions__del form-group ">
     <div>
       <input type="text" class="form-control" v-model="variantData.name" @keyup="change">
-      <p v-if="isVariantInvalid" class="help-block">Название должно содержать не меньше 3 символов</p>
+      <p v-if="isVariantInvalid" class="help-block">Название должно содержать не меньше 2 символов</p>
     </div>
     <button href="javascript:void(0)" class="questions__btn btn btn-warning btn-fab" @click="remove(variantData)" v-if="isShowRemoveBtn">
       <i class="material-icons"><img src='/img/minus.svg'></i>
@@ -14,7 +14,7 @@
   export default {
     data: function () {
       return {
-        isVariantInvalid: true
+        isVariantInvalid: false
       }
     },
 
@@ -41,7 +41,7 @@
     methods: {
 
       validateName: function () {
-        if(this.variantData.name && this.variantData.name.length >= 3) {
+        if(this.variantData.name && this.variantData.name.length >= 2) {
           this.isVariantInvalid = false;
           return true;
         } else {
