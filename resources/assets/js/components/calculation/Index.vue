@@ -17,6 +17,12 @@
       :hourPriceData="calculate.hourPrice"
     />
 
+    <other-tasks
+      v-if="steps.current == 2"
+      :otherTasksData="otherTasks"
+      :hourPriceData="calculate.hourPrice"
+    />
+
     <pagination
       :stepsData="steps"
     />
@@ -30,13 +36,14 @@
       'steps': require('./Steps.vue'),
       'pagination': require('./StepsPagination.vue'),
       'start': require('./Start.vue'),
-      'stages': require('./StagesList.vue')
+      'stages': require('./StagesList.vue'),
+      'other-tasks': require('./OtherTasks.vue')
     },
 
     data: function () {
       return {
         steps: {
-          current: 1,
+          current: 2,
           list: [
             'Начало',
             'Задачи',
@@ -129,7 +136,8 @@
               }
             ]
           }
-        ]
+        ],
+        otherTasks: []
       }
     }
 
