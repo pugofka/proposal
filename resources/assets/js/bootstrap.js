@@ -54,6 +54,7 @@ if (token) {
 //     key: 'your-pusher-key'
 // });
 
+// Other packages
 require('bootstrap-material-design');
 
 $.material.init();
