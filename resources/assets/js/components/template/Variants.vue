@@ -12,14 +12,11 @@
 
 <script>
   export default {
-    components: {
-      "variant-name": require("./Variants.vue")
-    },
 
     data:
       function () {
         return {
-          variantId: this.variantsData,
+          variantId: this.variantsData.id,
           variants: this.variantsData,
         }
       },
@@ -48,13 +45,18 @@
           "variant_id": this.variantsData[index].id,
           "variant_time": this.variantsData[index].templates_data[0].variant_time
         })
-      }, 500)
+      }, 200)
     },
 
     watch: {},
 
     created() {
+      const t = this;
       for(var i=0; i < this.variants.length; i++) {
+        this.variants[i].templates_data = this.variants[i].templates_data.filter(function (item) {
+          if(item.template_id == t.templateIdData) return item;
+        })
+
         if(this.variants[i].templates_data.length <= 0) {
           this.variants[i].templates_data = [{
             id: null,
