@@ -14,7 +14,7 @@ class CalculationController extends Controller
      */
     public function index()
     {
-        //
+        return view('calculation.create');
     }
 
     /**

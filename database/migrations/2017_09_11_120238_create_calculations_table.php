@@ -16,8 +16,10 @@ class CreateCalculationsTable extends Migration
         Schema::create('calculations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id');
+            $table->string('calculation_name');
             $table->string('user_name');
             $table->string('user_phone');
+            $table->integer('cost_per_hour');
             $table->timestamps();
         });
     }
