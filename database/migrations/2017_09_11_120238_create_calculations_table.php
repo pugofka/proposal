@@ -15,11 +15,14 @@ class CreateCalculationsTable extends Migration
     {
         Schema::create('calculations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_id');
-            $table->string('calculation_name');
-            $table->string('user_name');
+            $table->string('name');
+            $table->string('user_name')->nullable();
+            $table->string('user_email')->nullable();
             $table->string('user_phone');
             $table->integer('cost_per_hour');
+            $table->json('tasks');
+            $table->json('additional_tasks');
+            $table->json('info');
             $table->timestamps();
         });
     }
