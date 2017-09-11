@@ -2,10 +2,14 @@
   <div class="row">
     <div class="templates__task-wrapper col-md-12">
       <div class="templates__task">
-        <input class="templates__task-checkbox" type="checkbox" :id="taskData.name+taskData.id"
-               v-model="active"
-               @change="sendActiveStatus"
-        >
+        <div class="togglebutton form-group">
+          <label>
+            <input checked="checked" name="active" type="checkbox" value="1" :id="taskData.name+taskData.id"
+                   v-model="active"
+                   @change="sendActiveStatus">
+            <span class="toggle"></span>
+          </label>
+        </div>
         <label class="templates__task-name" :for="taskData.name+taskData.id">{{ taskData.name }}</label>
       </div>
       <task-variants v-if="active"
