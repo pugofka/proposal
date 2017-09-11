@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\calculation;
+use App\Template;
 use Illuminate\Http\Request;
 
 class CalculationController extends Controller
@@ -24,7 +25,8 @@ class CalculationController extends Controller
      */
     public function create()
     {
-        return view('calculations.create');
+        $templates = Template::get(['id', 'name']);
+        return view('calculations.create', compact('templates'));
     }
 
     /**
