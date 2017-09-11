@@ -55,7 +55,7 @@
 
     methods: {
       sendActiveStatus: function () {
-        axios.put(API_URL + "/templates/" + this.templateId + "/edit/task-status", {
+        axios.put("/templates/" + this.templateId + "/edit/task-status", {
           "task_id": this.taskData.id,
           "template_id": this.templateId
         })

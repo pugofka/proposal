@@ -69,7 +69,7 @@
         this.callback(data);
 
         if(this.taskData.id) {
-          axios.delete(API_URL+'/tasks/'+this.taskData.id, {
+          axios.delete('/tasks/'+this.taskData.id, {
             "name": this.taskData.name,
             "stage": this.taskData.stage_id,
             "id": this.taskData.id
@@ -96,7 +96,7 @@
       postTask: function () {
         var t = this;
         if(this.taskData.id) {
-          axios.put(API_URL+'/tasks/'+this.taskData.id, {
+          axios.put('/tasks/'+this.taskData.id, {
             "name": this.taskData.name,
             "stage": this.taskData.stage_id,
             "templates": this.selectedTemplates,
@@ -110,7 +110,7 @@
               console.error(error);
             })
         } else {
-          axios.post(API_URL+'/tasks/', {
+          axios.post('/tasks/', {
             "name": this.taskData.name,
             "templates": this.selectedTemplates,
             "stage": this.taskData.stage_id

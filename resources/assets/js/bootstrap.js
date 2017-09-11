@@ -1,5 +1,4 @@
 // CONST
-window.API_URL = 'http://localhost';
 
 window._ = require('lodash');
 
