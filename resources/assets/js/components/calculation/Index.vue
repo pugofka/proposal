@@ -56,7 +56,7 @@
     data: function () {
       return {
         steps: {
-          current: 4,
+          current: 0,
           list: [
             'Начало',
             'Задачи',
@@ -152,6 +152,13 @@
         ],
         otherTasks: [],
         expensesCustomers: []
+      }
+    },
+
+    props: {
+      templatesData: {
+        type: Array,
+        required: true
       }
     },
 
