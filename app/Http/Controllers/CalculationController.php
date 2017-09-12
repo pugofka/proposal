@@ -42,7 +42,26 @@ class CalculationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        dd($request->additional_tasks);
+        //Принимаем и сохраняем данные для создания нового расчёта
+        if ($request->ajax()) {
+//            Validator::make($request->all(), [
+//                'id' => 'required',
+//            ])->validate();
+
+            Calculation::create([
+                'name' => $request->name,
+                'cost_per_hour' => $request->cost_per_hour,
+                'user_name' => $request->user_name,
+                'user_phone' => $request->user_phone,
+                'user_email' => $request->user_email,
+                'template_id' => $request->template_id,
+                'additional_tasks' => json_encode($request->additional_tasks),
+                'tasks' => json_encode($request->tasks),
+                'info' => json_encode($request->info),
+            ]);
+            return response(['status' => 'Расчёт успешно создан'], 201);
+        }
     }
 
     /**
@@ -75,6 +94,19 @@ class CalculationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, calculation $calculation)
+    {
+//        //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
+//        if ($request->ajax()) {
+//            Validator::make($request->all(), [
+//                'id' => 'required',
+//            ])->validate();
+//
+//            $calculateData = Template::where('id', $request->id)->with('tasks', 'tasks.templates', 'tasks.variants')->get();
+//            return response($calculateData, 200);
+//        }
+    }
+
+    public function selectTemplate(Request $request)
     {
         //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
         if ($request->ajax()) {

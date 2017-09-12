@@ -20,9 +20,10 @@ class CreateCalculationsTable extends Migration
             $table->string('user_email')->nullable();
             $table->string('user_phone');
             $table->integer('cost_per_hour');
+            $table->integer('template_id');
             $table->json('tasks');
-            $table->json('additional_tasks');
-            $table->json('info');
+            $table->json('additional_tasks')->nullable();
+            $table->json('info')->nullable();
             $table->timestamps();
         });
     }
