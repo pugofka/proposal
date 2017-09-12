@@ -22,6 +22,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('stages', 'StageController');
 Route::resource('tasks', 'TaskController');
 Route::resource('variants', 'VariantController');
+Route::resource('calculations', 'CalculationController');
 Route::resource('templates', 'TemplateController');
 Route::put('templates/{template}/edit/task-status', 'TemplateController@TaskStatus')->name('templates.edit-task-status');
 Route::put('templates/{template}/edit/update-time', 'TemplateController@UpdateTime')->name('templates.update-time');
+Route::put('calculations', 'CalculationController@update');

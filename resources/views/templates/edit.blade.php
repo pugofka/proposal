@@ -27,11 +27,7 @@
           <h2>{{ ($stage->name) }}</h2>
         </div>
       </div>
-      {{--<template-list-tasks--}}
-      {{--:tasks-data="{{ json_encode($stage->tasks) }}"--}}
-      {{--></template-list-tasks>--}}
       @foreach($stage->tasks as $task)
-        {{--          {{ dd($task->templates_data) }}--}}
         <div class="templates__edit-wrapper">
           <template-task
               :task-data="{{ json_encode($task) }}"
@@ -40,17 +36,6 @@
               :variants-data="{{ json_encode($task->variants) }}"
           ></template-task>
         </div>
-        {{--<div class="col-md-12" style="display: flex; margin-left: 15px;">--}}
-        {{--{{ dd($task->isActive($template->id)) }}--}}
-        {{--          <input name="checkbox" type="checkbox" @if ($task->isActive($template->id)) checked="checked" @endif>--}}
-        {{--<div style="margin-left: 5px">{{ $task->name }}</div>--}}
-        {{--</div>--}}
-        {{--@foreach($task->variants as $variant)--}}
-        {{--<div style="margin-left: 45px;">--}}
-        {{--{{ $variant->name }}--}}
-        {{--<input type="number" placeholder="Время (ч)" style="margin-left: 10px; width: 80px;">--}}
-        {{--</div>--}}
-        {{--@endforeach--}}
       @endforeach
     @endforeach
 
