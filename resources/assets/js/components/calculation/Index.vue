@@ -15,6 +15,9 @@
       v-if="steps.current == 1"
       :stagesData="stages"
       :hourPriceData="calculate.hourPrice"
+      :templatesData="templatesData"
+      :calculateData="calculate"
+      :setStagesCallback="setStages"
     />
 
     <other-tasks
@@ -68,88 +71,14 @@
         calculate: {
           name: '',
           hourPrice: 0,
+          template: 0
         },
         client: {
           name: '',
           phone: '',
           mail: ''
         },
-        stages: [
-          {
-            name: "Верстка",
-            tasks: [
-              {
-                id: 1,
-                name: "Верстка главной",
-                variants: [
-                  {
-                    id: 1,
-                    name: "Да",
-                    time: 10
-                  },
-                  {
-                    id: 2,
-                    name: "Нет",
-                    time: 0
-                  }
-                ]
-              },
-              {
-                id: 2,
-                name: "Верстка главной",
-                variants: [
-                  {
-                    id: 1,
-                    name: "Да",
-                    time: 10
-                  },
-                  {
-                    id: 2,
-                    name: "Нет",
-                    time: 0
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            name: "Верстка",
-            tasks: [
-              {
-                id: 3,
-                name: "Верстка главной",
-                variants: [
-                  {
-                    id: 1,
-                    name: "Да",
-                    time: 10
-                  },
-                  {
-                    id: 2,
-                    name: "Нет",
-                    time: 0
-                  }
-                ]
-              },
-              {
-                id: 4,
-                name: "Верстка главной",
-                variants: [
-                  {
-                    id: 1,
-                    name: "Да",
-                    time: 10
-                  },
-                  {
-                    id: 2,
-                    name: "Нет",
-                    time: 0
-                  }
-                ]
-              }
-            ]
-          }
-        ],
+        stages: null,
         otherTasks: [],
         expensesCustomers: []
       }
@@ -189,6 +118,12 @@
         }
 
         return tasksHours;
+      }
+    },
+
+    methods: {
+      setStages: function (stages) {
+        Vue.set(this, 'stages', stages);
       }
     }
 
