@@ -86,4 +86,16 @@ class CalculationController extends Controller
             return response($calculateData, 200);
         }
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\calculation $calculation
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(calculation $calculation)
+    {
+        //
+    }
 }
+
