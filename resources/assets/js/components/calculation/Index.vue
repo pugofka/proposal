@@ -95,25 +95,29 @@
       resultHours: function () {
         let tasksHours = [];
 
-        for (var i = 0; i < this.stages.length; i++) {
-          for (var j = 0; j < this.stages[i].tasks.length; j++) {
-            if(this.stages[i].tasks[j].hours) {
-              const task = {
-                name: this.stages[i].tasks[j].name,
-                hours: this.stages[i].tasks[j].hours
-              };
-              tasksHours.push(task);
+        if(this.stages) {
+          for (var i = 0; i < this.stages.length; i++) {
+            for (var j = 0; j < this.stages[i].tasks.length; j++) {
+              if(this.stages[i].tasks[j].hours) {
+                const task = {
+                  name: this.stages[i].tasks[j].name,
+                  hours: this.stages[i].tasks[j].hours
+                };
+                tasksHours.push(task);
+              }
             }
           }
         }
 
-        for (var i = 0; i < this.otherTasks.length; i++) {
-          if(this.otherTasks[i].hours) {
-            const task = {
-              name: this.otherTasks[i].name,
-              hours: this.otherTasks[i].hours
-            };
-            otherTasksHour.push();
+        if(this.otherTasks) {
+          for (var i = 0; i < this.otherTasks.length; i++) {
+            if(this.otherTasks[i].hours) {
+              const task = {
+                name: this.otherTasks[i].name,
+                hours: this.otherTasks[i].hours
+              };
+              otherTasksHour.push();
+            }
           }
         }
 
