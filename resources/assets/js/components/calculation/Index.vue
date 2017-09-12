@@ -39,6 +39,17 @@
 
     <pagination
       :stepsData="steps"
+      :data="{
+        name: calculate.name,
+        cost_per_hour: calculate.hourPrice,
+        user_name: client.name,
+        user_phone: client.phone,
+        user_email: client.mail,
+        template: calculate.template,
+        tasks: stages,
+        additional_tasks: otherTasks,
+        info: expensesCustomers
+      }"
     />
 
   </div>
