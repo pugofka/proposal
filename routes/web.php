@@ -26,3 +26,4 @@ Route::resource('calculations', 'CalculationController');
 Route::resource('templates', 'TemplateController');
 Route::put('templates/{template}/edit/task-status', 'TemplateController@TaskStatus')->name('templates.edit-task-status');
 Route::put('templates/{template}/edit/update-time', 'TemplateController@UpdateTime')->name('templates.update-time');
+Route::put('calculations', 'CalculationController@update');

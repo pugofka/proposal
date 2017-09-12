@@ -3,7 +3,7 @@
     <li {{{ Request::is('stages') ? 'class=active' : '' }}}><a href="{{ route('stages.index') }}">Этапы</a></li>
     <li {{{ Request::is('templates') ? 'class=active' : '' }}}><a href="{{ route('templates.index') }}">Шаблоны</a></li>
     <li {{{ Request::is('tasks') ? 'class=active' : '' }}}><a href="{{ route('tasks.index') }}">Вопросы</a></li>
-    <li {{{ Request::is('calculations') ? 'class=active' : '' }}}><a href="{{ route('calculations.create') }}">Создание расчёта</a></li>
+    <li {{{ Request::is('calculations') ? 'class=active' : '' }}}><a href="{{ route('calculations.index') }}">Расчёт</a></li>
     <li><a href="javascript:void(0)">Настройки</a></li>
   </ul>
 </nav>

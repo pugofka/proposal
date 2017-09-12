@@ -6,6 +6,7 @@ use App\calculation;
 use App\Stage;
 use App\Template;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CalculationController extends Controller
 {
@@ -16,7 +17,7 @@ class CalculationController extends Controller
      */
     public function index()
     {
-        //
+        return view('calculations.index');
     }
 
     /**
@@ -28,7 +29,7 @@ class CalculationController extends Controller
     {
         $templates = Template::get(['id', 'name']);
 
-        return $calculateData = Stage::with('tasks', 'tasks.variants')->get()->makeHidden(['created_at', 'updated_at', 'deleted_at']);
+        $calculateData = Stage::with('tasks', 'tasks.variants')->get()->makeHidden(['created_at', 'updated_at', 'deleted_at']);
 //        dd($calculateData->first()->tasks);
         return view('calculations.create', compact('templates', 'calculateData'));
     }
@@ -80,18 +81,9 @@ class CalculationController extends Controller
             Validator::make($request->all(), [
                 'id' => 'required',
             ])->validate();
-            $calculateData = Stage::with('tasks', 'tasks.variants');
-        }
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\calculation $calculation
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(calculation $calculation)
-    {
-        //
+            $calculateData = Template::where('id', $request->id)->with('tasks', 'tasks.templates', 'tasks.variants')->get();
+            return response($calculateData, 200);
+        }
     }
 }
