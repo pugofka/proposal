@@ -31,10 +31,10 @@ Route::middleware(['auth'])->group(function () {
         return redirect('/login');
     });
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('personalPages', 'PersonalPageController');
     Route::resource('stages', 'StageController');
     Route::resource('tasks', 'TaskController');
     Route::resource('variants', 'VariantController');
-
     Route::resource('templates', 'TemplateController');
     Route::put('templates/{template}/edit/task-status', 'TemplateController@taskStatus')->name('templates.edit-task-status');
     Route::put('templates/{template}/edit/update-time', 'TemplateController@updateTime')->name('templates.update-time');
