@@ -21,7 +21,8 @@
       </div>
       <div class="input-group">
         <span class="input-group-addon users__field-name" id="basic-addon1">Пароль</span>
-        {{ Form::password('user_password', ['class' => 'form-control users__input']) }}
+        {{ Form::password('user_new_password', ['class' => 'form-control users__input']) }}
+        {{ Form::password('user_new_password_confirm', ['class' => 'form-control users__input']) }}
       </div>
       {{ Form::submit('Обновить данные', ['class' => 'btn btn-primary']) }}
       {{ Form::close() }}

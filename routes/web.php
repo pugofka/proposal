@@ -39,6 +39,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('templates/{template}/edit/update-time', 'TemplateController@updateTime')->name('templates.update-time');
     Route::get('calculations', 'CalculationController@selectTemplate');
     Route::resource('calculations', 'CalculationController');
-    Route::get('users/{user}', 'UserController@show');
+    Route::get('users/{user}', 'UserController@show')->name('users.show');
     Route::get('users/{user}/edit', 'UserController@update')->name('users.update');
 });
