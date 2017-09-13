@@ -31,7 +31,6 @@ Route::middleware(['auth'])->group(function () {
         return redirect('/login');
     });
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('personalPages', 'PersonalPageController');
     Route::resource('stages', 'StageController');
     Route::resource('tasks', 'TaskController');
     Route::resource('variants', 'VariantController');
