@@ -1,0 +1,10 @@
+.users {
+  &__field-name {
+    min-width: 150px;
+    text-align: left;
+  }
+
+  &__input {
+    padding: 5px 10px;
+  }
+}
