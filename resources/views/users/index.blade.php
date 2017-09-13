@@ -1,11 +1,16 @@
 @extends('layouts.app')
 @section('content')
+  @if (session('status'))
+    <div class="alert alert-success">
+      {{ session('status') }}
+    </div>
+  @endif
   <div class="row">
     <h2 class="users__title">Данные аккаунта</h2>
   </div>
   <div class="row">
     <div class="create__wrapper">
-      {{ Form::open(array('url' => route('users.update', $userData->id))) }}
+      {{ Form::open(array('url' => route('users.update', $userData->id), 'method' => 'GET')) }}
       <div class="input-group">
         <span class="input-group-addon users__field-name" id="basic-addon1">Имя</span>
         {{ Form::text('user_name', $userData->name, ['class' => 'form-control users__input']) }}

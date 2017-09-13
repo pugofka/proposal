@@ -71,7 +71,10 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->name = $request->user_name;
+        $user->email = $request->user_email;
+        $user->save();
+        return redirect(url()->previous())->with('status', 'Успешно обновлено');
     }
 
     /**
