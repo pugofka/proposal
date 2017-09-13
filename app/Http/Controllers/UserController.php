@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -71,9 +73,19 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-//        dd($request);
-        $user->name = $request->user_name;
-        $user->email = $request->user_email;
+        Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'confirmed|min:6',
+                'password_confirmation' => 'same:password',
+            ])->validate();
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if(($request->password) && ($request->password != '') ) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
         return redirect(url()->previous())->with('status', 'Успешно обновлено');
     }
