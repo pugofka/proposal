@@ -1,16 +1,25 @@
 @extends('layouts.app')
 @section('content')
-  <h2 class="users__title">Данные аккаунта</h2>
-  <div class="input-group">
-    <span class="input-group-addon users__field-name" id="basic-addon1">Имя</span>
-    <input type="text" class="form-control users__input" placeholder="Имя" aria-label="Username" aria-describedby="basic-addon1" value="{{ $userData->name }}">
+  <div class="row">
+    <h2 class="users__title">Данные аккаунта</h2>
   </div>
-  <div class="input-group">
-    <span class="input-group-addon users__field-name" id="basic-addon1">Логин (e-mail)</span>
-    <input type="text" class="form-control users__input" placeholder="e-mail" aria-label="Useremail" aria-describedby="basic-addon1" value="{{ $userData->email }}">
-  </div>
-  <div class="input-group">
-    <span class="input-group-addon users__field-name" id="basic-addon1">Пароль</span>
-    <input type="password" class="form-control users__input" placeholder="Пароль" aria-label="Userpassword" aria-describedby="basic-addon1" value="{{ $userData->password }}">
+  <div class="row">
+    <div class="create__wrapper">
+      {{ Form::open(array('url' => route('users.update', $userData->id))) }}
+      <div class="input-group">
+        <span class="input-group-addon users__field-name" id="basic-addon1">Имя</span>
+        {{ Form::text('user_name', $userData->name, ['class' => 'form-control users__input']) }}
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon users__field-name" id="basic-addon1">Логин (e-mail)</span>
+        {{ Form::text('user_email', $userData->email, ['class' => 'form-control users__input']) }}
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon users__field-name" id="basic-addon1">Пароль</span>
+        {{ Form::password('user_password', ['class' => 'form-control users__input']) }}
+      </div>
+      {{ Form::submit('Обновить данные', ['class' => 'btn btn-primary']) }}
+      {{ Form::close() }}
+    </div>
   </div>
 @endsection
