@@ -76,14 +76,16 @@ class UserController extends Controller
         Validator::make($request->all(), [
                 'name' => 'required',
                 'email' => 'required|email',
-                'password' => 'confirmed|min:6',
-                'password_confirmation' => 'same:password',
             ])->validate();
 
         $user->name = $request->name;
         $user->email = $request->email;
 
         if(($request->password) && ($request->password != '') ) {
+            Validator::make($request->all(), [
+                'password' => 'confirmed|min:6',
+                'password_confirmation' => 'same:password'
+            ])->validate();
             $user->password = Hash::make($request->password);
         }
         $user->save();
