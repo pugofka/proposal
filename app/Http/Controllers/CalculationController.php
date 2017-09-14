@@ -28,10 +28,7 @@ class CalculationController extends Controller
     public function create()
     {
         $templates = Template::get(['id', 'name']);
-
-        $calculateData = Stage::with('tasks', 'tasks.variants')->get()->makeHidden(['created_at', 'updated_at', 'deleted_at']);
-//        dd($calculateData->first()->tasks);
-        return view('calculations.create', compact('templates', 'calculateData'));
+        return view('calculations.create', compact('templates'));
     }
 
     /**
@@ -109,12 +106,13 @@ class CalculationController extends Controller
     public function selectTemplate(Request $request)
     {
         //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
+
         if ($request->ajax()) {
             Validator::make($request->all(), [
                 'id' => 'required',
             ])->validate();
 
-            $calculateData = Template::where('id', $request->id)->with('tasks', 'tasks.templates', 'tasks.variants')->get();
+            $calculateData = Template::where('id', $request->id)->with('tasks.stage', 'tasks', 'tasks.variants')->get();
             return response($calculateData, 200);
         }
     }
@@ -130,4 +128,3 @@ class CalculationController extends Controller
         //
     }
 }
-

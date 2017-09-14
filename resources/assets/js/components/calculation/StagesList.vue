@@ -47,84 +47,17 @@
 
     methods: {
       getStages: function () {
-        const data = [
-          {
-            name: "Верстка",
-            tasks: [
-              {
-                id: 1,
-                name: "Верстка главной",
-                variants: [
-                  {
-                    id: 1,
-                    name: "Да",
-                    variant_time: 10
-                  },
-                  {
-                    id: 2,
-                    name: "Нет",
-                    variant_time: 0
-                  }
-                ]
-              },
-              {
-                id: 2,
-                name: "Верстка главной",
-                variants: [
-                  {
-                    id: 1,
-                    name: "Да",
-                    variant_time: 10
-                  },
-                  {
-                    id: 2,
-                    name: "Нет",
-                    variant_time: 0
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            name: "Верстка",
-            tasks: [
-              {
-                id: 3,
-                name: "Верстка главной",
-                variants: [
-                  {
-                    id: 1,
-                    name: "Да",
-                    variant_time: 10
-                  },
-                  {
-                    id: 2,
-                    name: "Нет",
-                    variant_time: 0
-                  }
-                ]
-              },
-              {
-                id: 4,
-                name: "Верстка главной",
-                variants: [
-                  {
-                    id: 1,
-                    name: "Да",
-                    variant_time: 10
-                  },
-                  {
-                    id: 2,
-                    name: "Нет",
-                    variant_time: 0
-                  }
-                ]
-              }
-            ]
+        axios.get('/calculations/template', {
+          params: {
+            id: this.calculate.template
           }
-        ];
-
-        this.setStagesCallback(data);
+        })
+          .then(function (response) {
+            this.setStagesCallback(response.data);
+          })
+          .catch(function (error) {
+            console.error(error);
+          })
       }
     }
 

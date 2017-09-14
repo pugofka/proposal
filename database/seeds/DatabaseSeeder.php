@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(UsersTableSeeder::class);
 
-//        DB::table('users')->truncate();
-//        \App\User::create([
-//           'name' => 'Name',
-//           'email' => 'email@domain.com',
-//           'password' => bcrypt('secret'),
-//       ]);
+       DB::table('users')->truncate();
+       \App\User::create([
+          'name' => 'Name',
+          'email' => 'email@domain.com',
+          'password' => bcrypt('secret'),
+      ]);
 
         Model::unguard();
         //disable foreign key check for this connection before running seeders
