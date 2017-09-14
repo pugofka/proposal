@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\calculation;
+use App\Calculation;
 use App\Stage;
 use App\Template;
 use Illuminate\Http\Request;
@@ -17,7 +17,8 @@ class CalculationController extends Controller
      */
     public function index()
     {
-        return view('calculations.index');
+        $calculations = Calculation::get();
+        return view('calculations.index', compact('calculations'));
     }
 
     /**
@@ -39,7 +40,6 @@ class CalculationController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->additional_tasks);
         //Принимаем и сохраняем данные для создания нового расчёта
         if ($request->ajax()) {
 //            Validator::make($request->all(), [
@@ -69,7 +69,8 @@ class CalculationController extends Controller
      */
     public function show(calculation $calculation)
     {
-        //
+        $calculateData = Calculation::where('id', $calculation->id)->get();
+        return view('calculations.show', compact('calculation', $calculateData));
     }
 
     /**
@@ -78,7 +79,7 @@ class CalculationController extends Controller
      * @param  \App\calculation $calculation
      * @return \Illuminate\Http\Response
      */
-    public function edit(calculation $calculation)
+    public function edit(Calculation $calculation)
     {
         //
     }
@@ -90,17 +91,32 @@ class CalculationController extends Controller
      * @param  \App\calculation $calculation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, calculation $calculation)
+    public function update(Request $request, Calculation $calculation)
     {
-//        //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
-//        if ($request->ajax()) {
-//            Validator::make($request->all(), [
-//                'id' => 'required',
-//            ])->validate();
+        if ($request->ajax()) {
+
+//            $messages = [
+//                'required' => 'Поле :attribute обязательно к заполнению.',
+//                'numeric' => 'Поле :attribute должно быть числом',
+//            ];
 //
-//            $calculateData = Template::where('id', $request->id)->with('tasks', 'tasks.templates', 'tasks.variants')->get();
-//            return response($calculateData, 200);
-//        }
+//            $this->validate($request, [
+//                'name' => 'required|string|min:1',
+//                'sort' => 'required|numeric',
+//            ], $messages);
+
+            $calculation->name = $request->name;
+            $calculation->cost_per_hour = $request->cost_per_hour;
+            $calculation->user_name = $request->user_name;
+            $calculation->user_phone = $request->user_phone;
+            $calculation->user_email = $request->user_email;
+            $calculation->template_id = $request->template_id;
+            $calculation->additional_tasks = json_encode($request->additional_tasks);
+            $calculation->tasks = json_encode($request->tasks);
+            $calculation->info = json_encode($request->info);
+            $calculation->save();
+
+        }
     }
 
     public function selectTemplate(Request $request)
@@ -112,7 +128,7 @@ class CalculationController extends Controller
                 'id' => 'required',
             ])->validate();
 
-            $calculateData = Template::where('id', $request->id)->with('tasks.stage', 'tasks', 'tasks.variants')->get();
+            $calculateData = Template::where('id', $request->id)->with('tasks', 'tasks.templates', 'tasks.variants')->get();
             return response($calculateData, 200);
         }
     }
@@ -125,6 +141,7 @@ class CalculationController extends Controller
      */
     public function destroy(calculation $calculation)
     {
-        //
+        $calculation->delete();
+        return redirect(route('calculations.index'))->with('status', 'Book deleted!');
     }
 }
