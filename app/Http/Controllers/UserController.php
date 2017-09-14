@@ -73,10 +73,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        Validator::make($request->all(), [
-                'name' => 'required',
-                'email' => 'required|email',
-            ])->validate();
+        $messages = [
+            'required' => 'Поле :attribute обязательно к заполнению.',
+            'email' => 'Неверный формат e-mail',
+        ];
+
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email'
+        ], $messages);
 
         $user->name = $request->name;
         $user->email = $request->email;
