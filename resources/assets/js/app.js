@@ -21,7 +21,8 @@ Vue.component('template-name', require('./components/template/Name.vue'));
 // Vue.component('template-list-tasks', require('./components/template/ListTasks.vue'));
 Vue.component('template-task', require('./components/template/Task.vue'));
 Vue.component('task-variants', require('./components/template/Variants.vue'));
-Vue.component('calculation', require('./components/calculation/Index.vue'));
+Vue.component('calculation-create', require('./components/calculation/Create.vue'));
+Vue.component('calculation-edit', require('./components/calculation/Edit.vue'));
 
 
 const app = new Vue({
