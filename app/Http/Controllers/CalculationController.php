@@ -121,12 +121,14 @@ class CalculationController extends Controller
 
     public function selectTemplate(Request $request)
     {
+        dd('frefre');
         //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
         if ($request->ajax()) {
             Validator::make($request->all(), [
                 'id' => 'required',
             ])->validate();
-            $calculateData = Template::where('id', $request->id)->with('tasks', 'tasks.templates', 'tasks.variants')->get();
+            $calculateData = Template::where('id', $request->id)->with('tasks', 'tasks.stage', 'tasks.variants')->get();
+            dd($calculateData);
             return response($calculateData, 200);
         }
     }
