@@ -20,7 +20,7 @@ class VariantController extends Controller
     {
         if($request->ajax()) {
             Validator::make($request->all(), [
-                'name' => 'required|min:3',
+                'name' => 'required|min:2',
                 'task' => 'required',
             ])->validate();
 
@@ -47,7 +47,7 @@ class VariantController extends Controller
     {
         if($request->ajax()) {
             Validator::make($request->all(), [
-                'name' => 'required|min:3',
+                'name' => 'required|min:2',
                 'task' => 'required',
                 'id' => 'required',
             ])->validate();

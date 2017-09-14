@@ -1,0 +1,77 @@
+<template>
+  <div class="task-variants-wrapper">
+    <div class="input-group templates__task-variant-wrapper" v-for="(variant, index) in variants">
+      <div class="form-group">
+        <span class="input-group-addon templates__variant-name" id="basic-addon1">{{ variant.name }}</span>
+        <input type="text" class="form-control templates__variant-time" id="exampleInputEmail1" aria-label="Variant"
+               aria-describedby="basic-addon1" placeholder="time" @keyup="sendVariantTime(index)"
+               v-model.number="variant.templates_data[0].variant_time">
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+
+    data:
+      function () {
+        return {
+          variantId: this.variantsData.id,
+          variants: this.variantsData,
+        }
+      },
+
+    props: {
+      variantsData: {
+        type: Array,
+        required: true
+      },
+      templateIdData: {
+        type: Number,
+        required: true
+      },
+      taskData: {
+        type: Object,
+        required: true
+      },
+    },
+
+    methods: {
+      sendVariantTime: _.debounce(function (index) {
+        console.log("update time by axios");
+        axios.put("/templates/" + this.templateIdData + "/edit/update-time", {
+          "task_id": this.taskData.id,
+          "template_id": this.templateIdData,
+          "variant_id": this.variantsData[index].id,
+          "variant_time": this.variantsData[index].templates_data[0].variant_time
+        })
+      }, 200)
+    },
+
+    watch: {},
+
+    created() {
+      const t = this;
+      for (var i = 0; i < this.variants.length; i++) {
+        this.variants[i].templates_data = this.variants[i].templates_data.filter(function (item) {
+          if (item.template_id == t.templateIdData) return item;
+        })
+
+        if (this.variants[i].templates_data.length <= 0) {
+          this.variants[i].templates_data = [{
+            id: null,
+            task_id: this.taskData.id,
+            template_id: this.templateIdData,
+            variant_id: this.variants[i].id,
+            variant_time: 0
+          }]
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+
+</style>

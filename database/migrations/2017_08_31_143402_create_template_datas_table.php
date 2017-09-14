@@ -18,7 +18,7 @@ class CreateTemplateDatasTable extends Migration
             $table->integer('template_id');
             $table->integer('task_id');
             $table->integer('variant_id');
-            $table->decimal('task_time');
+            $table->decimal('variant_time');
             $table->timestamps();
         });
     }
