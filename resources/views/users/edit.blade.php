@@ -21,7 +21,7 @@
 
   <div class="row">
     <div class="create__wrapper">
-      {{ Form::open(array('url' => route('users.update', $userData->id), 'method' => 'GET')) }}
+      {{ Form::open(array('url' => route('users.edit', $userData->id), 'method' => 'GET')) }}
       <div class="input-group">
         <span class="input-group-addon users__field-name" id="basic-addon1">Имя</span>
         {{ Form::text('name', $userData->name, ['class' => 'form-control users__input']) }}

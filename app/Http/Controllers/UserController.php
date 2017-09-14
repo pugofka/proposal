@@ -50,7 +50,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $userData = Auth::user();
-        return view('users.index', compact('userData'));
+        return view('users.edit', compact('userData'));
     }
 
     /**
@@ -59,19 +59,7 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
+    public function edit(User $user, Request $request)
     {
         $messages = [
             'required' => 'Поле :attribute обязательно к заполнению.',
@@ -95,6 +83,18 @@ class UserController extends Controller
         }
         $user->save();
         return redirect(url()->previous())->with('status', 'Успешно обновлено');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+
     }
 
     /**
