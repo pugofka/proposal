@@ -26,7 +26,7 @@
     methods: {
       onClick: function () {
         this.setVariantCallback(this.variant.id);
-        this.setHoursCallback(this.variant.time);
+        this.setHoursCallback(this.variant.variant_time);
       }
     }
   }
