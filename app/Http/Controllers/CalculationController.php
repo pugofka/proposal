@@ -126,9 +126,7 @@ class CalculationController extends Controller
             Validator::make($request->all(), [
                 'id' => 'required',
             ])->validate();
-
             $calculateData = Template::where('id', $request->id)->with('tasks', 'tasks.templates', 'tasks.variants')->get();
-            dd($calculateData);
             return response($calculateData, 200);
         }
     }
@@ -142,7 +140,7 @@ class CalculationController extends Controller
     public function destroy(calculation $calculation)
     {
         $calculation->delete();
-        return redirect(route('calculations.index'))->with('status', 'Book deleted!');
+        return redirect(route('calculations.index'))->with('status', 'Расчёт удалён');
     }
 }
 
