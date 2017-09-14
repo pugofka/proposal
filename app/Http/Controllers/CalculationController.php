@@ -141,7 +141,8 @@ class CalculationController extends Controller
      */
     public function destroy(calculation $calculation)
     {
-        //
+        $calculation->delete();
+        return redirect(route('calculations.index'))->with('status', 'Book deleted!');
     }
 }
 

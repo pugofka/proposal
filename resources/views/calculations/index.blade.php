@@ -8,6 +8,11 @@
     @foreach($calculations as $calculation)
       <li class="calculations__item">
         <a href="{{ route('calculations.show', ['íd' => $calculation->id ])  }}" class="calculations__item-name">{{ $calculation->name }}</a>
+        {{ Form::open(['url' => route('calculations.destroy', ['íd' => $calculation->id]), 'method'=> 'delete' ]) }}
+
+        {{ Form::submit('X') }}
+
+        {{Form::close()}}
       </li>
     @endforeach
 
