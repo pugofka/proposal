@@ -127,7 +127,7 @@
                 name: this.otherTasks[i].name,
                 hours: this.otherTasks[i].hours
               };
-              otherTasksHour.push();
+              tasksHours.push(task);
             }
           }
         }

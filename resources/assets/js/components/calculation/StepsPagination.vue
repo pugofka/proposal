@@ -55,7 +55,7 @@
               console.error(error);
             });
         } else {
-          axios.post('/calculation', this.data)
+          axios.post('/calculations', this.data)
             .then(function () {
               window.location.href = "/calculations";
             })
