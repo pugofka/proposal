@@ -46,13 +46,23 @@
       },
 
       postData: function () {
-        axios.post('calculation', this.data)
-          .then(function () {
-            window.location.href = "/calculation";
-          })
-          .catch(function (error) {
-            console.error(error);
-          });
+        if (this.data.id) {
+          axios.put('/calculations', this.data)
+            .then(function () {
+              window.location.href = "/calculations";
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+        } else {
+          axios.post('/calculation', this.data)
+            .then(function () {
+              window.location.href = "/calculations";
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+        }
       }
     },
 
