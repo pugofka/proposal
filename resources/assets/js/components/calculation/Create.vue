@@ -112,7 +112,7 @@
               if(this.stages[i].tasks[j].hours) {
                 const task = {
                   name: this.stages[i].tasks[j].name,
-                  hours: this.stages[i].tasks[j].hours
+                  hours: +this.stages[i].tasks[j].hours
                 };
                 tasksHours.push(task);
               }
@@ -125,7 +125,7 @@
             if(this.otherTasks[i].hours) {
               const task = {
                 name: this.otherTasks[i].name,
-                hours: this.otherTasks[i].hours
+                hours: +this.otherTasks[i].hours
               };
               tasksHours.push(task);
             }
