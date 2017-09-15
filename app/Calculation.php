@@ -13,6 +13,7 @@ class Calculation extends Model
         'user_id',
         'user_name',
         'user_phone',
+        'user_email',
         'cost_per_hour',
         'template_id',
         'tasks',
