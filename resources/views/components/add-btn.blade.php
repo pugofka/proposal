@@ -1,3 +1,3 @@
-<a href="{{ route($slot.'.create') }}" class="stages__btn btn btn-warning btn-fab pull-right">
+<a href="{{ route($slot.'.create') }}" class="btn btn-success btn-fab pull-right">
     <i class="material-icons">add</i>
 </a>
