@@ -205,8 +205,10 @@ class CalculationController extends Controller
         ];
         $pdf = Pdf::loadView('pdf.document', $data);
 
+
         $filename = 'calculate_'.now().'.pdf';
-        Storage::put($filename, $pdf->output('document.pdf'));
+        return $pdf->stream('document.pdf');
+//        Storage::put($filename, $pdf->output('document.pdf'));
 
         //  @todo
         // TODO save filename to DB
