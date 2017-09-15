@@ -82,7 +82,7 @@ class CalculationController extends Controller
      */
     public function edit(Calculation $calculation)
     {
-        //
+        return view('calculations.show');
     }
 
     /**
