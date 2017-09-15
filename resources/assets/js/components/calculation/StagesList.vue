@@ -47,13 +47,14 @@
 
     methods: {
       getStages: function () {
+        const t = this;
         axios.get('/calculations/template', {
           params: {
             id: this.calculate.template
           }
         })
           .then(function (response) {
-            this.setStagesCallback(response.data);
+            t.setStagesCallback(response.data);
           })
           .catch(function (error) {
             console.error(error);

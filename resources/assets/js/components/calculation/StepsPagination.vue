@@ -47,7 +47,7 @@
 
       postData: function () {
         if (this.data.id) {
-          axios.put('/calculations', this.data)
+          axios.put('/calculations/'+this.data.id+'/edit', this.data)
             .then(function () {
               window.location.href = "/calculations";
             })
@@ -55,7 +55,7 @@
               console.error(error);
             });
         } else {
-          axios.post('/calculations', this.data)
+          axios.post('/calculations/create', this.data)
             .then(function () {
               window.location.href = "/calculations";
             })
@@ -77,7 +77,7 @@
 
       data: {
         handler: function (e) {
-          if(e.name && e.cost_per_hour && e.user_name && e.template && e.tasks) this.isInvalid = false
+          if(e.name && e.cost_per_hour && e.user_name && e.user_phone && e.user_email && e.template_id && e.tasks) this.isInvalid = false
           else this.isInvalid = true
         },
         deep: true
