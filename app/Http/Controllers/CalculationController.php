@@ -83,7 +83,8 @@ class CalculationController extends Controller
     public function edit(Calculation $calculation)
     {
         $calculateData = Calculation::where('id', $calculation->id)->get();
-        return view('calculations.show', compact('calculateData'));
+        $templates = Template::get(['id', 'name']);
+        return view('calculations.edit', compact('calculateData', 'templates'));
     }
 
     /**

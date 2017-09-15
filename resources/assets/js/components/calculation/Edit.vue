@@ -35,7 +35,7 @@
       v-if="steps.current == 4"
       :hoursData="resultHours"
       :hourPriceData="this.calculate.hourPrice"
-      :getPDFData=true
+      :getPDFData="true"
     />
 
     <pagination
@@ -47,7 +47,7 @@
         user_name: client.name,
         user_phone: client.phone,
         user_email: client.mail,
-        template: calculate.template,
+        template_id: calculate.template,
         tasks: stages,
         additional_tasks: otherTasks,
         info: expensesCustomers
@@ -85,16 +85,16 @@
           id: this.calculateData.id,
           name: this.calculateData.name,
           hourPrice: this.calculateData.cost_per_hour,
-          template: this.calculateData.template
+          template: this.calculateData.template_id
         },
         client: {
           name: this.calculateData.user_name,
           phone: this.calculateData.user_phone,
           mail: this.calculateData.user_mail
         },
-        stages: this.calculateData.tasks,
-        otherTasks: this.calculateData.additional_tasks,
-        expensesCustomers: this.calculateData.info
+        stages: JSON.parse(this.calculateData.tasks),
+        otherTasks: JSON.parse(this.calculateData.additional_tasks),
+        expensesCustomers: JSON.parse(this.calculateData.info)
       }
     },
 
@@ -117,7 +117,7 @@
               if(this.stages[i].tasks[j].hours) {
                 const task = {
                   name: this.stages[i].tasks[j].name,
-                  hours: this.stages[i].tasks[j].hours
+                  hours: +this.stages[i].tasks[j].hours
                 };
                 tasksHours.push(task);
               }
@@ -130,9 +130,9 @@
             if(this.otherTasks[i].hours) {
               const task = {
                 name: this.otherTasks[i].name,
-                hours: this.otherTasks[i].hours
+                hours: +this.otherTasks[i].hours
               };
-              otherTasksHour.push();
+              tasksHours.push(task);
             }
           }
         }
