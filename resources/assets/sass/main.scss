@@ -85,3 +85,7 @@ input:checked + .toggle:after {
 .variant__incorrect {
   color: crimson;
 }
+
+.table tbody > tr > td.vert-aligned {
+  vertical-align: middle;
+}
