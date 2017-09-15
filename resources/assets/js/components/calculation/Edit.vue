@@ -35,6 +35,7 @@
       v-if="steps.current == 4"
       :hoursData="resultHours"
       :hourPriceData="this.calculate.hourPrice"
+      :getPDFData=true
     />
 
     <pagination

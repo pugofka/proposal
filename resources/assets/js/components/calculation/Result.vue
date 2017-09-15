@@ -20,7 +20,7 @@
               {{ hours * hourPriceData }} руб.
             </div>
           </div>
-          <button type="button" class="btn btn-success btn-raised">Скачать PDF</button>
+          <button v-if="getPDFData" type="button" class="btn btn-success btn-raised" @click="getPdf">Скачать PDF</button>
         </div>
         <div class="col-md-6">
         </div>
@@ -39,7 +39,8 @@
 
     props: {
       hoursData: Array,
-      hourPriceData: Number
+      hourPriceData: Number,
+      getPDFData: Boolean
     },
 
     methods: {
@@ -47,6 +48,10 @@
         for (var i = 0; i < this.hoursData.length; i++) {
           this.hours += this.hoursData[i].hours;
         }
+      },
+
+      getPdf: function () {
+        console.log('get pdf');
       },
 
       drawChart: function () {

@@ -47,7 +47,7 @@
 
       postData: function () {
         if (this.data.id) {
-          axios.put('/calculations', this.data)
+          axios.put('/calculations/'+this.data.id+'/edit', this.data)
             .then(function () {
               window.location.href = "/calculations";
             })
@@ -55,7 +55,7 @@
               console.error(error);
             });
         } else {
-          axios.post('/calculations', this.data)
+          axios.post('/calculations/create', this.data)
             .then(function () {
               window.location.href = "/calculations";
             })
