@@ -8,13 +8,7 @@
 
     <div class="col-md-11">
         <div class="well bs-component">
-            <div class="form-horizontal">
-                <fieldset>
-                    <legend>{{ $title }}</legend>
-
-                    {{ $slot }}
-                </fieldset>
-            </div>
+            {{ $slot }}
         </div>
     </div>
 
