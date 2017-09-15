@@ -44,9 +44,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
     Route::resource('calculations', 'CalculationController')->only([
         'index',
-        'create',
-        'edit',
+//        'create',
+//        'edit',
         'destroy',
     ]);
     Route::get('calculations/template', 'CalculationController@selectTemplate');
+    Route::post('calculations/create', 'CalculationController@create')->name('calculations.create');
+    Route::put('calculations/{calculation}/edit', 'CalculationController@edit')->name('calculations.edit');
 });
