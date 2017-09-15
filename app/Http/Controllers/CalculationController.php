@@ -8,6 +8,8 @@ use App\Template;
 use App\TemplateData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class CalculationController extends Controller
 {
@@ -123,7 +125,6 @@ class CalculationController extends Controller
 
     public function selectTemplate(Request $request)
     {
-//        dd($request->all());
         //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
         if ($request->ajax()) {
             Validator::make($request->all(), [
@@ -133,48 +134,57 @@ class CalculationController extends Controller
             // Получаем данные с расчетами по шаблону
             $calculateData = TemplateData::with('variant', 'task')->where('template_id', $request->id)->get();
 
-            // Получаем спсок всех этапов
-            $stages = Stage::with('tasks')->get();
-
-            // Формируем пустой массив, в который будем складывать данные в нужной структуре
-            $result = [];
-
-            // Перебираем все этапы, так как нужна красивая группировка по этапам и данные по эатапм
-            foreach ($stages as $stage) {
-                // фильтруем задачи этапа
-                $taskForStage = $calculateData->whereIn('task_id', $stage->tasks->pluck('id'))->groupBy('task_id');
-                $resultTask = [];
-                foreach ($taskForStage as $task) {
-                    $resultVariant = [];
-                    foreach ($task as $data) {
-                        $variant = $data->variant;
-                        $resultVariant[] = [
-                            'id' => $variant->id,
-                            'name' => $variant->name,
-                            'variant_time' => $data->variant_time
-                        ];
-                    }
-                    if (count($resultVariant) > 0) {
-                        $resultTask[] = [
-                            'id' => $task->first()->task->id,
-                            'name' => $task->first()->task->name,
-                            'variants' => $resultVariant,
-                        ];
-
-                    }
-                }
-                if (count($resultTask) > 0) {
-                    $result[] = [
-                        'name' => $stage->name,
-                        'id' => $stage->id,
-                        'tasks' => $resultTask
-                    ];
-                }
-            }
-
+            $result = $this->getDataForCalculateTemplate($calculateData);
 
             return response($result, 200);
         }
+    }
+
+    /**
+     * @param TemplateData $calculateData
+     * @return array
+     */
+    protected function getDataForCalculateTemplate($calculateData)
+    {
+        // Получаем спсок всех этапов
+        $stages = Stage::with('tasks')->get();
+
+        // Формируем пустой массив, в который будем складывать данные в нужной структуре
+        $result = [];
+
+        // Перебираем все этапы, так как нужна красивая группировка по этапам и данные по эатапм
+        foreach ($stages as $stage) {
+            // фильтруем задачи этапа
+            $taskForStage = $calculateData->whereIn('task_id', $stage->tasks->pluck('id'))->groupBy('task_id');
+            $resultTask = [];
+            foreach ($taskForStage as $task) {
+                $resultVariant = [];
+                foreach ($task as $data) {
+                    $variant = $data->variant;
+                    $resultVariant[] = [
+                        'id' => $variant->id,
+                        'name' => $variant->name,
+                        'variant_time' => $data->variant_time
+                    ];
+                }
+                if (count($resultVariant) > 0) {
+                    $resultTask[] = [
+                        'id' => $task->first()->task->id,
+                        'name' => $task->first()->task->name,
+                        'variants' => $resultVariant,
+                    ];
+                }
+            }
+            if (count($resultTask) > 0) {
+                $result[] = [
+                    'name' => $stage->name,
+                    'id' => $stage->id,
+                    'tasks' => $resultTask
+                ];
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -187,5 +197,19 @@ class CalculationController extends Controller
     {
         $calculation->delete();
         return redirect(route('calculations.index'))->with('status', 'Расчёт удалён');
+    }
+
+    public function generatePdf() {
+        $data = [
+            'foo' => 'bar'
+        ];
+        $pdf = Pdf::loadView('pdf.document', $data);
+
+        $filename = 'calculate_'.now().'.pdf';
+        Storage::put($filename, $pdf->output('document.pdf'));
+
+        //  @todo
+        // TODO save filename to DB
+        return 'ok';
     }
 }
