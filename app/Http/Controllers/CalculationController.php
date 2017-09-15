@@ -46,7 +46,6 @@ class CalculationController extends Controller
 //            Validator::make($request->all(), [
 //                'id' => 'required',
 //            ])->validate();
-
             Calculation::create([
                 'name' => $request->name,
                 'cost_per_hour' => $request->cost_per_hour,
@@ -150,25 +149,25 @@ class CalculationController extends Controller
                     foreach ($task as $data) {
                         $variant = $data->variant;
                         $resultVariant[] = [
-                            'id'    =>  $variant->id,
-                            'name'  =>  $variant->name,
-                            'variant_time'  =>  $data->variant_time
+                            'id' => $variant->id,
+                            'name' => $variant->name,
+                            'variant_time' => $data->variant_time
                         ];
                     }
-                    if(count($resultVariant)>0) {
+                    if (count($resultVariant) > 0) {
                         $resultTask[] = [
-                            'id'  => $task->first()->task->id,
-                            'name'  => $task->first()->task->name,
+                            'id' => $task->first()->task->id,
+                            'name' => $task->first()->task->name,
                             'variants' => $resultVariant,
                         ];
 
                     }
                 }
-                if(count($resultTask)>0) {
+                if (count($resultTask) > 0) {
                     $result[] = [
-                        'name'  => $stage->name,
-                        'id'  => $stage->id,
-                        'tasks'     => $resultTask
+                        'name' => $stage->name,
+                        'id' => $stage->id,
+                        'tasks' => $resultTask
                     ];
                 }
             }
