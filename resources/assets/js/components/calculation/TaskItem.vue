@@ -4,9 +4,11 @@
     <header class="task__title">
       <h4>{{ task.name }}<small>стоимость задачи: {{ taskPrice }} руб.</small></h4>
       <div class="task__deffered">
-        <div class="form-group">
+        <div class="togglebutton form-group">
           <label>
-            <input type="checkbox" v-model="task.deffered"> Отложить задачу
+            <input type="checkbox" v-model="task.deffered">
+            <span class="toggle"></span>
+            Отложить задачу
           </label>
         </div>
       </div>

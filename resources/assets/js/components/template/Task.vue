@@ -1,38 +1,42 @@
 <template>
-  <div class="row">
-    <div class="templates__task-wrapper col-md-12">
-      <div class="templates__task">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      {{ taskData.name }}
+      <div class="pull-right">
         <div class="togglebutton form-group">
           <label>
-            <input checked="checked" name="active" type="checkbox" value="1" :id="taskData.name+taskData.id"
-                   v-model="active"
-                   @change="sendActiveStatus">
+            <input
+              type="checkbox"
+              v-model="active"
+              @change="sendActiveStatus">
             <span class="toggle"></span>
           </label>
         </div>
-        <label class="templates__task-name" :for="taskData.name+taskData.id">{{ taskData.name }}</label>
       </div>
-      <task-variants v-if="active"
-                     :variants-data=taskData.variants
-                     :template-id-data=templateId
-                     :task-data=taskData
-      ></task-variants>
+    </div>
+    <div v-if="active" class="panel-body">
+      <task-variants
+        v-if="active"
+        :variants-data="taskData.variants"
+        :template-id-data="templateId"
+        :task-data="taskData"
+      />
     </div>
   </div>
 </template>
 
 <script>
   export default {
+
     components: {
       "task-variant": require("./Variants.vue")
     },
 
-    data:
-      function () {
-        return {
-          active: this.activeData
-        }
-      },
+    data: function () {
+      return {
+        active: this.activeData
+      }
+    },
 
     props: {
       taskData: {
@@ -60,16 +64,13 @@
           "template_id": this.templateId
         })
       }
-    },
-
-    watch: {},
-
-    mounted() {
-
     }
+
   }
 </script>
 
-<style lang="scss">
-
+<style scoped>
+  .togglebutton.form-group {
+    margin-top: 0;
+  }
 </style>

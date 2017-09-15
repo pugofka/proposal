@@ -1,11 +1,15 @@
 <template>
-  <div class="task-variants-wrapper">
-    <div class="input-group templates__task-variant-wrapper" v-for="(variant, index) in variants">
-      <div class="form-group">
-        <span class="input-group-addon templates__variant-name" id="basic-addon1">{{ variant.name }}</span>
-        <input type="text" class="form-control templates__variant-time" id="exampleInputEmail1" aria-label="Variant"
-               aria-describedby="basic-addon1" placeholder="time" @keyup="sendVariantTime(index)"
-               v-model.number="variant.templates_data[0].variant_time">
+  <div>
+    <div class="form-group" v-for="(variant, index) in variants">
+      <label :for="index" class="col-md-2 control-label">{{ variant.name }}</label>
+      <div class="col-md-10">
+        <input
+          type="text"
+          class="form-control"
+          :id="index"
+          @keyup="sendVariantTime(index)"
+          v-model.number="variant.templates_data[0].variant_time"
+        />
       </div>
     </div>
   </div>
@@ -49,8 +53,6 @@
       }, 200)
     },
 
-    watch: {},
-
     created() {
       const t = this;
       for (var i = 0; i < this.variants.length; i++) {
@@ -71,7 +73,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-
-</style>
