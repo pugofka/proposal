@@ -1,29 +1,27 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-heading">Результат</div>
-    <div class="panel-body">
-      <div class="result row">
-        <div class="col-md-6">
-          <div class="row result__row">
-            <div class="col-md-6 result__key">
-              Часы:
-            </div>
-            <div class="col-md-6 result__value">
-              {{ hours }} ч.
-            </div>
+  <div class="well bs-component">
+    <h2>Результат</h2>
+    <div class="result row">
+      <div class="col-md-6">
+        <div class="row result__row">
+          <div class="col-md-6 result__key">
+            Часы:
           </div>
-          <div class="row result__row">
-            <div class="col-md-6 result__key">
-              Стоимость работы:
-            </div>
-            <div class="col-md-6 result__value">
-              {{ hours * hourPriceData }} руб.
-            </div>
+          <div class="col-md-6 result__value">
+            {{ hours }} ч.
           </div>
-          <button v-if="getPDFData" type="button" class="btn btn-success btn-raised" @click="getPdf">Скачать PDF</button>
         </div>
-        <div class="col-md-6">
+        <div class="row result__row">
+          <div class="col-md-6 result__key">
+            Стоимость работы:
+          </div>
+          <div class="col-md-6 result__value">
+            {{ hours * hourPriceData }} руб.
+          </div>
         </div>
+        <button v-if="getPDFData" type="button" class="btn btn-success btn-raised" @click="getPdf">Скачать PDF</button>
+      </div>
+      <div class="col-md-6">
       </div>
     </div>
   </div>
