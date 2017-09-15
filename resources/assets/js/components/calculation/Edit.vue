@@ -90,7 +90,7 @@
         client: {
           name: this.calculateData.user_name,
           phone: this.calculateData.user_phone,
-          mail: this.calculateData.user_mail
+          mail: this.calculateData.user_email
         },
         stages: JSON.parse(this.calculateData.tasks),
         otherTasks: JSON.parse(this.calculateData.additional_tasks),
