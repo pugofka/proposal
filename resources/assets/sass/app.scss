@@ -1,19 +1,15 @@
-
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
 // Variables
 @import "variables";
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-
 // Boostrap Material
 @import "node_modules/bootstrap-material-design/dist/css/bootstrap-material-design";
 @import "node_modules/bootstrap-material-design/dist/css/ripples";
 
 // My styles
+@import 'components/_fonts';
 @import "main";
 
 // Pages
@@ -23,4 +19,3 @@
 @import "pages/questions";
 @import "btn";
 @import "pages/users";
-@import "pages/calculations";
