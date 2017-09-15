@@ -12,6 +12,7 @@
 */
 
 
+
 Auth::routes();
 //Auth::routes(); - шорткат для записей ниже
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -37,14 +38,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('templates', 'TemplateController');
     Route::put('templates/{template}/edit/task-status', 'TemplateController@taskStatus')->name('templates.edit-task-status');
     Route::put('templates/{template}/edit/update-time', 'TemplateController@updateTime')->name('templates.update-time');
-
-    //Route::put('calculations/{calculation}', 'CalculationController@Update')->middleware('auth');
-    Route::get('calculations/template', 'CalculationController@selectTemplate');
-
+//
+//    //Route::put('calculations/{calculation}', 'CalculationController@Update')->middleware('auth');
     Route::get('users/{user}', 'UserController@show')->name('users.show');
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
-    Route::resource('calculations', 'CalculationController');
+    Route::resource('calculations', 'CalculationController')->only([
+        'index',
+        'create',
+        'edit',
+        'destroy',
+    ]);
     Route::get('calculations/template', 'CalculationController@selectTemplate');
 });
-
-

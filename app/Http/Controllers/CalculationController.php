@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Calculation;
 use App\Stage;
 use App\Template;
+use App\TemplateData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,7 +18,7 @@ class CalculationController extends Controller
      */
     public function index()
     {
-        $calculations = Calculation::get();
+        $calculations = Calculation::all();
         return view('calculations.index', compact('calculations'));
     }
 
@@ -64,19 +65,19 @@ class CalculationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\calculation $calculation
+     * @param  \App\Calculation $calculation
      * @return \Illuminate\Http\Response
      */
-    public function show(calculation $calculation)
+    public function show(Calculation $calculation)
     {
-        $calculateData = Calculation::where('id', $calculation->id)->get();
-        return view('calculations.show', compact('calculation', $calculateData));
+//        $calculateData = TemplateData::where('id', $calculation->id)->get();
+//        return view('calculations.show', compact('calculation'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\calculation $calculation
+     * @param  \App\Calculation $calculation
      * @return \Illuminate\Http\Response
      */
     public function edit(Calculation $calculation)
@@ -88,7 +89,7 @@ class CalculationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\calculation $calculation
+     * @param  \App\Calculation $calculation
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Calculation $calculation)
@@ -121,20 +122,57 @@ class CalculationController extends Controller
 
     public function selectTemplate(Request $request)
     {
+//        dd($request->all());
         //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
         if ($request->ajax()) {
             Validator::make($request->all(), [
                 'id' => 'required',
             ])->validate();
 
-            $calculateData = Template::where('id', $request->id)->with('tasks', 'tasks.stage', 'tasks.variants')->get();
-            foreach ($calculateData->first()->tasks as $tasks)
-            {
-                $stage[$tasks->stage->id] = $tasks->stage;
-                $stage[$tasks->stage->id]['TASKS'][] = $tasks;
+            // Получаем данные с расчетами по шаблону
+            $calculateData = TemplateData::with('variant', 'task')->where('template_id', $request->id)->get();
 
+            // Получаем спсок всех этапов
+            $stages = Stage::with('tasks')->get();
+
+            // Формируем пустой массив, в который будем складывать данные в нужной структуре
+            $result = [];
+
+            // Перебираем все этапы, так как нужна красивая группировка по этапам и данные по эатапм
+            foreach ($stages as $stage) {
+                // фильтруем задачи этапа
+                $taskForStage = $calculateData->whereIn('task_id', $stage->tasks->pluck('id'))->groupBy('task_id');
+                $resultTask = [];
+                foreach ($taskForStage as $task) {
+                    $resultVariant = [];
+                    foreach ($task as $data) {
+                        $variant = $data->variant;
+                        $resultVariant[] = [
+                            'id'    =>  $variant->id,
+                            'name'  =>  $variant->name,
+                            'variant_time'  =>  $data->variant_time
+                        ];
+                    }
+                    if(count($resultVariant)>0) {
+                        $resultTask[] = [
+                            'id'  => $task->first()->task->id,
+                            'name'  => $task->first()->task->name,
+                            'variants' => $resultVariant,
+                        ];
+
+                    }
+                }
+                if(count($resultTask)>0) {
+                    $result[] = [
+                        'name'  => $stage->name,
+                        'id'  => $stage->id,
+                        'tasks'     => $resultTask
+                    ];
+                }
             }
-            return response($stage, 200);
+
+
+            return response($result, 200);
         }
     }
 
@@ -144,7 +182,7 @@ class CalculationController extends Controller
      * @param  \App\calculation $calculation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(calculation $calculation)
+    public function destroy(Calculation $calculation)
     {
         $calculation->delete();
         return redirect(route('calculations.index'))->with('status', 'Расчёт удалён');
