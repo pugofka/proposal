@@ -45,7 +45,7 @@
         user_name: client.name,
         user_phone: client.phone,
         user_email: client.mail,
-        template: calculate.template,
+        template_id: calculate.template,
         tasks: stages,
         additional_tasks: otherTasks,
         info: expensesCustomers

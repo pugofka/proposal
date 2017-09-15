@@ -77,7 +77,7 @@
 
       data: {
         handler: function (e) {
-          if(e.name && e.cost_per_hour && e.user_name && e.template && e.tasks) this.isInvalid = false
+          if(e.name && e.cost_per_hour && e.user_name && e.user_phone && e.user_email && e.template_id && e.tasks) this.isInvalid = false
           else this.isInvalid = true
         },
         deep: true
