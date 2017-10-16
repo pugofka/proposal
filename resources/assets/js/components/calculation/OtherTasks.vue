@@ -1,31 +1,29 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-heading">Дополнительные задачи</div>
-    <div class="panel-body">
-      <div class="task" v-for="task in otherTasks">
-        <div class="form-group is-empty">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Задача"
-            v-model="task.name"
-          >
-        </div>
-        <div class="form-group is-empty">
-          <input
-            type="number"
-            class="form-control"
-            min="0"
-            placeholder="Часы"
-            v-model.number="task.hours"
-          >
-        </div>
-        <div class="task__price">
-          стоимость доп. задачи: {{ task.hours * hourPriceData }} руб.
-        </div>
+  <div class="well bs-component">
+    <h2>Дополнительные задачи</h2>
+    <div class="task" v-for="task in otherTasks">
+      <div class="form-group is-empty">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Задача"
+          v-model="task.name"
+        >
       </div>
-      <button class="btn btn-success btn-fab" @click="addTask"><img src='/img/plus.svg'></button>
+      <div class="form-group is-empty">
+        <input
+          type="number"
+          class="form-control"
+          min="0"
+          placeholder="Часы"
+          v-model.number="task.hours"
+        >
+      </div>
+      <div class="task__price">
+        стоимость доп. задачи: {{ task.hours * hourPriceData }} руб.
+      </div>
     </div>
+    <button class="btn btn-success btn-fab" @click="addTask"><i class="material-icons">add</i></button>
   </div>
 </template>
 

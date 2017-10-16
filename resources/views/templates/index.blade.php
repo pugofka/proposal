@@ -1,41 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-  <section class="templates">
-    <div class="row">
-      <div class="templates__wrap">
-        <h1 class="templates__title">Шаблоны</h1>
-        <a href="{{ route('templates.create') }}" class="templates__btn btn btn-warning btn-fab">
-          <i class="material-icons">
-            <img src="{{ URL::asset('/img/plus.svg') }}" alt="">
-          </i>
-        </a>
-      </div>
-      <table class="table table-striped table-hover templates__table">
-        <thead>
-        <tr>
-          <th>Название шаблона</th>
-          <th>Редактирование</th>
-        </tr>
-        </thead>
-        <tbody>
+    <section>
+        <div class="row">
+            <h1>Шаблоны</h1>
 
-        @foreach($templates as $template)
-          <tr>
-            <td>{{ $template->name }}</td>
-            <td>
-              <a href="{{ route('templates.edit', [$template->id]) }}" class="templates__modify-btn btn btn-warning btn-fab">
-                <i class="material-icons">
-                  <img src="{{URL::asset('/img/pen.svg')}}" alt="">
-                </i>
-              </a>
-            </td>
-          </tr>
+            @if(isset($templates) && !$templates->isEmpty())
+                @component('components.table-list', ['list' => $templates, 'type' => 'templates'])@endcomponent
+            @else
+                @component('components.alert')
+                    @slot('type') info @endslot
+                    @slot('title') Нет данных @endslot
+                    Не найдено ни одного шаблона!
+                @endcomponent
+            @endif
 
-        @endforeach
-        </tbody>
-      </table>
-    </div>
-  </section>
-
+            @component('components.add-btn') templates @endcomponent
+        </div>
+    </section>
 @endsection

@@ -1,7 +1,6 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-heading">Расходы клиента</div>
-    <div class="panel-body">
+  <div class="well bs-component">
+    <h2>Расходы клиента</h2>
       <div class="task" v-for="task in expensesCustomers">
         <div class="form-group is-empty">
           <input
@@ -23,8 +22,7 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-success btn-fab" @click="addTask"><img src='/img/plus.svg'></button>
-    </div>
+      <button class="btn btn-success btn-fab" @click="addTask"><i class="material-icons">add</i></button>
   </div>
 </template>
 

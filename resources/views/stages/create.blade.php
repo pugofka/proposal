@@ -1,28 +1,50 @@
 @extends('layouts.app')
 
 @section('content')
-  <section class="create">
-    <a href="{{ route('stages.index') }}" class="create__btn btn btn-warning btn-fab">
-      <i class="material-icons">
-        <img src="{{URL::asset('/img/back.svg')}}" alt="">
-      </i>
-    </a>
-    <div class="create__wrapper">
-    {{--<form class="create__form form-horizontal">--}}
-    {{ Form::open(['url' => route('stages.store'), 'class' => 'create__form form-horizontal']) }}
-    <fieldset>
-      <legend>Создание нового этапа</legend>
 
-      @include('stages._form')
+    @component('components.well')
+        @slot('type') stages @endslot
 
-      <div class="form-group">
-        <div class="col-md-10 col-md-offset-2 create__btns">
-          {{ Form::reset('Очистить поля', ['class' => 'btn btn-default']) }}
-          {{ Form::submit('Создать', ['class' => 'btn btn-primary']) }}
-        </div>
-      </div>
-    </fieldset>
-    {{ Form::close() }}
-    </div>
-  </section>
+        {{ Form::open(['url' => route('stages.store'), 'class' => 'form-horizontal']) }}
+        <fieldset>
+            <legend>Создание нового этапа</legend>
+
+            <div class="form-group {{ $errors->has('name') ?  'has-error' : ''}}">
+                {{ Form::label('name', 'Название этапа', ['class' => 'col-md-3 control-label']) }}
+                <div class="col-md-9">
+                    {{ Form::text('name', null, ['class'=>'form-control']) }}
+                    @if ($errors->has('name'))
+                        <span class="help-block">{{  $errors->first('name') }}</span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group {{ $errors->has('sort') ?  'has-error' : ''}}">
+                {{ Form::label('sort', 'Номер этапа', ['class' => 'col-md-3 control-label']) }}
+                <div class="col-md-9">
+                    {{ Form::number('sort', null, ['class'=>'form-control']) }}
+                    @if ($errors->has('sort'))
+                        <span class="help-block">{{  $errors->first('sort') }}</span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-9 col-md-offset-3">
+                    <div class="togglebutton">
+                        <label>
+                            <input type="checkbox" name="active"> Активность
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-right">
+                {{ Form::reset('Очистить поля', ['class' => 'btn btn-default']) }}
+                {{ Form::submit('Создать', ['class' => 'btn btn-success btn-raised']) }}
+            </div>
+        </fieldset>
+        {{ Form::close() }}
+    @endcomponent
+
 @endsection

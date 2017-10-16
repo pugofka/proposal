@@ -15,7 +15,7 @@
                         <a href="{{ route($type.'.edit', ['id' => $item->id ]) }}" class="btn btn-info btn-raised btn-xs">
                             <i class="material-icons">edit</i>
                         </a>
-                        <button type="submit" class="btn btn-danger btn-raised btn-xs">delete</button>
+                        <button type="submit" class="btn btn-danger btn-raised btn-xs"><i class="material-icons">delete</i></button>
                     {{Form::close()}}
                 </td>
             </tr>

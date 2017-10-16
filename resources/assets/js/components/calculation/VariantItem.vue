@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="radio radio-primary">
     <label>
       <input type="radio" :name="'variant'+taskIdData" @click="onClick" :checked="currentVariantData == variant.id">
+      <span class="circle"></span>
+      <span class="check"></span>
       {{ variant.name }}
     </label>
   </div>

@@ -9,7 +9,7 @@
                 @component('components.table-list', ['list' => $calculations, 'type' => 'calculations'])@endcomponent
             @else
                 @component('components.alert')
-                    @slot('type') warning @endslot
+                    @slot('type') info @endslot
                     @slot('title') Нет данных @endslot
                     Не найдено ни одного расчета!
                 @endcomponent

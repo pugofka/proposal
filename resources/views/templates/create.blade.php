@@ -1,27 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-  <section class="create">
-    <a href="{{ route('templates.index') }}" class="create__btn btn btn-warning btn-fab">
-      <i class="material-icons">
-        <img src="{{URL::asset('/img/back.svg')}}" alt="">
-      </i>
-    </a>
-    <div class="create__wrapper">
-      {{ Form::open(['url' => route('templates.store'), 'class' => 'create__form form-horizontal']) }}
-      <fieldset>
-        <legend>Создание нового шаблона</legend>
 
-        @include('templates._form')
+    @component('components.well')
+        @slot('type') templates @endslot
 
-        <div class="form-group">
-          <div class="col-md-10 col-md-offset-2 create__btns">
-            {{ Form::reset('Очистить поля', ['class' => 'btn btn-default']) }}
-            {{ Form::submit('Создать', ['class' => 'btn btn-primary']) }}
-          </div>
-        </div>
-      </fieldset>
-      {{ Form::close() }}
-    </div>
-  </section>
+        {{ Form::open(['url' => route('stages.store'), 'class' => 'form-horizontal']) }}
+        <fieldset>
+            <legend>Создание нового шаблона</legend>
+
+            <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
+                {{ Form::label('name', 'Название шаблона', ['class' => 'col-md-3 control-label']) }}
+
+                <div class="col-md-9">
+                    {{ Form::text('name', null, ['class'=>'form-control', 'required'=>true]) }}
+
+                    @if ($errors->has('name'))
+                        <span class="help-block">{{  $errors->first('name') }}</span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="text-right">
+                {{ Form::reset('Очистить поля', ['class' => 'btn btn-default']) }}
+                {{ Form::submit('Создать', ['class' => 'btn btn-success btn-raised']) }}
+            </div>
+        </fieldset>
+        {{ Form::close() }}
+    @endcomponent
+
 @endsection
