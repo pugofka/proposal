@@ -99,7 +99,8 @@
   <div class="pdf-owner">
     Автор документа: Анна Булгар <br>
     менеджер проектов <br>
-    Телефон: +7 (812) 425-64-08
+    Телефон: +7 (812) 425-64-08 <br>
+    E-mail: a.bulgar@pugofka.com
   </div>
 </div>
 
@@ -111,11 +112,17 @@
 
   <br>
 
-@foreach($stages as $stage)
+  @foreach($stages as $stage)
     {{$stage->name}}
     <br>
   @endforeach
+</div>
 
+{{--Page-3--}}
+<div class="pdf-page">
+  <h2 class="pdf-h2">
+    Расчётная смета проекта
+  </h2>
 </div>
 
 <htmlpagefooter name="MyCustomFooter">
