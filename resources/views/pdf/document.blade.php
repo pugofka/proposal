@@ -72,28 +72,28 @@
 
 {{--Page-1--}}
 <div class="pdf-page">
-
-  <h1 class="pdf-h1">Коммерческое предложение по созданию сайта</h1>
-
+  <h1 class="pdf-h1">
+    Коммерческое предложение по созданию сайта
+  </h1>
   {{--<div class="pdf-table-wrapper">--}}
-    {{--<table class="pdf-first-page-table">--}}
-      {{--<tr>--}}
-        {{--<td>Автор документа:</td>--}}
-        {{--<td>Анна Булгар</td>--}}
-      {{--</tr>--}}
-      {{--<tr>--}}
-        {{--<td class="cell-centered" colspan="2">Менеджер проектов</td>--}}
-      {{--</tr>--}}
-      {{--<tr>--}}
-        {{--<td>Телефон:</td>--}}
-        {{--<td>+7 (812) 425-64-08</td>--}}
-      {{--</tr>--}}
-      {{--<tr>--}}
-        {{--<td>E-mail:--}}
-        {{--</td>--}}
-        {{--<td>a.bulgar@pugofka.com</td>--}}
-      {{--</tr>--}}
-    {{--</table>--}}
+  {{--<table class="pdf-first-page-table">--}}
+  {{--<tr>--}}
+  {{--<td>Автор документа:</td>--}}
+  {{--<td>Анна Булгар</td>--}}
+  {{--</tr>--}}
+  {{--<tr>--}}
+  {{--<td class="cell-centered" colspan="2">Менеджер проектов</td>--}}
+  {{--</tr>--}}
+  {{--<tr>--}}
+  {{--<td>Телефон:</td>--}}
+  {{--<td>+7 (812) 425-64-08</td>--}}
+  {{--</tr>--}}
+  {{--<tr>--}}
+  {{--<td>E-mail:--}}
+  {{--</td>--}}
+  {{--<td>a.bulgar@pugofka.com</td>--}}
+  {{--</tr>--}}
+  {{--</table>--}}
   {{--</div>--}}
 
   <div class="pdf-owner">
@@ -101,13 +101,21 @@
     менеджер проектов <br>
     Телефон: +7 (812) 425-64-08
   </div>
-
 </div>
 
+{{--Page-2--}}
 <div class="pdf-page">
   <h2 class="pdf-h2">
-
+    Этапы работ
   </h2>
+
+  <br>
+
+@foreach($stages as $stage)
+    {{$stage->name}}
+    <br>
+  @endforeach
+
 </div>
 
 <htmlpagefooter name="MyCustomFooter">

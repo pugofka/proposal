@@ -201,7 +201,8 @@ class CalculationController extends Controller
 
     public function generatePdf() {
         $data = [
-            'foo' => 'bar'
+            'foo' => 'bar',
+            'stages' => Stage::get(['name'])
         ];
         $pdf = Pdf::loadView('pdf.document', $data);
 
