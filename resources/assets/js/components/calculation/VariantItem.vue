@@ -22,12 +22,14 @@
       currentVariantData: Number,
       taskIdData: Number,
       setVariantCallback: Function,
+      setVariantNameCallback: Function,
       setHoursCallback: Function
     },
 
     methods: {
       onClick: function () {
         this.setVariantCallback(this.variant.id);
+        this.setVariantNameCallback(this.variant.name);
         this.setHoursCallback(this.variant.variant_time);
       }
     }

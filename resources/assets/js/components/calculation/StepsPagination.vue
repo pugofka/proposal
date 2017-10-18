@@ -57,7 +57,7 @@
         } else {
           axios.post('/calculations/create', this.data)
             .then(function () {
-              window.location.href = "/calculations";
+//              window.location.href = "/calculations";
             })
             .catch(function (error) {
               console.error(error);
@@ -77,7 +77,7 @@
 
       data: {
         handler: function (e) {
-          if(e.name && e.cost_per_hour && e.user_name && e.user_phone && e.user_email && e.template_id && e.tasks) this.isInvalid = false
+          if(e.name && e.cost_per_hour && e.user_name && e.user_phone && e.user_email && e.template_id && e.stages) this.isInvalid = false
           else this.isInvalid = true
         },
         deep: true
