@@ -269,11 +269,9 @@ class CalculationController extends Controller
 
     public function generatePdf(Calculation $calculation) {
 
-        $calculateData = Calculation::where('id', $calculation->id)->get();
-
         $data = [
             'foo' => 'bar',
-            'stages' => $calculateData
+            'calculation' => $calculation
         ];
         $pdf = Pdf::loadView('pdf.document', $data);
 
