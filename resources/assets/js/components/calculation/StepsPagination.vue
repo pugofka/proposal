@@ -57,7 +57,7 @@
         } else {
           axios.post('/calculations/create', this.data)
             .then(function () {
-//              window.location.href = "/calculations";
+             window.location.href = "/calculations";
             })
             .catch(function (error) {
               console.error(error);
