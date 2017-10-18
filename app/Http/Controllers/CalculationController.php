@@ -43,6 +43,7 @@ class CalculationController extends Controller
      */
     public function store(Request $request)
     {
+
         //Принимаем и сохраняем данные для создания нового расчёта
         if ($request->ajax()) {
 //            Validator::make($request->all(), [
@@ -52,35 +53,35 @@ class CalculationController extends Controller
             $deffered_tasks = [];
             $tasksData = [];
 
-            foreach ($request->stages as $stage) {
+            foreach ($request->stages as  $stage) {
                 $stageHours = 0;
                 $tasks = [];
-                foreach ($stage->tasks as $task) {
-                    if($task->deffered) {
+                foreach ($stage['tasks'] as  $task) {
+                    if($task['deffered']) {
                         $deffered_tasks[] = [
-                          'id' => $task->id,
-                          'name' => $task->name,
+                          'id' => $task['id'],
+                          'name' => $task['name'],
                         ];
                     }
                     else {
                         $tasks[] = [
-                            'id' => $task->id,
-                            'name' => $task->name,
-                            'variant_id' => $task->variant_id,
-                            'variant_name' => $task->variant_name,
-                            'hours' => $task->hours,
+                            'id' => $task['id'],
+                            'name' => $task['name'],
+                            'variant_id' => $task['variant_id'],
+                            'variant_name' => $task['variant_name'],
+                            'hours' => $task['hours'],
                         ];
-                        $stageHours += $task->hours;
+                        $stageHours += $task['hours'];
                     }
                 }
 
                 $tasksData['stages'][] = [
-                    'stage_id' => $stage->id,
-                    'stage_name' => $stage->name,
+                    'stage_id' => $stage['id'],
+                    'stage_name' => $stage['name'],
                     'tasks' => $tasks,
-                    'workers' => $stage->workers,
+                    'workers' => $stage['workers'],
                     'stage_hours' => $stageHours,
-                    'stage_price' => $request->cost_per_hour * $stageHours,
+                    'stage_price' => $request->cost_per_hour * $stageHours
                 ];
                 unset($tasks, $stageHours);
             }
@@ -270,11 +271,9 @@ class CalculationController extends Controller
 
         $calculateData = Calculation::where('id', $calculation->id)->get();
 
-        dd($calculateData);
-
         $data = [
             'foo' => 'bar',
-            'stages' => Stage::with('tasks')
+            'stages' => $calculateData
         ];
         $pdf = Pdf::loadView('pdf.document', $data);
 
