@@ -109,9 +109,7 @@
   <h2 class="pdf-h2">
     Этапы работ
   </h2>
-
   <br>
-
   @foreach($stages as $stage)
     {{$stage->name}}
     <br>
@@ -123,6 +121,12 @@
   <h2 class="pdf-h2">
     Расчётная смета проекта
   </h2>
+
+  {{--Тут пошли этапы со своими задачами, часами и стоимостью (не за 1 час)--}}
+  @foreach($stages as $stage)
+    {{$stage->name}}
+    <br>
+  @endforeach
 </div>
 
 <htmlpagefooter name="MyCustomFooter">

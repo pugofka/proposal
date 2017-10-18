@@ -15,7 +15,7 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Цена"
+              placeholder="Описание"
               v-model="task.price"
             >
             <span class="input-group-addon">руб.</span>

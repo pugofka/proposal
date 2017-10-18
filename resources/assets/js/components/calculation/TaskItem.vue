@@ -30,9 +30,10 @@
                   v-for="(variant, index) in task.variants"
                   :key="index"
                   :variantData="variant"
-                  :currentVariantData="task.variant"
+                  :currentVariantData="task.variant_id"
                   :taskIdData="task.id"
                   :setVariantCallback="setVariant"
+                  :setVariantNameCallback="setVariantName"
                   :setHoursCallback="setHours"
                 />
               </div>
@@ -41,7 +42,7 @@
         </div>
 
         <div class="col-md-6">
-          <div class="row" v-if="task.variant">
+          <div class="row" v-if="task.variant_id">
             <div class="form-group">
               <div class="col-md-4 col-md-offset-4">
                 <label for="name" class="control-label">Рекомендованные часы</label>
@@ -82,7 +83,11 @@
       },
 
       setVariant: function (variant) {
-        Vue.set(this.task, 'variant', variant);
+        Vue.set(this.task, 'variant_id', variant);
+      },
+
+      setVariantName: function (name) {
+        Vue.set(this.task, 'variant_name', name);
       },
 
       toggleDeffered: function () {
@@ -105,7 +110,8 @@
 
     created() {
       if(!this.task.hours) this.setHours(0);
-      if(!this.task.variant) this.setVariant(null);
+      if(!this.task.variant_id) this.setVariant(null);
+      if(!this.task.variant_name) this.setVariantName(null);
       if(!this.task.deffered) this.toggleDeffered();
     }
   }

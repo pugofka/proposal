@@ -2,7 +2,7 @@
   <div class="stage">
 
     <header class="stage__title">
-      <h3>{{stage.name}} <small>стоимость этапа: {{ stagePrice }} руб.</small></h3>
+      <h3>{{stage.name}} <small>стоимость этапа: {{ stage.price }} руб.</small></h3>
       <div class="stage__workers">
         <div class="form-group is-empty">
           <div class="col-md-5 col-md-offset-4">
@@ -52,24 +52,48 @@
 
       setWorkers: function (workers) {
         Vue.set(this.stage, 'workers', workers);
-      }
+      },
 
-    },
+      setStageHours: function (hours) {
+        Vue.set(this.stage, 'hours', hours);
+      },
 
-    computed: {
-      stagePrice: function () {
+      setStagePrice: function (price) {
+        Vue.set(this.stage, 'price', price);
+      },
+
+      computedPrice: function () {
         let hoursSum = 0;
         for (var i = 0; i < this.stage.tasks.length; i++) {
           hoursSum += this.stage.tasks[i].hours;
         }
         return hoursSum * this.hourPriceData;
+      },
+
+      computedHours: function () {
+        let hoursSum = 0;
+        for (var i = 0; i < this.stage.tasks.length; i++) {
+          hoursSum += this.stage.tasks[i].hours;
+        }
+        return hoursSum;
+      }
+    },
+
+    watch: {
+      'stage.tasks': {
+        handler: function () {
+          this.stage.price = this.computedPrice();
+          this.stage.hours = this.computedHours();
+        },
+        deep: true
       }
     },
 
     created() {
       if(!this.stage.workers) this.setWorkers(1);
+      if(!this.stage.hours) this.setStageHours(0);
+      if(!this.stage.price) this.setStagePrice(0);
     }
-
   }
 </script>
 

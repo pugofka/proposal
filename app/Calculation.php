@@ -18,6 +18,7 @@ class Calculation extends Model
         'template_id',
         'tasks',
         'info',
-        'additional_tasks'
+        'additional_tasks',
+        'stages'
     ];
 }

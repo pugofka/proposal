@@ -53,3 +53,4 @@ Route::middleware(['auth'])->group(function () {
     Route::put('calculations/{calculation}/edit', 'CalculationController@update')->name('calculations.update');
 });
 Route::get('calculations/pdf', 'CalculationController@generatePdf');
+Route::get('calculations/{calculation}/pdf', 'CalculationController@generatePdf');
