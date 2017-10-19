@@ -48,7 +48,7 @@
         user_phone: client.phone,
         user_email: client.mail,
         template_id: calculate.template,
-        tasks: stages,
+        stages: stages,
         additional_tasks: otherTasks,
         info: expensesCustomers
       }"
@@ -92,7 +92,8 @@
           phone: this.calculateData.user_phone,
           mail: this.calculateData.user_email
         },
-        stages: JSON.parse(this.calculateData.tasks),
+        tasks: JSON.parse(this.calculateData.tasks),
+        stages: null,
         otherTasks: JSON.parse(this.calculateData.additional_tasks),
         expensesCustomers: JSON.parse(this.calculateData.info)
       }
@@ -144,7 +145,63 @@
     methods: {
       setStages: function (stages) {
         Vue.set(this, 'stages', stages);
+        this.mapStages()
+      },
+
+      getStages: function () {
+        const t = this;
+        axios.get('/calculations/template', {
+          params: {
+            id: this.calculateData.template_id
+          }
+        })
+          .then(function (response) {
+            t.setStages(response.data);
+          })
+          .catch(function (error) {
+            console.error(error);
+          })
+      },
+
+      mapStages: function () {
+        const t = this;
+        this.stages.map(function (item) {
+          for (var i = 0; i < t.tasks.stages.length; i++) {
+            if(t.tasks.stages[i].stage_id === item.id) {
+              item.hours = t.tasks.stages[i].stage_hours;
+              item.price = t.tasks.stages[i].stage_price;
+              item.workers = t.tasks.stages[i].workers;
+
+              item.tasks.map(function (task) {
+                for (var j = 0; j < t.tasks.stages[i].tasks.length; j++) {
+                  if(t.tasks.stages[i].tasks[j].id === task.id) {
+                    task.hours = t.tasks.stages[i].tasks[j].hours;
+                    task.variant_name = t.tasks.stages[i].tasks[j].variant_name;
+                    task.variant_id = t.tasks.stages[i].tasks[j].variant_id;
+                  }
+                }
+              })
+            }
+          }
+          return item;
+        });
+
+        this.stages.map(function (item) {
+          for (var i = 0; i < t.tasks.deffered_tasks.length; i++) {
+            item.tasks.map(function (task) {
+              if(t.tasks.deffered_tasks[i].id === task.id) {
+                task.deffered = true;
+              }
+            })
+          }
+          return item;
+        });
+
       }
+    },
+
+    created() {
+      this.getStages();
     }
 
   }
