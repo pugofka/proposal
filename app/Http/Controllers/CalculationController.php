@@ -43,8 +43,6 @@ class CalculationController extends Controller
      */
     public function store(Request $request)
     {
-
-        //Принимаем и сохраняем данные для создания нового расчёта
         if ($request->ajax()) {
 //            Validator::make($request->all(), [
 //                'id' => 'required',
@@ -53,17 +51,19 @@ class CalculationController extends Controller
             $deffered_tasks = [];
             $tasksData = [];
 
-            foreach ($request->stages as  $stage) {
+            foreach ($request->stages as $stage) {
                 $stageHours = 0;
                 $tasks = [];
-                foreach ($stage['tasks'] as  $task) {
-                    if($task['deffered']) {
+                foreach ($stage['tasks'] as $task) {
+
+//                    dd($task);
+
+                    if ($task['deffered']) {
                         $deffered_tasks[] = [
-                          'id' => $task['id'],
-                          'name' => $task['name'],
+                            'id' => $task['id'],
+                            'name' => $task['name'],
                         ];
-                    }
-                    else {
+                    } else {
                         $tasks[] = [
                             'id' => $task['id'],
                             'name' => $task['name'],
@@ -83,12 +83,15 @@ class CalculationController extends Controller
                     'stage_hours' => $stageHours,
                     'stage_price' => $request->cost_per_hour * $stageHours
                 ];
+
                 unset($tasks, $stageHours);
             }
 
             $tasksData['deffered_tasks'] = $deffered_tasks;
+            //Снова отвязка
             unset($deffered_tasks);
 
+            //Собственно сохранние данных
             Calculation::create([
                 'name' => $request->name,
                 'cost_per_hour' => $request->cost_per_hour,
@@ -147,13 +150,12 @@ class CalculationController extends Controller
                 $stageHours = 0;
                 $tasks = [];
                 foreach ($stage->tasks as $task) {
-                    if($task->deffered) {
+                    if ($task->deffered) {
                         $defered_tasks[] = [
                             'id' => $task->id,
                             'name' => $task->name,
                         ];
-                    }
-                    else {
+                    } else {
                         $tasks[] = [
                             'id' => $task->id,
                             'name' => $task->name,
@@ -267,16 +269,18 @@ class CalculationController extends Controller
         return redirect(route('calculations.index'))->with('status', 'Расчёт удалён');
     }
 
-    public function generatePdf(Calculation $calculation) {
-
+    public function generatePdf(Calculation $calculation)
+    {
         $data = [
             'foo' => 'bar',
-            'calculation' => $calculation
+            'stages' => json_decode($calculation->tasks)->stages,
+            'calculation' => $calculation,
+            'defferedTasks' => json_decode($calculation->tasks)->deffered_tasks
         ];
         $pdf = Pdf::loadView('pdf.document', $data);
 
 
-        $filename = 'calculate_'.now().'.pdf';
+        $filename = 'calculate_' . now() . '.pdf';
         return $pdf->stream('document.pdf');
 //        Storage::put($filename, $pdf->output('document.pdf'));
 
