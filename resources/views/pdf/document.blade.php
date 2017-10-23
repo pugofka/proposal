@@ -58,19 +58,26 @@
       background-color: cornflowerblue;
     }
 
+    .pdf-stage__name {
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .pdf-stage__money {
+      margin-bottom: 50px;
+    }
   </style>
 </head>
 <body>
 
 <htmlpageheader name="customHeader">
   <table
-      style="border-bottom: 1px solid #000000; vertical-align: bottom; font-family: serif; font-size: 9pt; color: #000088;"
+      style="border-bottom: 1px solid #000000; margin-bottom: 25px; border-top: 20px solid #fff; vertical-align: bottom; font-family: serif; font-size: 9pt; color: #000088;"
       width="100%">
     <tbody>
     <tr>
       <td width="50%">Pugofka - веб-студия, которую рекомендуют.</td>
-      <td style="text-align: right; font-weight: bold;" width="50%"><img src="{{ public_path('img/logo.png') }}"
-                                                                         alt="logo"></td>
+      <td style="text-align: right; font-weight: bold;" width="50%"><img src="{{ public_path('img/logo.png') }}" alt="logo"></td>
     </tr>
     </tbody>
   </table>
@@ -119,7 +126,8 @@
   <br>
   {{--{{ dd($stages) }}--}}
   @foreach($stages as $stage)
-    {{ $stage->stage_name }}
+{{--    {{ dd($stage) }}--}}
+    <div class="pdf-stage__name">{{ $stage->stage_name }}</div>
     <br>
   @endforeach
 </div>
@@ -129,11 +137,9 @@
   <h2 class="pdf-h2">
     Расчётная смета проекта
   </h2>
-  {{--{{ dd($defferedTasks) }}--}}
   {{--{{ dd($calculation) }}--}}
   @foreach($stages as $stage)
-    {{--{{dd ($calculation)}}--}}
-    {{ $stage->stage_name }}
+    <div class="pdf-stage__name">{{ $stage->stage_name }}</div>
     <table class="pdf-estimate" border="1">
       <tr>
         <td>Задачи</td>
@@ -150,13 +156,16 @@
         @endif
       @endforeach
     </table>
+    <div class="pdf-stage__time">Время на этап: {{ $stage->stage_hours }} час(ов).</div>
+    <div class="pdf-stage__money">Денег на этап: {{ $stage->stage_price }} час(ов).</div>
   @endforeach
+
 
   <h2 class="pdf-h2">
     Отложенные задачи
   </h2>
   @foreach($defferedTasks as $task)
-      {{$task->name}}
+    {{$task->name}}
   @endforeach
 </div>
 
@@ -204,7 +213,7 @@
     <tr>
       <td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td>
       <td style="font-weight: bold; font-style: italic;" align="center" width="33%">{PAGENO}/{nbpg}</td>
-      <td style="text-align: right;" width="33%">My document</td>
+      <td style="text-align: right;" width="33%"></td>
     </tr>
     </tbody>
   </table>

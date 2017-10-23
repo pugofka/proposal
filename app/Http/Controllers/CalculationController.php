@@ -277,7 +277,9 @@ class CalculationController extends Controller
             'calculation' => $calculation,
             'defferedTasks' => json_decode($calculation->tasks)->deffered_tasks
         ];
-        $pdf = Pdf::loadView('pdf.document', $data);
+        $pdf = Pdf::loadView('pdf.document', $data, [], [
+//            Кастомные настройки сюда
+        ]);
 
 
         $filename = 'calculate_' . now() . '.pdf';
