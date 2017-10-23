@@ -47,24 +47,37 @@
       text-align: center;
     }
 
-    .pdf-owner {
+    .pdf-owner,
+    .pdf-estimate {
       width: 100%;
       text-align: center;
+      border-collapse: collapse;
     }
 
+    .pdf-estimate tr > td {
+      background-color: cornflowerblue;
+    }
+
+    .pdf-stage__name {
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .pdf-stage__money {
+      margin-bottom: 50px;
+    }
   </style>
 </head>
 <body>
 
 <htmlpageheader name="customHeader">
   <table
-      style="border-bottom: 1px solid #000000; vertical-align: bottom; font-family: serif; font-size: 9pt; color: #000088;"
+      style="border-bottom: 1px solid #000000; margin-bottom: 25px; border-top: 20px solid #fff; vertical-align: bottom; font-family: serif; font-size: 9pt; color: #000088;"
       width="100%">
     <tbody>
     <tr>
       <td width="50%">Pugofka - веб-студия, которую рекомендуют.</td>
-      <td style="text-align: right; font-weight: bold;" width="50%"><img src="{{ public_path('img/logo.png') }}"
-                                                                         alt="logo"></td>
+      <td style="text-align: right; font-weight: bold;" width="50%"><img src="{{ public_path('img/logo.png') }}" alt="logo"></td>
     </tr>
     </tbody>
   </table>
@@ -75,6 +88,7 @@
   <h1 class="pdf-h1">
     Коммерческое предложение по созданию сайта
   </h1>
+
   {{--<div class="pdf-table-wrapper">--}}
   {{--<table class="pdf-first-page-table">--}}
   {{--<tr>--}}
@@ -110,8 +124,10 @@
     Этапы работ
   </h2>
   <br>
+  {{--{{ dd($stages) }}--}}
   @foreach($stages as $stage)
-    {{$stage->name}}
+{{--    {{ dd($stage) }}--}}
+    <div class="pdf-stage__name">{{ $stage->stage_name }}</div>
     <br>
   @endforeach
 </div>
@@ -121,12 +137,72 @@
   <h2 class="pdf-h2">
     Расчётная смета проекта
   </h2>
-
-  {{--Тут пошли этапы со своими задачами, часами и стоимостью (не за 1 час)--}}
+  {{--{{ dd($calculation) }}--}}
   @foreach($stages as $stage)
-    {{$stage->name}}
-    <br>
+    <div class="pdf-stage__name">{{ $stage->stage_name }}</div>
+    <table class="pdf-estimate" border="1">
+      <tr>
+        <td>Задачи</td>
+        <td>Длительность, <br> часов</td>
+        <td>Стоимость, <br> руб.</td>
+      </tr>
+      @foreach($stage->tasks as $task)
+        @if ((int)$task->hours > 0)
+          <tr>
+            <td>{{ $task->name }}</td>
+            <td>{{ $task->hours }} час(ов)</td>
+            <td>{{ $task->hours * $calculation->cost_per_hour }}</td>
+          </tr>
+        @endif
+      @endforeach
+    </table>
+    <div class="pdf-stage__time">Время на этап: {{ $stage->stage_hours }} час(ов).</div>
+    <div class="pdf-stage__money">Денег на этап: {{ $stage->stage_price }} час(ов).</div>
   @endforeach
+
+
+  <h2 class="pdf-h2">
+    Отложенные задачи
+  </h2>
+  @foreach($defferedTasks as $task)
+    {{$task->name}}
+  @endforeach
+</div>
+
+{{--Page-4--}}
+<div class="pdf-page">
+  <h2 class="pdf-h2">
+    Почему мы?
+  </h2>
+  <img src="{{ public_path('img/achievements.png') }}" alt="achievements">
+</div>
+
+{{--Page-5--}}
+<div class="pdf-page">
+  <h2 class="pdf-h2">
+    Примеры работ
+  </h2>
+</div>
+
+{{--Page-6--}}
+<div class="pdf-page">
+  <h2 class="pdf-h2">
+    Наши клиенты
+  </h2>
+</div>
+
+{{--Page-7--}}
+<div class="pdf-page">
+  <h2 class="pdf-h2">
+    Мы готовы ответить на ваши вопросы
+  </h2>
+</div>
+
+{{--Page-8--}}
+<div class="pdf-page">
+  <h2 class="pdf-h2">
+    Наш адрес
+  </h2>
 </div>
 
 <htmlpagefooter name="MyCustomFooter">
@@ -137,7 +213,7 @@
     <tr>
       <td width="33%"><span style="font-weight: bold; font-style: italic;">{DATE j-m-Y}</span></td>
       <td style="font-weight: bold; font-style: italic;" align="center" width="33%">{PAGENO}/{nbpg}</td>
-      <td style="text-align: right;" width="33%">My document</td>
+      <td style="text-align: right;" width="33%"></td>
     </tr>
     </tbody>
   </table>
