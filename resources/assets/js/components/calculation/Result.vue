@@ -19,7 +19,7 @@
             {{ hours * hourPriceData }} руб.
           </div>
         </div>
-        <button v-if="getPDFData" type="button" class="btn btn-success btn-raised" @click="getPdf">Скачать PDF</button>
+        <a href='/calculations/pdf' v-if="getPDFData" class="btn btn-success btn-raised">Скачать PDF</a>
       </div>
       <div class="col-md-6">
       </div>
@@ -48,10 +48,6 @@
         }
       },
 
-      getPdf: function () {
-        console.log('get pdf');
-      },
-
       drawChart: function () {
 
       }
@@ -67,14 +63,14 @@
 </script>
 
 <style scoped lang="scss">
-  .result {
-    &__row {
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-
-    &__key {
-      font-weight: 700;
-    }
+.result {
+  &__row {
+    font-size: 20px;
+    margin-bottom: 15px;
   }
+
+  &__key {
+    font-weight: 700;
+  }
+}
 </style>

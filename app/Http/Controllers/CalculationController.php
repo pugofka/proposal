@@ -8,8 +8,8 @@ use App\Template;
 use App\TemplateData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use niklasravnsborg\LaravelPdf\Facades\Pdf;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class CalculationController extends Controller
 {
@@ -271,23 +271,7 @@ class CalculationController extends Controller
 
     public function generatePdf(Calculation $calculation)
     {
-        $data = [
-            'foo' => 'bar',
-            'stages' => json_decode($calculation->tasks)->stages,
-            'calculation' => $calculation,
-            'defferedTasks' => json_decode($calculation->tasks)->deffered_tasks
-        ];
-        $pdf = Pdf::loadView('pdf.document', $data, [], [
-//            Кастомные настройки сюда
-        ]);
-
-
-        $filename = 'calculate_' . now() . '.pdf';
-        return $pdf->stream('document.pdf');
-//        Storage::put($filename, $pdf->output('document.pdf'));
-
-        //  @todo
-        // TODO save filename to DB
-        return 'ok';
+        $pdf = PDF::loadView('pdf.document');
+        return $pdf->download('document.pdf');
     }
 }
