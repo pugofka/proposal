@@ -338,12 +338,22 @@
               <div class="section-price__block">
                 <div class="section-price__block-left">
                   <h4 class="h4">Стоимость работ</h4>
-                  <p class="h1 color-red">748 080 рублей</p>
+                  <p class="h1 color-red">{{$price}} рублей</p>
                   <span class="color-red">в т.ч. НДС 18:</span>
                 </div>
                 <div class="section-price__block-right">
                   <h4 class="h4">Срок разработки</h4>
-                  <p class="h1 color-red">67 рабочих дней</p>
+                  <p class="h1 color-red">
+                    
+                    @php
+                      $hoursData = json_decode($data->additional_tasks);
+                      $hours = 0;
+                      for ($i=0; $i < count($hoursData); $i++) { 
+                        $hours += $hoursData[$i]->hours;
+                      }
+                    @endphp
+                    {{$hours / 8}} рабочих дней
+                  </p>
                 </div>
                 <div class="clear"></div>
               </div>
@@ -352,23 +362,21 @@
 
           <tr class="section-price__list">
             <td class="section-price__list__item" colspan="2">
-              <span class="section-price__list__item-name color-red">Проблема</span>
-              <span class="section-price__list__item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
-                neque vel enim impedit, provident voluptatem?</span>
+              <p class="section-price__list__item-name color-red">Проблема</p>
+              <p class="section-price__list__item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
+                neque vel enim impedit, provident voluptatem?</p>
             </td>
           </tr>
           <tr class="section-price__list">
             <td class="section-price__list__item" colspan="2">
-              <span class="section-price__list__item-name color-red">Задача</span>
-              <span class="section-price__list__item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
-                neque vel enim impedit, provident voluptatem?</span>
+              <p class="section-price__list__item-name color-red">Задача</p>
+              <p class="section-price__list__item-text">{{$data->name}}</p>
             </td>
           </tr>
           <tr class="section-price__list">
             <td class="section-price__list__item" colspan="2">
-              <span class="section-price__list__item-name color-red">Цель</span>
-              <span class="section-price__list__item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
-                neque vel enim impedit, provident voluptatem?</span>
+              <p class="section-price__list__item-name color-red">Цель</p>
+              <p class="section-price__list__item-text">{{$template}}</p>
             </td>
           </tr>
 
@@ -389,41 +397,27 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td valign="top">
-              1
-            </td>
-            <td valign="top">
-              <strong>Создание технического заания и прототипов</strong>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta quae porro quas tempora, quos commodi?</p>
-            </td>
-            <td align="right">76 000</td>
-            <td align="right">10</td>
-          </tr>
-
-          <tr class="tr-gray">
-            <td valign="top">
-              2
-            </td>
-            <td valign="top">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta quae porro quas tempora, quos commodi?</p>
-            </td>
-            <td align="right">76 000</td>
-            <td align="right">10</td>
-          </tr>
-
-          <tr>
-            <td valign="top">
-              3
-            </td>
-            <td valign="top">
-              <strong>Создание технического заания и прототипов</strong>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta quae porro quas tempora, quos commodi?</p>
-            </td>
-            <td align="right">76 000</td>
-            <td align="right">10</td>
-          </tr>
-
+          @php
+            $hoursData = json_decode($data->additional_tasks);
+          @endphp
+          @for ($i = 0; $i < count($hoursData); $i++)
+            @if ((($i + 1) % 2) == 0)
+              <tr class="tr-gray">
+            @else
+              <tr>
+            @endif
+                <td valign="top">
+                  {{ $i + 1 }}
+                </td>
+                <td valign="top">
+                  <strong>{{$hoursData[$i]->name}}</strong>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta quae porro quas tempora, quos commodi?</p>
+                </td>
+                <td align="right">{{$data->cost_per_hour * $hoursData[$i]->hours}}</td>
+                <td align="right">{{$hoursData[$i]->hours / 8}}</td>
+            </tr>
+          @endfor
+          
         </tbody>
       </table>
     </section>
@@ -520,21 +514,16 @@
       <h1 class="section-functionality__title h1">Дополнительный функцинал</h1>
       <table width="100%" class="section__table ection-functionality__table">
         <tbody>
-          <tr>
-            <td bgcolor="#ececec">Функция</td>
-          </tr>
-          <tr>
-            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum inventore hic maiores repellendus voluptas,
-              esse beatae officiis molestias unde amet quasi praesentium odio in quaerat, tenetur, veritatis facilis? Voluptatem,
-              quas!
+          @for ($i = 0; $i < count($info); $i++)
+            <tr>
+              <td bgcolor="#ececec">{{$info[$i]->name}}</td>
+            </tr>
+            <tr>
+            <td>
+              {{$info[$i]->price}}
             </td>
           </tr>
-          <tr>
-            <td bgcolor="#ececec">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, eveniet?</td>
-          </tr>
-          <tr>
-            <td>Lorem ipsum dolor sit amet.</td>
-          </tr>
+          @endfor
         </tbody>
       </table>
 
