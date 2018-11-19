@@ -269,9 +269,21 @@ class CalculationController extends Controller
         return redirect(route('calculations.index'))->with('status', 'Расчёт удалён');
     }
 
-    public function generatePdf(Calculation $calculation)
-    {
-        $pdf = PDF::loadView('pdf.document');
+    public function generatePdf(Calculation $calculation, Request $request)
+    {   
+        $data = Calculation::where('id', $calculation->id)->get(); $data = $data[0];
+        $template = Template::where('id', $data->template_id)->get(); $template = str_replace(" ","",$template[0]->name);
+        //dd($data);
+        $hoursData = json_decode($data->additional_tasks);
+        $hours = 0;
+        $basicPrace = $data->cost_per_hour;
+        $price = 0;
+        for ($i=0; $i < count($hoursData); $i++) { 
+            $hours += $hoursData[$i]->hours;
+        }
+        $price = $hours * $basicPrace;
+        $info = json_decode($data->info);
+        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info'));
         return $pdf->download('document.pdf');
     }
 }
