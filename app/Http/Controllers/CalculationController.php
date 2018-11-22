@@ -90,18 +90,21 @@ class CalculationController extends Controller
             $tasksData['deffered_tasks'] = $deffered_tasks;
             //Снова отвязка
             unset($deffered_tasks);
-
+            
             //Собственно сохранние данных
             Calculation::create([
-                'name' => $request->name,
-                'cost_per_hour' => $request->cost_per_hour,
-                'user_name' => $request->user_name,
-                'user_phone' => $request->user_phone,
-                'user_email' => $request->user_email,
-                'template_id' => $request->template_id,
-                'additional_tasks' => json_encode($request->additional_tasks),
-                'tasks' => json_encode($tasksData),
-                'info' => json_encode($request->info)
+                'name'              => $request->name,
+                'cost_per_hour'     => $request->cost_per_hour,
+                'user_name'         => $request->user_name,
+                'user_phone'        => $request->user_phone,
+                'user_email'        => $request->user_email,
+                'problem'           => $request->problem,
+                'task'              => $request->task,
+                'target'            => $request->target,
+                'template_id'       => $request->template_id,
+                'additional_tasks'  => json_encode($request->additional_tasks),
+                'tasks'             => json_encode($tasksData),
+                'info'              => json_encode($request->info)
             ]);
             return response(['status' => 'Расчёт успешно создан'], 201);
         }
@@ -180,15 +183,18 @@ class CalculationController extends Controller
             $tasksData['deffered_tasks'] = $defered_tasks;
             unset($defered_tasks);
 
-            $calculation->name = $request->name;
-            $calculation->cost_per_hour = $request->cost_per_hour;
-            $calculation->user_name = $request->user_name;
-            $calculation->user_phone = $request->user_phone;
-            $calculation->user_email = $request->user_email;
-            $calculation->template_id = $request->template_id;
+            $calculation->name             = $request->name;
+            $calculation->cost_per_hour    = $request->cost_per_hour;
+            $calculation->user_name        = $request->user_name;
+            $calculation->problem          = $request->problem;
+            $calculation->task             = $request->task;
+            $calculation->target           = $request->target;
+            $calculation->user_phone       = $request->user_phone;
+            $calculation->user_email       = $request->user_email;
+            $calculation->template_id      = $request->template_id;
             $calculation->additional_tasks = json_encode($request->additional_tasks);
-            $calculation->tasks = json_encode($tasksData);
-            $calculation->info = json_encode($request->info);
+            $calculation->tasks            = json_encode($tasksData);
+            $calculation->info             = json_encode($request->info);
             $calculation->save();
         }
     }
@@ -197,6 +203,7 @@ class CalculationController extends Controller
     {
         //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
         if ($request->ajax()) {
+            
             Validator::make($request->all(), [
                 'id' => 'required',
             ])->validate();
@@ -205,7 +212,7 @@ class CalculationController extends Controller
             $calculateData = TemplateData::with('variant', 'task')->where('template_id', $request->id)->get();
 
             $result = $this->getDataForCalculateTemplate($calculateData);
-
+            
             return response($result, 200);
         }
     }
@@ -273,17 +280,24 @@ class CalculationController extends Controller
     {   
         $data = Calculation::where('id', $calculation->id)->get(); $data = $data[0];
         $template = Template::where('id', $data->template_id)->get(); $template = str_replace(" ","",$template[0]->name);
-        //dd($data);
-        $hoursData = json_decode($data->additional_tasks);
-        $hours = 0;
+        
+        $stage = json_decode($data->tasks);
+        $additional_tasks = json_decode($data->additional_tasks);
         $basicPrace = $data->cost_per_hour;
         $price = 0;
-        for ($i=0; $i < count($hoursData); $i++) { 
-            $hours += $hoursData[$i]->hours;
+        $hours = 0;
+        //dd($data->additional_tasks);
+        for ($i=0; $i < count($additional_tasks); $i++) { // подсчет часов задач
+            $hours += $additional_tasks[$i]->hours;
         }
+        for ($i=0; $i < count($stage->stages); $i++) { // подсчет часов этапов
+           $hours+= $stage->stages[$i]->stage_hours;
+        }
+
         $price = $hours * $basicPrace;
         $info = json_decode($data->info);
-        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info'));
+        
+        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info', 'hours'));
         return $pdf->download('document.pdf');
     }
 }

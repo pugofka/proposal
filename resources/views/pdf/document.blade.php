@@ -310,14 +310,14 @@
 <body>
     <section class="section-home">
       <img src="img/pdfgen/pugofka_logo.png" class="section-home__logo">
-      <h1 class="section-home__title">Коммерческое предложение по созданию сайта <span class="color-red">www.kapous.ru</span>
-        19.04.2016
+      <h1 class="section-home__title">Коммерческое предложение по созданию <span class="color-red">{{$data->name}}</span>
+        {{date('d.m.Y')}}
       </h1>
     </section>
 
     <header class='header'>
       <div class="header__img"><img src="img/pdfgen/pugofka_logo.png" height="50"></div>
-      <div class="header__text">Коммерческое предложение<br/>по созданию сайта www.kapous.ru</div>
+      <div class="header__text">Коммерческое предложение<br/>по созданию "{{$data->name}}"</div>
     </header>
     <footer class='footer'>
       <img src="img/pdfgen/icon_pugofka.png" class="footer__img" height="25">
@@ -338,22 +338,11 @@
               <div class="section-price__block">
                 <div class="section-price__block-left">
                   <h4 class="h4">Стоимость работ</h4>
-                  <p class="h1 color-red">{{$price}} рублей</p>
-                  <span class="color-red">в т.ч. НДС 18:</span>
+                  <p class="h1 color-red">{{ number_format($price, 2, ',', ' ') }} рублей</p>
                 </div>
                 <div class="section-price__block-right">
                   <h4 class="h4">Срок разработки</h4>
-                  <p class="h1 color-red">
-                    
-                    @php
-                      $hoursData = json_decode($data->additional_tasks);
-                      $hours = 0;
-                      for ($i=0; $i < count($hoursData); $i++) { 
-                        $hours += $hoursData[$i]->hours;
-                      }
-                    @endphp
-                    {{$hours / 8}} рабочих дней
-                  </p>
+                  <p class="h1 color-red">{{ceil($hours / 8)}} рабочих дней</p>
                 </div>
                 <div class="clear"></div>
               </div>
@@ -363,20 +352,19 @@
           <tr class="section-price__list">
             <td class="section-price__list__item" colspan="2">
               <p class="section-price__list__item-name color-red">Проблема</p>
-              <p class="section-price__list__item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
-                neque vel enim impedit, provident voluptatem?</p>
+              <p class="section-price__list__item-text">{{$data->problem}}</p>
             </td>
           </tr>
           <tr class="section-price__list">
             <td class="section-price__list__item" colspan="2">
               <p class="section-price__list__item-name color-red">Задача</p>
-              <p class="section-price__list__item-text">{{$data->name}}</p>
+              <p class="section-price__list__item-text">{{$data->task}}</p>
             </td>
           </tr>
           <tr class="section-price__list">
             <td class="section-price__list__item" colspan="2">
               <p class="section-price__list__item-name color-red">Цель</p>
-              <p class="section-price__list__item-text">{{$template}}</p>
+              <p class="section-price__list__item-text">{{$data->target}}</p>
             </td>
           </tr>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form-group" v-for="(variant, index) in variants">
+    <div class="form-group" v-for="(variant, index) in variants" :key="index">
       <label :for="index" class="col-md-2 control-label">{{ variant.name }}</label>
       <div class="col-md-10">
         <input
@@ -16,60 +16,62 @@
 </template>
 
 <script>
-  export default {
+export default {
+  data: function() {
+    return {
+      variantId: this.variantsData.id,
+      variants: this.variantsData
+    };
+  },
 
-    data:
-      function () {
-        return {
-          variantId: this.variantsData.id,
-          variants: this.variantsData,
-        }
-      },
-
-    props: {
-      variantsData: {
-        type: Array,
-        required: true
-      },
-      templateIdData: {
-        type: Number,
-        required: true
-      },
-      taskData: {
-        type: Object,
-        required: true
-      },
+  props: {
+    variantsData: {
+      type: Array,
+      required: true
     },
-
-    methods: {
-      sendVariantTime: _.debounce(function (index) {
-        console.log("update time by axios");
-        axios.put("/templates/" + this.templateIdData + "/edit/update-time", {
-          "task_id": this.taskData.id,
-          "template_id": this.templateIdData,
-          "variant_id": this.variantsData[index].id,
-          "variant_time": this.variantsData[index].templates_data[0].variant_time
-        })
-      }, 200)
+    templateIdData: {
+      type: Number,
+      required: true
     },
+    taskData: {
+      type: Object,
+      required: true
+    }
+  },
 
-    created() {
-      const t = this;
-      for (var i = 0; i < this.variants.length; i++) {
-        this.variants[i].templates_data = this.variants[i].templates_data.filter(function (item) {
+  methods: {
+    sendVariantTime: _.debounce(function(index) {
+      console.log("update time by axios");
+      axios.put("/templates/" + this.templateIdData + "/edit/update-time", {
+        task_id: this.taskData.id,
+        template_id: this.templateIdData,
+        variant_id: this.variantsData[index].id,
+        variant_time: this.variantsData[index].templates_data[0].variant_time
+      });
+    }, 200)
+  },
+
+  created() {
+    const t = this;
+    for (var i = 0; i < this.variants.length; i++) {
+      this.variants[i].templates_data = this.variants[i].templates_data.filter(
+        function(item) {
           if (item.template_id == t.templateIdData) return item;
-        })
+        }
+      );
 
-        if (this.variants[i].templates_data.length <= 0) {
-          this.variants[i].templates_data = [{
+      if (this.variants[i].templates_data.length <= 0) {
+        this.variants[i].templates_data = [
+          {
             id: null,
             task_id: this.taskData.id,
             template_id: this.templateIdData,
             variant_id: this.variants[i].id,
             variant_time: 0
-          }]
-        }
+          }
+        ];
       }
     }
   }
+};
 </script>

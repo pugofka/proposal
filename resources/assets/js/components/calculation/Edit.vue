@@ -9,6 +9,9 @@
       v-if="steps.current == 0"
       :calculateData="calculate"
       :clientData="client"
+      :problem="problem"
+      :task="task"
+      :target="target"
     />
 
     <stages
@@ -48,6 +51,9 @@
         user_name: client.name,
         user_phone: client.phone,
         user_email: client.mail,
+        problem: client.problem,
+        task: client.task,
+        target: client.target,
         template_id: calculate.template,
         stages: stages,
         additional_tasks: otherTasks,
@@ -93,6 +99,9 @@ export default {
         phone: this.calculateData.user_phone,
         mail: this.calculateData.user_email
       },
+      problem: this.calculateData.problem,
+      target: this.calculateData.target,
+      task: this.calculateData.task,
       tasks: JSON.parse(this.calculateData.tasks),
       stages: null,
       otherTasks: JSON.parse(this.calculateData.additional_tasks),
