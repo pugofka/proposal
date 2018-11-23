@@ -9,6 +9,7 @@
       v-if="steps.current == 0"
       :calculateData="calculate"
       :clientData="client"
+      :descriptionData="description"
     />
 
     <stages
@@ -45,9 +46,9 @@
         user_name: client.name,
         user_phone: client.phone,
         user_email: client.mail,
-        problem: client.problem,
-        task:client.task,
-        target:client.target,
+        problem: description.problem,
+        task:description.task,
+        target:description.target,
         template_id: calculate.template,
         stages: stages,
         additional_tasks: otherTasks,
@@ -90,7 +91,9 @@ export default {
       client: {
         name: "",
         phone: "",
-        mail: "",
+        mail: ""
+      },
+      description: {
         problem: "",
         task: "",
         target: ""

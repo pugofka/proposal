@@ -24,7 +24,7 @@ class TemplateDataController extends Controller
      */
     public function create(Request $request)
     {
-        dd($request);
+       
     }
 
     /**

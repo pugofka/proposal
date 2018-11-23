@@ -21,7 +21,7 @@
         <label for="price" class="col-md-4 control-label">Проблема</label>
         <div class="col-md-6">
           <div class="input-group">
-            <textarea id="problem" cols="100" rows="" class="form-control" v-model="problem"></textarea>
+            <textarea id="problem" cols="100" rows="" class="form-control" v-model="description.problem"></textarea>
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
         <label for="price" class="col-md-4 control-label">Задача</label>
         <div class="col-md-6">
           <div class="input-group">
-            <textarea id="task" cols="100" rows="" class="form-control" v-model="task"></textarea>
+            <textarea id="task" cols="100" rows="" class="form-control" v-model="description.task"></textarea>
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@
         <label for="price" class="col-md-4 control-label">Цель</label>
         <div class="col-md-6">
           <div class="input-group">
-            <textarea id="target" cols="100" rows="" class="form-control" v-model="target"></textarea>
+            <textarea id="target" cols="100" rows="" class="form-control" v-model="description.target"></textarea>
           </div>
         </div>
       </div>
@@ -66,16 +66,15 @@ export default {
   data: function() {
     return {
       calculate: this.calculateData,
-      client: this.clientData
+      client: this.clientData,
+      description: this.descriptionData
     };
   },
 
   props: {
     calculateData: Object,
     clientData: Object,
-    problem: Text,
-    target: Text,
-    task: Text
+    descriptionData: Object
   }
 };
 </script>

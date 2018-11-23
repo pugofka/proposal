@@ -342,7 +342,7 @@
                 </div>
                 <div class="section-price__block-right">
                   <h4 class="h4">Срок разработки</h4>
-                  <p class="h1 color-red">{{ceil($hours / 8)}} рабочих дней</p>
+                  <p class="h1 color-red">{{ceil($totalHours / 8)}} рабочих дней</p>
                 </div>
                 <div class="clear"></div>
               </div>
@@ -386,7 +386,7 @@
         </thead>
         <tbody>
           @php
-            $hoursData = json_decode($data->additional_tasks);
+            $hoursData = $stages;
           @endphp
           @for ($i = 0; $i < count($hoursData); $i++)
             @if ((($i + 1) % 2) == 0)
@@ -398,17 +398,46 @@
                   {{ $i + 1 }}
                 </td>
                 <td valign="top">
-                  <strong>{{$hoursData[$i]->name}}</strong>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta quae porro quas tempora, quos commodi?</p>
+                  <strong>{{$hoursData[$i]->stage_name}}</strong>
+                  <p>{{$hoursData[$i]->tasks[0]->name}}</p>
                 </td>
-                <td align="right">{{$data->cost_per_hour * $hoursData[$i]->hours}}</td>
-                <td align="right">{{$hoursData[$i]->hours / 8}}</td>
-            </tr>
+                <td align="right">{{$hoursData[$i]->tasks[0]->variant_name}} - {{ number_format($hoursData[$i]->stage_price, 2, ',', ' ') }} ₽</td>
+                <td align="right">{{ceil($hoursData[$i]->stage_hours / 8)}}</td>
+              </tr>
           @endfor
           
         </tbody>
       </table>
     </section>
+
+    <section class="section-estimate">
+      <h1 class="section-estimate__title h1">Расходы клиента</h1>
+      <table width="100%" class="section__table section-estimate__table">
+        <thead>
+          <tr class="tr-gray">
+            <td width="70%">Описание расходов</td>
+            <td width="30%" align="right">Стоимость расходов</td>
+          </tr>
+        </thead>
+        <tbody>
+      
+          @for ($i = 0; $i < count($info); $i++)
+            @if ((($i + 1) % 2) == 0)
+              <tr class="tr-gray">
+            @else
+              <tr>
+            @endif
+                <td valign="top">
+                  <p>{{$info[$i]->name}}</p>
+                </td>
+                <td align="right">{{ number_format($info[$i]->price, 2, ',', ' ') }} ₽</td>
+              </tr>
+          @endfor
+          
+        </tbody>
+      </table>
+    </section>
+
 
     <section class="section section-cms">
       <h1 class="h1 section__title">Система управления сайтом</h1>
@@ -441,59 +470,52 @@
 
     <section class="section section-calendar-plan">
       <h1 class="h1 section__title">Календарный план</h1>
-      <table width="100%" class="section__table section-calendar-plan__table">
+      <table width="10" class="section__table section-calendar-plan__table">
         <thead>
           <tr>
-            <td width="24%">Этап / месяц</td>
-            <td width="19%">Апрель, 2018</td>
-            <td width="19%">Май, 2018</td>
-            <td width="19%">Июнь, 2018</td>
-            <td width="19%">Июнь, 2018</td>
+            @php
+              $weeksCount = ceil($stageHours / 40);
+              $tdWidth = 100 / $weeksCount;
+            @endphp
+             <td width="3%">Этап / неделя</td>
+            @for ($i = 0; $i < $weeksCount; $i++)
+            <td width="{{$tdWidth}}%">Неделя {{$i + 1}}</td>
+            @endfor
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>ТЗ, прототипы</td>
-            <td bgcolor="#eb4523"></td>
-            <td bgcolor="#eb4523"></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Дизайн</td>
-            <td></td>
-            <td bgcolor="#eb4523"></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Верстка</td>
-            <td></td>
-            <td bgcolor="#eb4523"></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Сборка сайта</td>
-            <td></td>
-            <td bgcolor="#eb4523"></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Интеграция с 1С</td>
-            <td></td>
-            <td></td>
-            <td bgcolor="#eb4523"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Тестирование, сдача</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td bgcolor="#eb4523"></td>
-          </tr>
+          @php
+            $step = 0;
+          @endphp
+          @foreach ($stages as $stage)
+            <tr>
+              <td>{{$stage->stage_name}}</td>
+              @php
+                $weeks = ceil($stage->stage_hours / 40);
+                $emptyWeeks = ($weeksCount - $weeks);
+              @endphp
+              @if ($step>0)
+                  @php
+                    $weeks = $weeks + $step;
+                  @endphp
+                  @for ($i = 0; $i < $step; $i++)
+                    <td></td>
+                    @php
+                      $emptyWeeks = ($emptyWeeks - $step);
+                    @endphp
+                  @endfor
+              @endif
+              @for ($i = $step; $i < $weeks; $i++)
+                  <td bgcolor="#eb4523"></td>
+                  @php
+                      $step += 1;
+                  @endphp
+              @endfor
+              @for ($i = 0; $i < $emptyWeeks; $i++)
+                <td></td>
+              @endfor
+            </tr>
+          @endforeach
         </tbody>
       </table>
     </section>
@@ -502,13 +524,16 @@
       <h1 class="section-functionality__title h1">Дополнительный функцинал</h1>
       <table width="100%" class="section__table ection-functionality__table">
         <tbody>
-          @for ($i = 0; $i < count($info); $i++)
+          @php
+              $additionalTasks = json_decode($data->additional_tasks);
+          @endphp
+          @for ($i = 0; $i < count($additionalTasks); $i++)
             <tr>
-              <td bgcolor="#ececec">{{$info[$i]->name}}</td>
+              <td bgcolor="#ececec">{{$additionalTasks[$i]->name}}</td>
             </tr>
             <tr>
             <td>
-              {{$info[$i]->price}}
+              {{number_format($additionalTasks[$i]->hours * $data->cost_per_hour, 2, ',', ' ')}} ₽
             </td>
           </tr>
           @endfor

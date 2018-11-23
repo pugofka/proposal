@@ -281,23 +281,28 @@ class CalculationController extends Controller
         $data = Calculation::where('id', $calculation->id)->get(); $data = $data[0];
         $template = Template::where('id', $data->template_id)->get(); $template = str_replace(" ","",$template[0]->name);
         
-        $stage = json_decode($data->tasks);
-        $additional_tasks = json_decode($data->additional_tasks);
-        $basicPrace = $data->cost_per_hour;
-        $price = 0;
-        $hours = 0;
-        //dd($data->additional_tasks);
-        for ($i=0; $i < count($additional_tasks); $i++) { // подсчет часов задач
-            $hours += $additional_tasks[$i]->hours;
-        }
-        for ($i=0; $i < count($stage->stages); $i++) { // подсчет часов этапов
-           $hours+= $stage->stages[$i]->stage_hours;
-        }
+        $stage = json_decode($data->tasks);                         // Этапы
+        $additional_tasks = json_decode($data->additional_tasks);   // Дополнительные задачи
+        $basicPrace = $data->cost_per_hour;                         // Стоимость часа
+        $stages = $stage->stages;                                           
 
-        $price = $hours * $basicPrace;
-        $info = json_decode($data->info);
+        $price      = 0;
+        $taskHours  = 0;
+        $stageHours = 0;    
+        $totalHours = 0;
         
-        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info', 'hours'));
+        for ($i=0; $i < count($additional_tasks); $i++) { // подсчет часов задач
+            $taskHours += $additional_tasks[$i]->hours;
+        }
+        for ($i=0; $i < count($stages); $i++) {    // подсчет часов этапов
+           $stageHours+= $stages[$i]->stage_hours;
+        }
+        //dd($data);
+        $totalHours = $taskHours + $stageHours;
+        $price      = $totalHours * $basicPrace;
+        $info       = json_decode($data->info);
+        //dd($stageHours);
+        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info', 'totalHours', 'stageHours', 'stages'));
         return $pdf->download('document.pdf');
     }
 }
