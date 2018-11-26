@@ -290,19 +290,22 @@ class CalculationController extends Controller
         $taskHours  = 0;
         $stageHours = 0;    
         $totalHours = 0;
-        
+        $countWeeks      = 0;
+
         for ($i=0; $i < count($additional_tasks); $i++) { // подсчет часов задач
             $taskHours += $additional_tasks[$i]->hours;
         }
         for ($i=0; $i < count($stages); $i++) {    // подсчет часов этапов
            $stageHours+= $stages[$i]->stage_hours;
+           $countWeeks+= 1;
         }
+        //dd($countWeeks);
         //dd($data);
         $totalHours = $taskHours + $stageHours;
         $price      = $totalHours * $basicPrace;
         $info       = json_decode($data->info);
-        //dd($stageHours);
-        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info', 'totalHours', 'stageHours', 'stages'));
+        //dd($stages);
+        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info', 'totalHours', 'stageHours', 'stages', 'countWeeks'));
         return $pdf->download('document.pdf');
     }
 }

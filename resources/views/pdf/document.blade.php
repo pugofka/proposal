@@ -470,16 +470,12 @@
 
     <section class="section section-calendar-plan">
       <h1 class="h1 section__title">Календарный план</h1>
-      <table width="10" class="section__table section-calendar-plan__table">
+      <table width="100%" class="section__table section-calendar-plan__table">
         <thead>
           <tr>
-            @php
-              $weeksCount = ceil($stageHours / 40);
-              $tdWidth = 100 / $weeksCount;
-            @endphp
-             <td width="3%">Этап / неделя</td>
-            @for ($i = 0; $i < $weeksCount; $i++)
-            <td width="{{$tdWidth}}%">Неделя {{$i + 1}}</td>
+             <td>Этап / неделя</td>
+            @for ($i = 0; $i < $countWeeks; $i++)
+              <td>Неделя {{$i + 1}}</td>
             @endfor
           </tr>
         </thead>
@@ -492,7 +488,7 @@
               <td>{{$stage->stage_name}}</td>
               @php
                 $weeks = ceil($stage->stage_hours / 40);
-                $emptyWeeks = ($weeksCount - $weeks);
+                $emptyWeeks = ($countWeeks - $weeks);
               @endphp
               @if ($step>0)
                   @php
@@ -500,10 +496,10 @@
                   @endphp
                   @for ($i = 0; $i < $step; $i++)
                     <td></td>
-                    @php
-                      $emptyWeeks = ($emptyWeeks - $step);
-                    @endphp
                   @endfor
+                  @php
+                    $emptyWeeks = ($emptyWeeks - $step);
+                  @endphp
               @endif
               @for ($i = $step; $i < $weeks; $i++)
                   <td bgcolor="#eb4523"></td>
@@ -511,9 +507,11 @@
                       $step += 1;
                   @endphp
               @endfor
+
               @for ($i = 0; $i < $emptyWeeks; $i++)
                 <td></td>
               @endfor
+              
             </tr>
           @endforeach
         </tbody>
