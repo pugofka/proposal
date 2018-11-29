@@ -14,7 +14,7 @@ class AddStagesToCalculations extends Migration
     public function up()
     {
         Schema::table('calculations', function($table) {
-            $table->json('stages')->nullable();
+            $table->text('stages')->nullable();
         });
     }
 
