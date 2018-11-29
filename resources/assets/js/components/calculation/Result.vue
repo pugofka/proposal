@@ -19,7 +19,7 @@
             {{ hours * hourPriceData }} руб.
           </div>
         </div>
-        <button v-if="getPDFData" type="button" class="btn btn-success btn-raised" @click="getPdf">Скачать PDF</button>
+        <a :href="`/calculations/${id}/pdf`" v-if="getPDFData" class="btn btn-success btn-raised">Скачать PDF</a>
       </div>
       <div class="col-md-6">
       </div>
@@ -28,53 +28,47 @@
 </template>
 
 <script>
-  export default {
-    data: function () {
-      return {
-        hours: 0
+export default {
+  data: function() {
+    return {
+      hours: 0
+    };
+  },
+
+  props: {
+    hoursData: Array,
+    hourPriceData: Number,
+    getPDFData: Boolean,
+    id: Number
+  },
+
+  methods: {
+    setHours: function() {
+      for (var i = 0; i < this.hoursData.length; i++) {
+        this.hours += this.hoursData[i].hours;
       }
     },
 
-    props: {
-      hoursData: Array,
-      hourPriceData: Number,
-      getPDFData: Boolean
-    },
+    drawChart: function() {}
+  },
 
-    methods: {
-      setHours: function () {
-        for (var i = 0; i < this.hoursData.length; i++) {
-          this.hours += this.hoursData[i].hours;
-        }
-      },
+  created() {
+    this.setHours();
+  },
 
-      getPdf: function () {
-        console.log('get pdf');
-      },
-
-      drawChart: function () {
-
-      }
-    },
-
-    created() {
-      this.setHours();
-    },
-
-    mounted() {
-    }
-  }
+  mounted() {}
+};
 </script>
 
 <style scoped lang="scss">
-  .result {
-    &__row {
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-
-    &__key {
-      font-weight: 700;
-    }
+.result {
+  &__row {
+    font-size: 20px;
+    margin-bottom: 15px;
   }
+
+  &__key {
+    font-weight: 700;
+  }
+}
 </style>

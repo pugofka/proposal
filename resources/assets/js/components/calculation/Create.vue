@@ -9,6 +9,7 @@
       v-if="steps.current == 0"
       :calculateData="calculate"
       :clientData="client"
+      :descriptionData="description"
     />
 
     <stages
@@ -45,6 +46,9 @@
         user_name: client.name,
         user_phone: client.phone,
         user_email: client.mail,
+        problem: description.problem,
+        task:description.task,
+        target:description.target,
         template_id: calculate.template,
         stages: stages,
         additional_tasks: otherTasks,
@@ -56,91 +60,95 @@
 </template>
 
 <script>
-  export default {
-    components: {
-      'steps': require('./Steps.vue'),
-      'pagination': require('./StepsPagination.vue'),
-      'start': require('./Start.vue'),
-      'stages': require('./StagesList.vue'),
-      'other-tasks': require('./OtherTasks.vue'),
-      'expenses-customers': require('./ExpensesCustomers.vue'),
-      'result': require('./Result.vue')
-    },
+export default {
+  components: {
+    steps: require("./Steps.vue"),
+    pagination: require("./StepsPagination.vue"),
+    start: require("./Start.vue"),
+    stages: require("./StagesList.vue"),
+    "other-tasks": require("./OtherTasks.vue"),
+    "expenses-customers": require("./ExpensesCustomers.vue"),
+    result: require("./Result.vue")
+  },
 
-    data: function () {
-      return {
-        steps: {
-          current: 0,
-          list: [
-            'Начало',
-            'Задачи',
-            'Дополнительные задачи',
-            'Расходы клиента',
-            'Результат'
-          ]
-        },
-        calculate: {
-          name: '',
-          hourPrice: 0,
-          template: 0
-        },
-        client: {
-          name: '',
-          phone: '',
-          mail: ''
-        },
-        stages: null,
-        otherTasks: [],
-        expensesCustomers: []
-      }
-    },
+  data: function() {
+    return {
+      steps: {
+        current: 0,
+        list: [
+          "Начало",
+          "Задачи",
+          "Дополнительные задачи",
+          "Расходы клиента",
+          "Результат"
+        ]
+      },
+      calculate: {
+        name: "",
+        hourPrice: 0,
+        template: 0
+      },
+      client: {
+        name: "",
+        phone: "",
+        mail: ""
+      },
+      description: {
+        problem: "",
+        task: "",
+        target: ""
+      },
+      stages: null,
+      otherTasks: [],
+      expensesCustomers: []
+    };
+  },
 
-    props: {
-      templatesData: {
-        type: Array,
-        required: true
-      }
-    },
+  props: {
+    templatesData: {
+      type: Array,
+      required: true
+    }
+  },
 
-    computed: {
-      resultHours: function () {
-        let tasksHours = [];
+  computed: {
+    resultHours: function() {
+      let tasksHours = [];
 
-        if(this.stages) {
-          for (var i = 0; i < this.stages.length; i++) {
-            for (var j = 0; j < this.stages[i].tasks.length; j++) {
-              if(this.stages[i].tasks[j].hours) {
-                const task = {
-                  name: this.stages[i].tasks[j].name,
-                  hours: +this.stages[i].tasks[j].hours
-                };
-                tasksHours.push(task);
-              }
-            }
-          }
-        }
-
-        if(this.otherTasks) {
-          for (var i = 0; i < this.otherTasks.length; i++) {
-            if(this.otherTasks[i].hours) {
+      if (this.stages) {
+        for (var i = 0; i < this.stages.length; i++) {
+          for (var j = 0; j < this.stages[i].tasks.length; j++) {
+            if (this.stages[i].tasks[j].hours) {
               const task = {
-                name: this.otherTasks[i].name,
-                hours: +this.otherTasks[i].hours
+                name: this.stages[i].tasks[j].name,
+                hours: +this.stages[i].tasks[j].hours
               };
               tasksHours.push(task);
             }
           }
         }
-
-        return tasksHours;
       }
-    },
 
-    methods: {
-      setStages: function (stages) {
-        Vue.set(this, 'stages', stages);
+      if (this.otherTasks) {
+        for (var i = 0; i < this.otherTasks.length; i++) {
+          if (this.otherTasks[i].hours) {
+            const task = {
+              name: this.otherTasks[i].name,
+              hours: +this.otherTasks[i].hours
+            };
+            tasksHours.push(task);
+          }
+        }
       }
+
+      return tasksHours;
     }
+  },
 
+  methods: {
+    setStages: function(stages) {
+      Vue.set(this, "stages", stages);
+    }
   }
+};
 </script>

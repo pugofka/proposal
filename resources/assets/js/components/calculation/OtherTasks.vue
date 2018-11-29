@@ -1,7 +1,7 @@
 <template>
   <div class="well bs-component">
     <h2>Дополнительные задачи</h2>
-    <div class="task" v-for="task in otherTasks">
+    <div class="task" v-for="(task,index) in otherTasks" :key="index">
       <div class="form-group is-empty">
         <input
           type="text"
@@ -28,53 +28,53 @@
 </template>
 
 <script>
-  export default {
-    data: function () {
-      return {
-        otherTasks: this.otherTasksData
-      }
-    },
+export default {
+  data: function() {
+    return {
+      otherTasks: this.otherTasksData
+    };
+  },
 
-    props: {
-      otherTasksData: Array,
-      hourPriceData: Number
-    },
+  props: {
+    otherTasksData: Array,
+    hourPriceData: Number
+  },
 
-    methods: {
-      addTask: function () {
-        const clearTask = {
-          name: '',
-          hours: ''
-        };
-        this.otherTasks.push(clearTask);
-      }
+  methods: {
+    addTask: function() {
+      const clearTask = {
+        name: "",
+        hours: ""
+      };
+      this.otherTasks.push(clearTask);
     }
   }
+};
 </script>
 
 <style scoped lang="scss">
-  .task {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    div {
-      width: 100%;
-      margin-right: 15px;
+  div {
+    width: 100%;
+    margin-right: 15px;
 
-      &:last-child {
-        margin-right: 0;
-        text-align: right;
-        color: #ccc;
-      }
+    &:last-child {
+      margin-right: 0;
+      text-align: right;
+      color: #ccc;
     }
   }
+}
 
-  .btn {
-    img {
-      width: 50%;
-      position: relative;
-      top: -2px;
-    }
+.btn {
+  img {
+    width: 50%;
+    position: relative;
+    top: -2px;
   }
+}
 </style>

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Calculation;
 use App\Stage;
 use App\Template;
+use App\Reviews;
+use App\Clients;
 use App\TemplateData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use niklasravnsborg\LaravelPdf\Facades\Pdf;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class CalculationController extends Controller
 {
@@ -90,18 +92,21 @@ class CalculationController extends Controller
             $tasksData['deffered_tasks'] = $deffered_tasks;
             //Снова отвязка
             unset($deffered_tasks);
-
+            
             //Собственно сохранние данных
             Calculation::create([
-                'name' => $request->name,
-                'cost_per_hour' => $request->cost_per_hour,
-                'user_name' => $request->user_name,
-                'user_phone' => $request->user_phone,
-                'user_email' => $request->user_email,
-                'template_id' => $request->template_id,
-                'additional_tasks' => json_encode($request->additional_tasks),
-                'tasks' => json_encode($tasksData),
-                'info' => json_encode($request->info)
+                'name'              => $request->name,
+                'cost_per_hour'     => $request->cost_per_hour,
+                'user_name'         => $request->user_name,
+                'user_phone'        => $request->user_phone,
+                'user_email'        => $request->user_email,
+                'problem'           => $request->problem,
+                'task'              => $request->task,
+                'target'            => $request->target,
+                'template_id'       => $request->template_id,
+                'additional_tasks'  => json_encode($request->additional_tasks),
+                'tasks'             => json_encode($tasksData),
+                'info'              => json_encode($request->info)
             ]);
             return response(['status' => 'Расчёт успешно создан'], 201);
         }
@@ -180,15 +185,18 @@ class CalculationController extends Controller
             $tasksData['deffered_tasks'] = $defered_tasks;
             unset($defered_tasks);
 
-            $calculation->name = $request->name;
-            $calculation->cost_per_hour = $request->cost_per_hour;
-            $calculation->user_name = $request->user_name;
-            $calculation->user_phone = $request->user_phone;
-            $calculation->user_email = $request->user_email;
-            $calculation->template_id = $request->template_id;
+            $calculation->name             = $request->name;
+            $calculation->cost_per_hour    = $request->cost_per_hour;
+            $calculation->user_name        = $request->user_name;
+            $calculation->problem          = $request->problem;
+            $calculation->task             = $request->task;
+            $calculation->target           = $request->target;
+            $calculation->user_phone       = $request->user_phone;
+            $calculation->user_email       = $request->user_email;
+            $calculation->template_id      = $request->template_id;
             $calculation->additional_tasks = json_encode($request->additional_tasks);
-            $calculation->tasks = json_encode($tasksData);
-            $calculation->info = json_encode($request->info);
+            $calculation->tasks            = json_encode($tasksData);
+            $calculation->info             = json_encode($request->info);
             $calculation->save();
         }
     }
@@ -197,6 +205,7 @@ class CalculationController extends Controller
     {
         //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
         if ($request->ajax()) {
+            
             Validator::make($request->all(), [
                 'id' => 'required',
             ])->validate();
@@ -205,7 +214,7 @@ class CalculationController extends Controller
             $calculateData = TemplateData::with('variant', 'task')->where('template_id', $request->id)->get();
 
             $result = $this->getDataForCalculateTemplate($calculateData);
-
+            
             return response($result, 200);
         }
     }
@@ -269,25 +278,43 @@ class CalculationController extends Controller
         return redirect(route('calculations.index'))->with('status', 'Расчёт удалён');
     }
 
-    public function generatePdf(Calculation $calculation)
-    {
-        $data = [
-            'foo' => 'bar',
-            'stages' => json_decode($calculation->tasks)->stages,
-            'calculation' => $calculation,
-            'defferedTasks' => json_decode($calculation->tasks)->deffered_tasks
-        ];
-        $pdf = Pdf::loadView('pdf.document', $data, [], [
-//            Кастомные настройки сюда
-        ]);
+    public function generatePdf(Calculation $calculation, Request $request)
+    {   
+        $data     = Calculation::where('id', $calculation->id)->get(); $data = $data[0];
+        $template = Template::where('id', $data->template_id)->get(); $template = str_replace(" ","",$template[0]->name);
+        $reviews  = Reviews::get();
+        $reviews  = json_decode($reviews);
+        $clients  = Clients::get();
+        $clients  = json_decode($clients); 
+    
 
+        $additional_tasks = json_decode($data->additional_tasks);   // Дополнительные задачи
+        $basicPrace = $data->cost_per_hour;                         // Стоимость часа
+        $stage = json_decode($data->tasks);                                          
+        $stages = $stage->stages;     
+       
+        $price      = 0;
+        $taskHours  = 0;
+        $stageHours = 0;
+        $totalHours = 0;
+        $countWeeks = 0;
+        
+        
+        for ($i=0; $i < count($additional_tasks); $i++) { // подсчет часов задач
+            $taskHours += $additional_tasks[$i]->hours;
+        }
+        for ($i=0; $i < count($stages); $i++) {    // подсчет часов этапов
+           $stageHours+= ceil($stages[$i]->stage_hours / 40) * 40;
+        }
 
-        $filename = 'calculate_' . now() . '.pdf';
-        return $pdf->stream('document.pdf');
-//        Storage::put($filename, $pdf->output('document.pdf'));
-
-        //  @todo
-        // TODO save filename to DB
-        return 'ok';
+        $additionalTasksHours = ceil($taskHours / 40) * 40;
+        $countWeeks = ceil(($stageHours + $additionalTasksHours) / 40);
+        $totalHours = $taskHours + $stageHours;
+        $price      = $totalHours * $basicPrace;
+        $info       = json_decode($data->info);
+        
+        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info', 'totalHours', 'stageHours', 'stages', 'countWeeks', 'reviews','clients'));
+        
+        return $pdf->download('document.pdf');
     }
 }

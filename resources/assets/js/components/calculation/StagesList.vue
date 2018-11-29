@@ -7,7 +7,7 @@
         <div class="col-md-10">
           <select id="templates" class="form-control" v-model="calculate.template" @change="getStages">
             <option value="0" disabled>Выберите шаблон</option>
-            <option v-for="template in templatesData" :value="template.id">{{ template.name }}</option>
+            <option v-for="(template, index) in templatesData" :value="template.id" :key="index">{{ template.name }}</option>
           </select>
         </div>
       </div>
@@ -23,42 +23,41 @@
 </template>
 
 <script>
-  export default {
+export default {
+  components: {
+    stage: require("./StageItem.vue")
+  },
 
-    components: {
-      'stage': require('./StageItem.vue')
-    },
+  data: function() {
+    return {
+      calculate: this.calculateData
+    };
+  },
 
-    data: function () {
-      return {
-        calculate: this.calculateData
-      }
-    },
+  props: {
+    stagesData: Array,
+    hourPriceData: Number,
+    calculateData: Object,
+    templatesData: Array,
+    setStagesCallback: Function
+  },
 
-    props: {
-      stagesData: Array,
-      hourPriceData: Number,
-      calculateData: Object,
-      templatesData: Array,
-      setStagesCallback: Function
-    },
-
-    methods: {
-      getStages: function () {
-        const t = this;
-        axios.get('/calculations/template', {
+  methods: {
+    getStages: function() {
+      const t = this;
+      axios
+        .get("/calculations/template", {
           params: {
             id: this.calculate.template
           }
         })
-          .then(function (response) {
-            t.setStagesCallback(response.data);
-          })
-          .catch(function (error) {
-            console.error(error);
-          })
-      }
+        .then(function(response) {
+          t.setStagesCallback(response.data);
+        })
+        .catch(function(error) {
+          console.error(error.response);
+        });
     }
-
   }
+};
 </script>

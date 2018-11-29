@@ -14,7 +14,6 @@ class TemplateData extends Model
         'task_id',
         'variant_id',
         'variant_time',
-
     ];
 
     public function template()
