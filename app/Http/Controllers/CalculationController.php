@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Calculation;
 use App\Stage;
 use App\Template;
+use App\Reviews;
+use App\Clients;
 use App\TemplateData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -278,34 +280,41 @@ class CalculationController extends Controller
 
     public function generatePdf(Calculation $calculation, Request $request)
     {   
-        $data = Calculation::where('id', $calculation->id)->get(); $data = $data[0];
+        $data     = Calculation::where('id', $calculation->id)->get(); $data = $data[0];
         $template = Template::where('id', $data->template_id)->get(); $template = str_replace(" ","",$template[0]->name);
-        
-        $stage = json_decode($data->tasks);                         // Этапы
+        $reviews  = Reviews::get();
+        $reviews  = json_decode($reviews);
+        $clients  = Clients::get();
+        $clients  = json_decode($clients); 
+    
+
         $additional_tasks = json_decode($data->additional_tasks);   // Дополнительные задачи
         $basicPrace = $data->cost_per_hour;                         // Стоимость часа
-        $stages = $stage->stages;                                           
-
+        $stage = json_decode($data->tasks);                                          
+        $stages = $stage->stages;     
+       
         $price      = 0;
         $taskHours  = 0;
-        $stageHours = 0;    
+        $stageHours = 0;
         $totalHours = 0;
-        $countWeeks      = 0;
-
+        $countWeeks = 0;
+        
+        
         for ($i=0; $i < count($additional_tasks); $i++) { // подсчет часов задач
             $taskHours += $additional_tasks[$i]->hours;
         }
         for ($i=0; $i < count($stages); $i++) {    // подсчет часов этапов
-           $stageHours+= $stages[$i]->stage_hours;
-           $countWeeks+= 1;
+           $stageHours+= ceil($stages[$i]->stage_hours / 40) * 40;
         }
-        //dd($countWeeks);
-        //dd($data);
+
+        $additionalTasksHours = ceil($taskHours / 40) * 40;
+        $countWeeks = ceil(($stageHours + $additionalTasksHours) / 40);
         $totalHours = $taskHours + $stageHours;
         $price      = $totalHours * $basicPrace;
         $info       = json_decode($data->info);
-        //dd($stages);
-        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info', 'totalHours', 'stageHours', 'stages', 'countWeeks'));
+        
+        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info', 'totalHours', 'stageHours', 'stages', 'countWeeks', 'reviews','clients'));
+        
         return $pdf->download('document.pdf');
     }
 }
