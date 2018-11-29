@@ -19,7 +19,7 @@
             {{ hours * hourPriceData }} руб.
           </div>
         </div>
-        <a href='/calculations/pdf' v-if="getPDFData" class="btn btn-success btn-raised">Скачать PDF</a>
+        <a :href="`/calculations/${id}/pdf`" v-if="getPDFData" class="btn btn-success btn-raised">Скачать PDF</a>
       </div>
       <div class="col-md-6">
       </div>
@@ -28,38 +28,36 @@
 </template>
 
 <script>
-  export default {
-    data: function () {
-      return {
-        hours: 0
+export default {
+  data: function() {
+    return {
+      hours: 0
+    };
+  },
+
+  props: {
+    hoursData: Array,
+    hourPriceData: Number,
+    getPDFData: Boolean,
+    id: Number
+  },
+
+  methods: {
+    setHours: function() {
+      for (var i = 0; i < this.hoursData.length; i++) {
+        this.hours += this.hoursData[i].hours;
       }
     },
 
-    props: {
-      hoursData: Array,
-      hourPriceData: Number,
-      getPDFData: Boolean
-    },
+    drawChart: function() {}
+  },
 
-    methods: {
-      setHours: function () {
-        for (var i = 0; i < this.hoursData.length; i++) {
-          this.hours += this.hoursData[i].hours;
-        }
-      },
+  created() {
+    this.setHours();
+  },
 
-      drawChart: function () {
-
-      }
-    },
-
-    created() {
-      this.setHours();
-    },
-
-    mounted() {
-    }
-  }
+  mounted() {}
+};
 </script>
 
 <style scoped lang="scss">

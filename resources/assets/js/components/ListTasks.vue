@@ -1,6 +1,6 @@
 <template>
   <div v-if="tasks">
-    <div class="questions__wrapper" v-for="task in tasks">
+    <div class="questions__wrapper" v-for="task in tasks" :key="task.id">
       <task
         :taskData='task'
         :templateData='templates'
@@ -16,40 +16,38 @@
 </template>
 
 <script>
-  export default {
-    components: {
-      'task': require('./Task.vue')
+export default {
+  components: {
+    task: require("./Task.vue")
+  },
+
+  data: function() {
+    return {
+      tasks: this.tasksData,
+      templates: this.templatesData,
+      isShowAddBtn: true
+    };
+  },
+
+  props: {
+    tasksData: {
+      type: Array
     },
 
-    data: function () {
-      return {
-        tasks: this.tasksData,
-        templates: this.templatesData,
-        isShowAddBtn: true
-      }
+    templatesData: {
+      type: Array
     },
 
-    props: {
+    stageId: {
+      type: Number
+    }
+  },
 
-      tasksData: {
-        type: Array
-      },
-
-      templatesData: {
-        type: Array
-      },
-
-      stageId: {
-        type: Number
-      }
-
-    },
-
-    methods: {
-
-      initStates: function () {
-        if(this.tasks.length <= 0) {
-          this.tasks = [{
+  methods: {
+    initStates: function() {
+      if (this.tasks.length <= 0) {
+        this.tasks = [
+          {
             id: null,
             name: null,
             stage_id: this.stageId,
@@ -60,47 +58,45 @@
                 name: null
               }
             ]
-          }];
-        }
-      },
-
-      addTask: function() {
-        var clearTask = {
-          id: null,
-          name: null,
-          stage_id: this.stageId,
-          variants: [
-            {
-              id: null,
-              name: null
-            }
-          ]
-        };
-        this.tasks.push(clearTask);
-      },
-
-      removeTask: function(data) {
-        this.tasks.splice(this.tasks.indexOf(data), 1);
+          }
+        ];
       }
-
     },
 
-    watch: {
-
-      tasks: {
-        handler: function(e) {
-          if(!e[e.length - 1].name) this.isShowAddBtn = false;
-          else this.isShowAddBtn = true;
-        },
-        deep: true
-      }
-
+    addTask: function() {
+      var clearTask = {
+        id: null,
+        name: null,
+        stage_id: this.stageId,
+        variants: [
+          {
+            id: null,
+            name: null
+          }
+        ]
+      };
+      this.tasks.push(clearTask);
     },
 
-    mounted() {
-      this.initStates();
+    removeTask: function(data) {
+      this.tasks.splice(this.tasks.indexOf(data), 1);
     }
+  },
+
+  watch: {
+    tasks: {
+      handler: function(e) {
+        if (!e[e.length - 1].name) this.isShowAddBtn = false;
+        else this.isShowAddBtn = true;
+      },
+      deep: true
+    }
+  },
+
+  mounted() {
+    this.initStates();
   }
+};
 </script>
 
 <style lang="scss">
@@ -123,25 +119,26 @@
   &__step:after {
     content: "";
     position: absolute;
-    background-image: url('http://localhost/img/down.svg');
+    background-image: url("http://localhost/img/down.svg");
     width: 20px;
     height: 20px;
     top: 50%;
     -webkit-transform: translateY(-50%);
-            transform: translateY(-50%);
+    transform: translateY(-50%);
     right: 0;
   }
 
   &__form {
     display: grid;
     -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
     grid-template-columns: 1fr 1fr 250px 50px;
     margin-bottom: 30px;
     background-color: #fff;
     border-radius: 2px;
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 10px;
   }
 
@@ -171,7 +168,7 @@
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     fill: #fff;
   }
 

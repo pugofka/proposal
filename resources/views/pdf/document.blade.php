@@ -23,7 +23,10 @@
       margin: 0px;
       padding: 0px;
     }
-
+    p {
+      margin:0px;
+      padding:0px;
+    }
     .clear {
       clear: both;
     }
@@ -139,7 +142,9 @@
     .section-estimate__table thead td {
       font-size: 12px;
     }
-
+    .section-estimate__table p {
+      margin-bottom: 5px;
+    }
     .section__table {
       margin-top: 50px;
     }
@@ -310,14 +315,12 @@
 <body>
     <section class="section-home">
       <img src="img/pdfgen/pugofka_logo.png" class="section-home__logo">
-      <h1 class="section-home__title">Коммерческое предложение по созданию сайта <span class="color-red">www.kapous.ru</span>
-        19.04.2016
-      </h1>
+      <h1 class="section-home__title">Коммерческое предложение<br><span class="color-red">{{$data->name}}</span><br>{{date('d.m.Y')}}</h1>
     </section>
 
     <header class='header'>
       <div class="header__img"><img src="img/pdfgen/pugofka_logo.png" height="50"></div>
-      <div class="header__text">Коммерческое предложение<br/>по созданию сайта www.kapous.ru</div>
+      <div class="header__text">Коммерческое предложение<br/>{{$data->name}}</div>
     </header>
     <footer class='footer'>
       <img src="img/pdfgen/icon_pugofka.png" class="footer__img" height="25">
@@ -338,12 +341,11 @@
               <div class="section-price__block">
                 <div class="section-price__block-left">
                   <h4 class="h4">Стоимость работ</h4>
-                  <p class="h1 color-red">748 080 рублей</p>
-                  <span class="color-red">в т.ч. НДС 18:</span>
+                  <p class="h1 color-red">{{ number_format($price, 0, ',', ' ') }} рублей</p>
                 </div>
                 <div class="section-price__block-right">
                   <h4 class="h4">Срок разработки</h4>
-                  <p class="h1 color-red">67 рабочих дней</p>
+                  <p class="h1 color-red">{{ceil($totalHours / 8)}} рабочих дней</p>
                 </div>
                 <div class="clear"></div>
               </div>
@@ -352,23 +354,20 @@
 
           <tr class="section-price__list">
             <td class="section-price__list__item" colspan="2">
-              <span class="section-price__list__item-name color-red">Проблема</span>
-              <span class="section-price__list__item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
-                neque vel enim impedit, provident voluptatem?</span>
+              <p class="section-price__list__item-name color-red">Проблема</p>
+              <p class="section-price__list__item-text">{{$data->problem}}</p>
             </td>
           </tr>
           <tr class="section-price__list">
             <td class="section-price__list__item" colspan="2">
-              <span class="section-price__list__item-name color-red">Задача</span>
-              <span class="section-price__list__item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
-                neque vel enim impedit, provident voluptatem?</span>
+              <p class="section-price__list__item-name color-red">Задача</p>
+              <p class="section-price__list__item-text">{{$data->task}}</p>
             </td>
           </tr>
           <tr class="section-price__list">
             <td class="section-price__list__item" colspan="2">
-              <span class="section-price__list__item-name color-red">Цель</span>
-              <span class="section-price__list__item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
-                neque vel enim impedit, provident voluptatem?</span>
+              <p class="section-price__list__item-name color-red">Цель</p>
+              <p class="section-price__list__item-text">{{$data->target}}</p>
             </td>
           </tr>
 
@@ -378,166 +377,214 @@
 
 
     <section class="section-estimate">
-      <h1 class="section-estimate__title h1">Расчетная сммета</h1>
+      <h1 class="section-estimate__title h1">Расчётная смета</h1>
       <table width="100%" class="section__table section-estimate__table">
         <thead>
           <tr class="tr-gray">
             <td width="10%">Этап</td>
             <td width="50%">Описание работ / этапа</td>
             <td width="20%" align="right">Стоимость работ. / условия оплаты</td>
-            <td width="20%" align="right">Сроки сдачи (раюочих дней)</td>
+            <td width="20%" align="right">Сроки сдачи (рабочих дней)</td>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td valign="top">
-              1
-            </td>
-            <td valign="top">
-              <strong>Создание технического заания и прототипов</strong>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta quae porro quas tempora, quos commodi?</p>
-            </td>
-            <td align="right">76 000</td>
-            <td align="right">10</td>
-          </tr>
+          @php
+            $hoursData = $stages;
+            $item = 0;
+          @endphp
+          @for ($i = 0; $i < count($hoursData); $i++)
+            @php
+                $item+=1;
+            @endphp
+            @if ((($i + 1) % 2) == 0)
+              <tr class="tr-gray">
+            @else
+              <tr>
+            @endif
+                <td valign="top">
+                  {{ $i + 1 }}
+                </td>
 
-          <tr class="tr-gray">
-            <td valign="top">
-              2
-            </td>
-            <td valign="top">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta quae porro quas tempora, quos commodi?</p>
-            </td>
-            <td align="right">76 000</td>
-            <td align="right">10</td>
-          </tr>
+                <td valign="top">
+                  <p style="font-weight:bold">{{$hoursData[$i]->stage_name}}</p>
+                  @foreach ($hoursData[$i]->tasks as $task)
+                    <p>{{$task->name}} - {{$task->variant_name}}</p>
+                  @endforeach
+                </td>
 
-          <tr>
-            <td valign="top">
-              3
-            </td>
-            <td valign="top">
-              <strong>Создание технического заания и прототипов</strong>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta quae porro quas tempora, quos commodi?</p>
-            </td>
-            <td align="right">76 000</td>
-            <td align="right">10</td>
-          </tr>
+                <td align="right">
+                  <p style="font-weight:bold">{{number_format($hoursData[$i]->stage_price, 0, ',', ' ')}} ₽</p>
+                  @foreach ($hoursData[$i]->tasks as $task)
+                    <p>{{number_format($task->hours * $data->cost_per_hour, 0, ',', ' ')}} ₽</p>
+                  @endforeach
+                </td>
 
+                <td align="right">
+                  <p style="font-weight:bold">{{$hoursData[$i]->stage_hours}}</p>
+                  @foreach ($hoursData[$i]->tasks as $task)
+                    <p>{{$task->hours}}</p>
+                  @endforeach
+                </td>
+              </tr>
+          @endfor
+          @php
+              $additionalTasks = json_decode($data->additional_tasks);
+          @endphp
+          @php
+            $item +=1;
+          @endphp
+          @if ((($item) % 2) == 0)
+            <tr class="tr-gray">
+          @else
+            <tr>
+          @endif
+              <td valign="top">{{$item}}</td>
+              <td>
+                <p style="font-weight:bold">Дополнительный функцинал</p>
+                @for ($i = 0; $i < count($additionalTasks); $i++)
+                  <p>{{$additionalTasks[$i]->name}}</p>
+                @endfor
+              </td>
+              <td align="right">
+                @php
+                  $additionalTasksTotalPrice = 0;
+                  $additionalTasksTotalHours = 0;
+                @endphp
+                @for ($i = 0; $i < count($additionalTasks); $i++)
+                  @php
+                    $additionalTasksTotalPrice += $additionalTasks[$i]->hours * $data->cost_per_hour;
+                    $additionalTasksTotalHours += $additionalTasks[$i]->hours;
+                  @endphp 
+                @endfor
+                <p style="font-weight:bold">{{$additionalTasksTotalPrice}} ₽</p>
+                @for ($i = 0; $i < count($additionalTasks); $i++)
+                  <p>{{number_format($additionalTasks[$i]->hours * $data->cost_per_hour, 0, ',', ' ')}} ₽</p>
+                @endfor
+              </td>
+              <td align="right">
+                <p style="font-weight:bold">{{$additionalTasksTotalHours}}</p>
+                @for ($i = 0; $i < count($additionalTasks); $i++)
+                  <p>{{$additionalTasks[$i]->hours}}</p>
+                @endfor
+              </td>
+            </tr>
         </tbody>
       </table>
     </section>
 
-    <section class="section section-cms">
-      <h1 class="h1 section__title">Система управления сайтом</h1>
-      <table width="100%" class="section__table section-cms__table">
+    <section class="section-estimate">
+      <h1 class="section-estimate__title h1">Расходы клиента</h1>
+      <table width="100%" class="section__table section-estimate__table">
         <thead>
-          <tr>
-            <td width="40%"></td>
-            <td width="30%"></td>
-            <td width="30%"></td>
+          <tr class="tr-gray">
+            <td width="70%">Описание расходов</td>
+            <td width="30%" align="right">Стоимость расходов</td>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <img src="img/pdfgen/b24_redaction.png" alt="" width="150">
-            </td>
-            <td>
-              <h2 class="h2">1С-Битрикс Редакция бизнес</h2>
-            </td>
-            <td style="text-align:right; font-size: 18px">72 900*</td>
-          </tr>
-          <tr>
-            <td colspan="3" style="padding-top:80px">*Лицензионный ключ активации ПО для дальнейшей разработки сайта и управления
-              им.
-            </td>
-          </tr>
+      
+          @for ($i = 0; $i < count($info); $i++)
+            @if ((($i + 1) % 2) == 0)
+              <tr class="tr-gray">
+            @else
+              <tr>
+            @endif
+                <td valign="top">
+                  <p>{{$info[$i]->name}}</p>
+                </td>
+                <td align="right">{{ number_format($info[$i]->price, 0, ',', ' ') }} ₽</td>
+              </tr>
+          @endfor
         </tbody>
       </table>
+      <p align="right" style="font-weight:bold; margin-top:10px">
+        @php
+          $customerExpenses = 0;
+        @endphp
+        @for ($i = 0; $i < count($info); $i++)
+          @php
+            $customerExpenses += $info[$i]->price;
+          @endphp
+        @endfor
+        Итого {{$customerExpenses}} ₽
+      </p>
     </section>
+
 
     <section class="section section-calendar-plan">
       <h1 class="h1 section__title">Календарный план</h1>
       <table width="100%" class="section__table section-calendar-plan__table">
         <thead>
           <tr>
-            <td width="24%">Этап / месяц</td>
-            <td width="19%">Апрель, 2018</td>
-            <td width="19%">Май, 2018</td>
-            <td width="19%">Июнь, 2018</td>
-            <td width="19%">Июнь, 2018</td>
+             <td>Этап / неделя</td>
+            @for ($i = 0; $i < $countWeeks; $i++)
+              <td>{{$i + 1}}</td>
+            @endfor
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>ТЗ, прототипы</td>
-            <td bgcolor="#eb4523"></td>
-            <td bgcolor="#eb4523"></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Дизайн</td>
-            <td></td>
-            <td bgcolor="#eb4523"></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Верстка</td>
-            <td></td>
-            <td bgcolor="#eb4523"></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Сборка сайта</td>
-            <td></td>
-            <td bgcolor="#eb4523"></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Интеграция с 1С</td>
-            <td></td>
-            <td></td>
-            <td bgcolor="#eb4523"></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Тестирование, сдача</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td bgcolor="#eb4523"></td>
-          </tr>
+          @php
+            $step = 0;
+          @endphp
+          @foreach ($stages as $stage)
+            <tr>
+              <td>{{$stage->stage_name}}</td>
+              @php
+                $weeks = ceil($stage->stage_hours / 40);
+                $emptyWeeks = ($countWeeks - $weeks);
+              @endphp
+              @if ($step>0)
+                  @php
+                    $weeks = $weeks + $step;
+                  @endphp
+                  @for ($i = 0; $i < $step; $i++)
+                    <td></td>
+                  @endfor
+                  @php
+                    $emptyWeeks = ($emptyWeeks - $step);
+                  @endphp
+              @endif
+              @for ($i = $step; $i < $weeks; $i++)
+                  <td bgcolor="#eb4523"></td>
+                  @php
+                      $step += 1;
+                  @endphp
+              @endfor
+
+              @for ($i = 0; $i < $emptyWeeks; $i++)
+                <td></td>
+              @endfor
+            </tr>
+          @endforeach
+            <tr>
+              <td>Дополнительный функцинал</td>
+              @php
+                $weeks = ceil($additionalTasksTotalHours / 40);
+                $emptyWeeks = ($countWeeks - $weeks);
+              @endphp
+              @if ($step>0)
+                  @php
+                    $weeks = $weeks + $step;
+                  @endphp
+                  @for ($i = 0; $i < $step; $i++)
+                    <td></td>
+                  @endfor
+                  @php
+                    $emptyWeeks = ($emptyWeeks - $step);
+                  @endphp
+              @endif
+              @for ($i = $step; $i < $weeks; $i++)
+                  <td bgcolor="#eb4523"></td>
+                  @php
+                      $step += 1;
+                  @endphp
+              @endfor
+              @for ($i = 0; $i < $emptyWeeks; $i++)
+                <td></td>
+              @endfor
+            </tr>
         </tbody>
       </table>
-    </section>
-
-    <section class="section section-functionality">
-      <h1 class="section-functionality__title h1">Дополнительный функцинал</h1>
-      <table width="100%" class="section__table ection-functionality__table">
-        <tbody>
-          <tr>
-            <td bgcolor="#ececec">Функция</td>
-          </tr>
-          <tr>
-            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum inventore hic maiores repellendus voluptas,
-              esse beatae officiis molestias unde amet quasi praesentium odio in quaerat, tenetur, veritatis facilis? Voluptatem,
-              quas!
-            </td>
-          </tr>
-          <tr>
-            <td bgcolor="#ececec">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, eveniet?</td>
-          </tr>
-          <tr>
-            <td>Lorem ipsum dolor sit amet.</td>
-          </tr>
-        </tbody>
-      </table>
-
     </section>
 
 
@@ -684,14 +731,25 @@
           </tr>
         </thead>
         <tbody>
+          @php
+            $counter = 0;
+          @endphp
           <tr>
-            <td><img src="img/pdfgen/review_ball_spb.png" alt=""></td>
-            <td><img src="img/pdfgen/review_akvabook.png" alt=""></td>
-            <td><img src="img/pdfgen/review_alpha_insurance.png" alt=""></td>
-          </tr>
-          <tr>
-            <td><img src="img/pdfgen/review_buisnes_school.png" alt=""></td>
-            <td><img src="img/pdfgen/review_clover_groups.png" alt=""></td>
+            @foreach($reviews as $review)
+              @php
+                $counter += 1;
+              @endphp
+              <td>
+                <img src="{{public_path('/storage/')}}{{$review->image}}" alt="" width="300px" height="auto">
+              </td>
+              @if ($counter==3)
+                </tr>
+                <tr>
+                @php
+                  $counter = 0;
+                @endphp
+              @endif
+            @endforeach
           </tr>
         </tbody>
       </table>
@@ -708,19 +766,25 @@
           </tr>
         </thead>
         <tbody>
+          @php
+            $counter = 0;
+          @endphp
           <tr>
-            <td><img src="img/pdfgen/clients_kapous.png" alt=""></td>
-            <td><img src="img/pdfgen/clients_buisnes_grant.png" alt=""></td>
-            <td><img src="img/pdfgen/clients_alfa_insurance.png" alt=""></td>
-          </tr>
-          <tr>
-            <td><img src="img/pdfgen/clients_ball_spb.png" alt=""></td>
-            <td><img src="img/pdfgen/clients_stronto.png" alt=""></td>
-            <td><img src="img/pdfgen/clients_spadream.png" alt=""></td>
-          </tr>
-          <tr>
-            <td><img src="img/pdfgen/clients_buisnes_school.png" alt=""></td>
-            <td><img src="img/pdfgen/clients_clover_groups.png" alt=""></td>
+            @foreach($clients as $client)
+              @php
+                $counter += 1;
+              @endphp
+              <td>
+                <img src="{{public_path('/storage/')}}{{$client->image}}" alt="" width="auto" height="auto">
+              </td>
+              @if ($counter==3)
+                </tr>
+                <tr>
+                @php
+                  $counter = 0;
+                @endphp
+              @endif
+            @endforeach
           </tr>
         </tbody>
       </table>

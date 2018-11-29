@@ -4,6 +4,7 @@
     <li {{{ Request::is('templates') ? 'class=active' : '' }}}><a href="{{ route('templates.index') }}">Шаблоны</a></li>
     <li {{{ Request::is('tasks') ? 'class=active' : '' }}}><a href="{{ route('tasks.index') }}">Вопросы</a></li>
     <li {{{ Request::is('calculations') ? 'class=active' : '' }}}><a href="{{ route('calculations.index') }}">Расчёт</a></li>
-    <li><a href="javascript:void(0)">Настройки</a></li>
+    <li {{{ Request::is('reviews') ? 'class=active' : '' }}}><a href="{{ route('reviews.index') }}">Справочник по отзывам</a></li>
+    <li {{{ Request::is('clients') ? 'class=active' : '' }}}><a href="{{ route('clients.index') }}">Справочник по клиентам</a></li>
   </ul>
 </nav>

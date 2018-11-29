@@ -18,6 +18,30 @@
         </div>
       </div>
       <div class="form-group is-empty">
+        <label for="price" class="col-md-4 control-label">Проблема</label>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea id="problem" cols="100" rows="" class="form-control" v-model="description.problem"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="form-group is-empty">
+        <label for="price" class="col-md-4 control-label">Задача</label>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea id="task" cols="100" rows="" class="form-control" v-model="description.task"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="form-group is-empty">
+        <label for="price" class="col-md-4 control-label">Цель</label>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea id="target" cols="100" rows="" class="form-control" v-model="description.target"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="form-group is-empty">
         <label for="fio" class="col-md-4 control-label">Клиент</label>
         <div class="col-md-6">
           <input id="fio" type="text" class="form-control" placeholder="ФИО" v-model="client.name">
@@ -38,18 +62,19 @@
 </template>
 
 <script>
-  export default {
-    data: function () {
-      return {
-        calculate: this.calculateData,
-        client: this.clientData
-      }
-    },
+export default {
+  data: function() {
+    return {
+      calculate: this.calculateData,
+      client: this.clientData,
+      description: this.descriptionData
+    };
+  },
 
-    props: {
-      calculateData: Object,
-      clientData: Object
-    }
-
+  props: {
+    calculateData: Object,
+    clientData: Object,
+    descriptionData: Object
   }
+};
 </script>

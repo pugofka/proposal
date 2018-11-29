@@ -1,7 +1,7 @@
 <template>
   <div class="well bs-component">
     <h2>Расходы клиента</h2>
-      <div class="task" v-for="task in expensesCustomers">
+      <div class="task" v-for="(task,index) in expensesCustomers" :key="index">
         <div class="form-group is-empty">
           <input
             type="text"
@@ -27,50 +27,50 @@
 </template>
 
 <script>
-  export default {
-    data: function () {
-      return {
-        expensesCustomers: this.expensesCustomersData
-      }
-    },
+export default {
+  data: function() {
+    return {
+      expensesCustomers: this.expensesCustomersData
+    };
+  },
 
-    props: {
-      expensesCustomersData: Array
-    },
+  props: {
+    expensesCustomersData: Array
+  },
 
-    methods: {
-      addTask: function () {
-        const clearTask = {
-          name: '',
-          price: ''
-        };
-        this.expensesCustomers.push(clearTask);
-      }
+  methods: {
+    addTask: function() {
+      const clearTask = {
+        name: "",
+        price: ""
+      };
+      this.expensesCustomers.push(clearTask);
     }
   }
+};
 </script>
 
 <style scoped lang="scss">
-  .task {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    div {
-      width: 100%;
-      margin-right: 15px;
+  div {
+    width: 100%;
+    margin-right: 15px;
 
-      &:last-child {
-        margin-right: 0;
-      }
+    &:last-child {
+      margin-right: 0;
     }
   }
+}
 
-  .btn {
-    img {
-      width: 50%;
-      position: relative;
-      top: -2px;
-    }
+.btn {
+  img {
+    width: 50%;
+    position: relative;
+    top: -2px;
   }
+}
 </style>

@@ -35,6 +35,6 @@ class CreateCalculationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('calculations');
+        Schema::drop('calculations');
     }
 }
