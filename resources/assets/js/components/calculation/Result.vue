@@ -4,25 +4,20 @@
     <div class="result row">
       <div class="col-md-6">
         <div class="row result__row">
-          <div class="col-md-6 result__key">
-            Часы:
-          </div>
-          <div class="col-md-6 result__value">
-            {{ hours }} ч.
-          </div>
+          <div class="col-md-6 result__key">Часы:</div>
+          <div class="col-md-6 result__value">{{ hours }} ч.</div>
         </div>
         <div class="row result__row">
-          <div class="col-md-6 result__key">
-            Стоимость работы:
-          </div>
-          <div class="col-md-6 result__value">
-            {{ hours * hourPriceData }} руб.
-          </div>
+          <div class="col-md-6 result__key">Стоимость работы:</div>
+          <div class="col-md-6 result__value">{{ hours * hourPriceData }} руб.</div>
         </div>
-        <a :href="`/calculations/${id}/pdf`" v-if="getPDFData" class="btn btn-success btn-raised">Скачать PDF</a>
+        <a
+          :href="`/calculations/${id}/pdf`"
+          v-if="getPDFData"
+          class="btn btn-success btn-raised"
+        >Скачать PDF</a>
       </div>
-      <div class="col-md-6">
-      </div>
+      <div class="col-md-6"></div>
     </div>
   </div>
 </template>
@@ -47,16 +42,12 @@ export default {
       for (var i = 0; i < this.hoursData.length; i++) {
         this.hours += this.hoursData[i].hours;
       }
-    },
-
-    drawChart: function() {}
+    }
   },
 
   created() {
     this.setHours();
-  },
-
-  mounted() {}
+  }
 };
 </script>
 

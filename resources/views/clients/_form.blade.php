@@ -38,11 +38,24 @@
                   </div>
               </div>
             @endif
+            <div class="form-group {{ $errors->has('sort') ?  'has-error' : ''}}">
+                {{ Form::label('sort', 'Порядок', ['class' => 'col-md-3 control-label']) }}
+                <div class="col-md-9">
+                    {{ Form::number('sort', null, ['class'=>'form-control']) }}
+                    @if ($errors->has('sort'))
+                        <span class="help-block">{{  $errors->first('sort') }}</span>
+                    @endif
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-md-9 col-md-offset-3">
                     <div class="togglebutton">
                         <label>
-                            {{ Form::checkbox('active') }} Активность
+                            @if ($formType == 'create')
+                                {{ Form::checkbox('active', '1', true) }} Активность
+                            @else
+                                {{ Form::checkbox('active') }} Активность
+                            @endif
                         </label>
                     </div>
                 </div>
@@ -52,12 +65,10 @@
 
             @if ($formType == 'edit')
               <div class="text-right">
-                {{ Form::reset('Очистить поля', ['class' => 'btn btn-default']) }}
                 {{ Form::submit('Сохранить', ['class' => 'btn btn-success btn-raised']) }}
               </div>
             @else
               <div class="text-right">
-                {{ Form::reset('Очистить поля', ['class' => 'btn btn-default']) }}
                 {{ Form::submit('Добавить', ['class' => 'btn btn-success btn-raised']) }}
               </div>
             @endif

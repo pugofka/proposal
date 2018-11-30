@@ -12,5 +12,6 @@ class Clients extends Model
         'name',
         'image',
         'active',
+        'sort',
     ];
 }

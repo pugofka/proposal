@@ -66,6 +66,12 @@
     .page-break {
       page-break-after: always;
     }
+    .description__name {
+      text-transform: uppercase;
+      color: #eb4523;
+      padding: 10px 0;
+      font-weight: bold;
+    }
 
     .section-home {
       position: relative;
@@ -315,12 +321,12 @@
 <body>
     <section class="section-home">
       <img src="img/pdfgen/pugofka_logo.png" class="section-home__logo">
-      <h1 class="section-home__title">Коммерческое предложение<br><span class="color-red">{{$data->name}}</span><br>{{date('d.m.Y')}}</h1>
+      <h1 class="section-home__title">Коммерческое предложение<br><span class="color-red">{{$calculateData->name}}</span><br>{{date('d.m.Y')}}</h1>
     </section>
 
     <header class='header'>
       <div class="header__img"><img src="img/pdfgen/pugofka_logo.png" height="50"></div>
-      <div class="header__text">Коммерческое предложение<br/>{{$data->name}}</div>
+      <div class="header__text">Коммерческое предложение<br/>{{$calculateData->name}}</div>
     </header>
     <footer class='footer'>
       <img src="img/pdfgen/icon_pugofka.png" class="footer__img" height="25">
@@ -332,9 +338,7 @@
     </footer>
 
     <section class="section-price">
-
       <table width="100%" height="100%">
-
         <tbody height="100%">
           <tr>
             <td colspan="2">
@@ -351,29 +355,34 @@
               </div>
             </td>
           </tr>
+        </tbody>
+      </table>
 
-          <tr class="section-price__list">
-            <td class="section-price__list__item" colspan="2">
-              <p class="section-price__list__item-name color-red">Проблема</p>
-              <p class="section-price__list__item-text">{{$data->problem}}</p>
-            </td>
-          </tr>
-          <tr class="section-price__list">
-            <td class="section-price__list__item" colspan="2">
-              <p class="section-price__list__item-name color-red">Задача</p>
-              <p class="section-price__list__item-text">{{$data->task}}</p>
-            </td>
-          </tr>
-          <tr class="section-price__list">
-            <td class="section-price__list__item" colspan="2">
-              <p class="section-price__list__item-name color-red">Цель</p>
-              <p class="section-price__list__item-text">{{$data->target}}</p>
-            </td>
-          </tr>
-
+      <table width="100%" height="100%" class="description">
+          <thead>
+            <tr>
+              <td width="30%"></td>
+              <td width="70%"></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="description__name">Проблема</td>
+              <td>{{$calculateData->problem}}</td>
+            </tr>
+            <tr>
+              <td class="description__name">Задача</td>
+              <td>{{$calculateData->task}}</td>
+            </tr>
+            <tr>
+              <td class="description__name">Цель</td>
+              <td>{{$calculateData->target}}</td>
+            </tr>
         </tbody>
       </table>
     </section>
+
+ 
 
 
     <section class="section-estimate">
@@ -415,7 +424,7 @@
                 <td align="right">
                   <p style="font-weight:bold">{{number_format($hoursData[$i]->stage_price, 0, ',', ' ')}} ₽</p>
                   @foreach ($hoursData[$i]->tasks as $task)
-                    <p>{{number_format($task->hours * $data->cost_per_hour, 0, ',', ' ')}} ₽</p>
+                    <p>{{number_format($task->hours * $calculateData->cost_per_hour, 0, ',', ' ')}} ₽</p>
                   @endforeach
                 </td>
 
@@ -428,7 +437,7 @@
               </tr>
           @endfor
           @php
-              $additionalTasks = json_decode($data->additional_tasks);
+              $additionalTasks = json_decode($calculateData->additional_tasks);
           @endphp
           @php
             $item +=1;
@@ -452,13 +461,13 @@
                 @endphp
                 @for ($i = 0; $i < count($additionalTasks); $i++)
                   @php
-                    $additionalTasksTotalPrice += $additionalTasks[$i]->hours * $data->cost_per_hour;
+                    $additionalTasksTotalPrice += $additionalTasks[$i]->hours * $calculateData->cost_per_hour;
                     $additionalTasksTotalHours += $additionalTasks[$i]->hours;
                   @endphp 
                 @endfor
-                <p style="font-weight:bold">{{$additionalTasksTotalPrice}} ₽</p>
+                <p style="font-weight:bold">{{ number_format($additionalTasksTotalPrice, 0, ',', ' ') }} ₽</p>
                 @for ($i = 0; $i < count($additionalTasks); $i++)
-                  <p>{{number_format($additionalTasks[$i]->hours * $data->cost_per_hour, 0, ',', ' ')}} ₽</p>
+                  <p>{{number_format($additionalTasks[$i]->hours * $calculateData->cost_per_hour, 0, ',', ' ')}} ₽</p>
                 @endfor
               </td>
               <td align="right">
@@ -506,7 +515,7 @@
             $customerExpenses += $info[$i]->price;
           @endphp
         @endfor
-        Итого {{$customerExpenses}} ₽
+        Итого {{ number_format($customerExpenses, 0, ',', ' ') }} ₽
       </p>
     </section>
 
@@ -719,76 +728,80 @@
       </div>
     </section>
 
-
-    <section class="section section-reviews">
-      <h1 class="section__title h1">Отзывы наших клиентов</h1>
-      <table width="100%" class="section__table section-reviews__table">
-        <thead>
-          <tr>
-            <td width="33.3333%"></td>
-            <td width="33.3333%"></td>
-            <td width="33.3333%"></td>
-          </tr>
-        </thead>
-        <tbody>
-          @php
-            $counter = 0;
-          @endphp
-          <tr>
-            @foreach($reviews as $review)
-              @php
-                $counter += 1;
-              @endphp
-              <td>
-                <img src="{{public_path('/storage/')}}{{$review->image}}" alt="" width="300px" height="auto">
-              </td>
-              @if ($counter==3)
-                </tr>
-                <tr>
+    @if (count($reviews)>0)
+      <section class="section section-reviews">
+        <h1 class="section__title h1">Отзывы наших клиентов</h1>
+        <table width="100%" class="section__table section-reviews__table">
+          <thead>
+            <tr>
+              <td width="33.3333%"></td>
+              <td width="33.3333%"></td>
+              <td width="33.3333%"></td>
+            </tr>
+          </thead>
+          <tbody>
+            @php
+              $counter = 0;
+            @endphp
+            <tr>
+              @foreach($reviews as $review)
                 @php
-                  $counter = 0;
+                  $counter += 1;
                 @endphp
-              @endif
-            @endforeach
-          </tr>
-        </tbody>
-      </table>
-    </section>
+                <td>
+                  <img src="{{public_path('/storage/')}}{{$review->image}}" alt="" width="300px" height="auto">
+                </td>
+                @if ($counter==3)
+                  </tr>
+                  <tr>
+                  @php
+                    $counter = 0;
+                  @endphp
+                @endif
+              @endforeach
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    @endif
 
-    <section class="section section-clients">
-      <h1 class="section__title h1">Клиенты</h1>
-      <table width="100%" class="section__table section-clients__table">
-        <thead>
-          <tr>
-            <td width="33.3333%"></td>
-            <td width="33.3333%"></td>
-            <td width="33.3333%"></td>
-          </tr>
-        </thead>
-        <tbody>
-          @php
-            $counter = 0;
-          @endphp
-          <tr>
-            @foreach($clients as $client)
-              @php
-                $counter += 1;
-              @endphp
-              <td>
-                <img src="{{public_path('/storage/')}}{{$client->image}}" alt="" width="auto" height="auto">
-              </td>
-              @if ($counter==3)
-                </tr>
-                <tr>
+    @if (count($clients)>0)
+      <section class="section section-clients">
+        <h1 class="section__title h1">Клиенты</h1>
+        <table width="100%" class="section__table section-clients__table">
+          <thead>
+            <tr>
+              <td width="33.3333%"></td>
+              <td width="33.3333%"></td>
+              <td width="33.3333%"></td>
+            </tr>
+          </thead>
+          <tbody>
+            @php
+              $counter = 0;
+            @endphp
+            <tr>
+              @foreach($clients as $client)
                 @php
-                  $counter = 0;
+                  $counter += 1;
                 @endphp
-              @endif
-            @endforeach
-          </tr>
-        </tbody>
-      </table>
-    </section>
+                <td>
+                  <img src="{{public_path('/storage/')}}{{$client->image}}" alt="" width="auto" height="auto">
+                </td>
+                @if ($counter==3)
+                  </tr>
+                  <tr>
+                  @php
+                    $counter = 0;
+                  @endphp
+                @endif
+              @endforeach
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    @endif
+    
 
 
     <section class="section section-contacts">

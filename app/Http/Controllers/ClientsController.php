@@ -16,7 +16,7 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Clients::get();
+        $clients = Clients::orderBy('sort')->get();
         return view('clients.index', compact('clients'));
     }
 
@@ -47,8 +47,9 @@ class ClientsController extends Controller
 
         Clients::create([
             'name'   => $request->name,
-            'active' =>$active,
-            'image'  =>$img
+            'active' => $active,
+            'image'  => $img,
+            'sort'   => $request->sort
         ]);
 
         return redirect(route('clients.index'))->with('status', 'Клиент успешно добавлен');
@@ -98,6 +99,7 @@ class ClientsController extends Controller
 
         $clients->name   = $request->input('name');
         $clients->active = $active;
+        $clients->sort   = $request->input('sort');
         $clients->save();
         return redirect(route('clients.index'))->with('status', 'Клиент успешно обновлен');
     }
