@@ -11,6 +11,7 @@ use App\TemplateData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+
 use PDF;
 
 class CalculationController extends Controller
@@ -293,17 +294,20 @@ class CalculationController extends Controller
         $stageHours = 0;
         $totalHours = 0;
         $countWeeks = 0;
-        
+        $stageweeks = 0;
+        //dd($calculateData);
+
         for ($i=0; $i < count($additional_tasks); $i++) { // подсчет часов задач
             $taskHours += $additional_tasks[$i]->hours;
         }
         
         for ($i=0; $i < count($stages); $i++) {    // подсчет часов этапов
-           $stageHours+= ceil($stages[$i]->stage_hours / 40) * 40;
+           $stageHours+= $stages[$i]->stage_hours;
+           $stageweeks+= ceil($stages[$i]->stage_hours / 40) * 40;
         }
         
         $additionalTasksHours = ceil($taskHours / 40) * 40;
-        $countWeeks = ceil(($stageHours + $additionalTasksHours) / 40);
+        $countWeeks = ceil(($stageweeks + $additionalTasksHours) / 40);
         $totalHours = $taskHours + $stageHours;
         $price      = $totalHours * $calculateData->cost_per_hour;
          

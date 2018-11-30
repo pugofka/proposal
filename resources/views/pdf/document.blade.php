@@ -429,9 +429,9 @@
                 </td>
 
                 <td align="right">
-                  <p style="font-weight:bold">{{$hoursData[$i]->stage_hours}}</p>
+                  <p style="font-weight:bold">{{ ceil($hoursData[$i]->stage_hours / 8) }}</p>
                   @foreach ($hoursData[$i]->tasks as $task)
-                    <p>{{$task->hours}}</p>
+                    <p>{{ ceil($task->hours / 8) }}</p>
                   @endforeach
                 </td>
               </tr>
@@ -471,9 +471,9 @@
                 @endfor
               </td>
               <td align="right">
-                <p style="font-weight:bold">{{$additionalTasksTotalHours}}</p>
+                <p style="font-weight:bold">{{ ceil($additionalTasksTotalHours / 8)}}</p>
                 @for ($i = 0; $i < count($additionalTasks); $i++)
-                  <p>{{$additionalTasks[$i]->hours}}</p>
+                  <p>{{ ceil($additionalTasks[$i]->hours / 8) }}</p>
                 @endfor
               </td>
             </tr>
