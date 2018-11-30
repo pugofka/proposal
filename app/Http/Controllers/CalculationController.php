@@ -285,7 +285,6 @@ class CalculationController extends Controller
         $clients        = json_decode(Clients::orderBy('sort')->where('active','=', 1)->get());
 
         $additional_tasks = json_decode($calculateData->additional_tasks);   // Дополнительные задачи
-        //dd($additional_tasks);
         $stage = json_decode($calculateData->tasks);
         $stages = $stage->stages;
        
@@ -307,10 +306,11 @@ class CalculationController extends Controller
         $countWeeks = ceil(($stageHours + $additionalTasksHours) / 40);
         $totalHours = $taskHours + $stageHours;
         $price      = $totalHours * $calculateData->cost_per_hour;
+         
+
         $info       = json_decode($calculateData->info);
-        dd($calculateData);
         $pdf = PDF::loadView('pdf.document', compact('calculateData', 'price', 'info', 'totalHours', 'stageHours', 'stages', 'countWeeks', 'reviews','clients'));
         
-        return $pdf->download('document.pdf');
+        return $pdf->download($calculateData->name .'.pdf');
     }
 }
