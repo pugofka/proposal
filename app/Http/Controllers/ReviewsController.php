@@ -34,13 +34,21 @@ class ReviewsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name'  => 'required|string|max:255',
+            'sort'  => 'numeric'
+        ], [
+            '*.required' => 'Заполните обязательное поле',
+        ]);
+        
         $img = $request->file('image')->store('uploads', 'public');
     
         if ($request->active)
             $active = 1;
         else
             $active = 0;
-
+        
         Reviews::create([
             'name'   => $request->name,
             'active' => $active,
