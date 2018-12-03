@@ -16,7 +16,7 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Clients::get();
+        $clients = Clients::orderBy('sort')->get();
         return view('clients.index', compact('clients'));
     }
 
@@ -38,8 +38,17 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name'  => 'required|string|max:255',
+            'sort'  => 'numeric'
+        ], [
+            '*.required' => 'Заполните обязательное поле',
+        ]);
+        
         $img = $request->file('image')->store('uploads', 'public');
-    
+        
         if ($request->active)
             $active = 1;
         else
@@ -47,8 +56,9 @@ class ClientsController extends Controller
 
         Clients::create([
             'name'   => $request->name,
-            'active' =>$active,
-            'image'  =>$img
+            'active' => $active,
+            'image'  => $img,
+            'sort'   => $request->sort
         ]);
 
         return redirect(route('clients.index'))->with('status', 'Клиент успешно добавлен');
@@ -98,6 +108,7 @@ class ClientsController extends Controller
 
         $clients->name   = $request->input('name');
         $clients->active = $active;
+        $clients->sort   = $request->input('sort');
         $clients->save();
         return redirect(route('clients.index'))->with('status', 'Клиент успешно обновлен');
     }

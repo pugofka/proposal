@@ -11,6 +11,7 @@ use App\TemplateData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+
 use PDF;
 
 class CalculationController extends Controller
@@ -104,7 +105,7 @@ class CalculationController extends Controller
                 'task'              => $request->task,
                 'target'            => $request->target,
                 'template_id'       => $request->template_id,
-                'additional_tasks'  => json_encode($request->additional_tasks),
+                'additional_tasks'  => $request->additional_tasks,
                 'tasks'             => json_encode($tasksData),
                 'info'              => json_encode($request->info)
             ]);
@@ -280,41 +281,40 @@ class CalculationController extends Controller
 
     public function generatePdf(Calculation $calculation, Request $request)
     {   
-        $data     = Calculation::where('id', $calculation->id)->get(); $data = $data[0];
-        $template = Template::where('id', $data->template_id)->get(); $template = str_replace(" ","",$template[0]->name);
-        $reviews  = Reviews::get();
-        $reviews  = json_decode($reviews);
-        $clients  = Clients::get();
-        $clients  = json_decode($clients); 
-    
+        $calculateData  = Calculation::where('id', $calculation->id)->first();
+        $reviews        = json_decode(Reviews::orderBy('sort')->where('active','=', 1)->get());
+        $clients        = json_decode(Clients::orderBy('sort')->where('active','=', 1)->get());
 
-        $additional_tasks = json_decode($data->additional_tasks);   // Дополнительные задачи
-        $basicPrace = $data->cost_per_hour;                         // Стоимость часа
-        $stage = json_decode($data->tasks);                                          
-        $stages = $stage->stages;     
+        $additional_tasks = json_decode($calculateData->additional_tasks);   // Дополнительные задачи
+        $stage = json_decode($calculateData->tasks);
+        $stages = $stage->stages;
        
         $price      = 0;
         $taskHours  = 0;
         $stageHours = 0;
         $totalHours = 0;
         $countWeeks = 0;
-        
-        
+        $stageweeks = 0;
+        //dd($calculateData);
+
         for ($i=0; $i < count($additional_tasks); $i++) { // подсчет часов задач
             $taskHours += $additional_tasks[$i]->hours;
         }
+        
         for ($i=0; $i < count($stages); $i++) {    // подсчет часов этапов
-           $stageHours+= ceil($stages[$i]->stage_hours / 40) * 40;
+           $stageHours+= $stages[$i]->stage_hours;
+           $stageweeks+= ceil($stages[$i]->stage_hours / 40) * 40;
         }
-
+        
         $additionalTasksHours = ceil($taskHours / 40) * 40;
-        $countWeeks = ceil(($stageHours + $additionalTasksHours) / 40);
+        $countWeeks = ceil(($stageweeks + $additionalTasksHours) / 40);
         $totalHours = $taskHours + $stageHours;
-        $price      = $totalHours * $basicPrace;
-        $info       = json_decode($data->info);
+        $price      = $totalHours * $calculateData->cost_per_hour;
+         
+
+        $info       = json_decode($calculateData->info);
+        $pdf = PDF::loadView('pdf.document', compact('calculateData', 'price', 'info', 'totalHours', 'stageHours', 'stages', 'countWeeks', 'reviews','clients'));
         
-        $pdf = PDF::loadView('pdf.document', compact('data', 'template', 'price', 'info', 'totalHours', 'stageHours', 'stages', 'countWeeks', 'reviews','clients'));
-        
-        return $pdf->download('document.pdf');
+        return $pdf->download($calculateData->name .'.pdf');
     }
 }

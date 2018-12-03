@@ -11,7 +11,7 @@
                 @component('components.alert')
                     @slot('type') info @endslot
                     @slot('title') Нет данных @endslot
-                    Не найдено ни одного отзыва!
+                    Не найдено ни одного клиента!
                 @endcomponent
             @endif
 

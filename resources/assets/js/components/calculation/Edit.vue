@@ -1,9 +1,6 @@
 <template>
   <div>
-
-    <steps
-      :stepsData="steps"
-    />
+    <steps :stepsData="steps"/>
 
     <start
       v-if="steps.current == 0"
@@ -27,10 +24,7 @@
       :hourPriceData="calculate.hourPrice"
     />
 
-    <expenses-customers
-      v-if="steps.current == 3"
-      :expensesCustomersData="expensesCustomers"
-    />
+    <expenses-customers v-if="steps.current == 3" :expensesCustomersData="expensesCustomers"/>
 
     <result
       v-if="steps.current == 4"
@@ -58,7 +52,6 @@
         info: expensesCustomers
       }"
     />
-
   </div>
 </template>
 
@@ -121,7 +114,8 @@ export default {
   computed: {
     resultHours: function() {
       let tasksHours = [];
-
+      
+      
       if (this.stages) {
         for (var i = 0; i < this.stages.length; i++) {
           for (var j = 0; j < this.stages[i].tasks.length; j++) {
@@ -177,23 +171,27 @@ export default {
     mapStages: function() {
       const t = this;
       this.stages.map(function(item) {
-        for (var i = 0; i < t.tasks.stages.length; i++) {
-          if (t.tasks.stages[i].stage_id === item.id) {
-            item.hours = t.tasks.stages[i].stage_hours;
-            item.price = t.tasks.stages[i].stage_price;
-            item.workers = t.tasks.stages[i].workers;
-
-            item.tasks.map(function(task) {
-              for (var j = 0; j < t.tasks.stages[i].tasks.length; j++) {
-                if (t.tasks.stages[i].tasks[j].id === task.id) {
-                  task.hours = t.tasks.stages[i].tasks[j].hours;
-                  task.variant_name = t.tasks.stages[i].tasks[j].variant_name;
-                  task.variant_id = t.tasks.stages[i].tasks[j].variant_id;
-                }
+        if (t.tasks.stages) {
+          for (var i = 0; i < t.tasks.stages.length; i++) {
+            if (t.tasks.stages[i].stage_id === item.id) {
+              item.hours = t.tasks.stages[i].stage_hours;
+              item.price = t.tasks.stages[i].stage_price;
+              item.workers = t.tasks.stages[i].workers;
+              if (item.tasks) {
+                item.tasks.map(function(task) {
+                  for (var j = 0; j < t.tasks.stages[i].tasks.length; j++) {
+                    if (t.tasks.stages[i].tasks[j].id === task.id) {
+                      task.hours = t.tasks.stages[i].tasks[j].hours;
+                      task.variant_name = t.tasks.stages[i].tasks[j].variant_name;
+                      task.variant_id = t.tasks.stages[i].tasks[j].variant_id;
+                    }
+                  }
+                });  
               }
-            });
+            }
           }
         }
+        
         return item;
       });
 
