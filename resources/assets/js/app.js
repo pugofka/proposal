@@ -14,7 +14,6 @@ window.Vue = require("vue");
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component("example", require("./components/Example.vue"));
 Vue.component("list-tasks", require("./components/ListTasks.vue"));
 Vue.component("template-name", require("./components/template/Name.vue"));
 // Vue.component('template-list-tasks', require('./components/template/ListTasks.vue'));

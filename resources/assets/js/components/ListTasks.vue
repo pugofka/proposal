@@ -1,15 +1,11 @@
 <template>
   <div v-if="tasks">
     <div class="questions__wrapper" v-for="task in tasks" :key="task.id">
-      <task
-        :taskData='task'
-        :templateData='templates'
-        :callback='removeTask'
-      />
+      <task :taskData="task" :templateData="templates" :callback="removeTask"/>
     </div>
     <button class="questions__btn btn btn-warning btn-fab" @click="addTask" v-if="isShowAddBtn">
       <i class="material-icons">
-        <img src='/img/plus.svg'>
+        <img src="/img/plus.svg">
       </i>
     </button>
   </div>
@@ -119,7 +115,7 @@ export default {
   &__step:after {
     content: "";
     position: absolute;
-    background-image: url("http://localhost/img/down.svg");
+    background-image: url("/img/down.svg");
     width: 20px;
     height: 20px;
     top: 50%;

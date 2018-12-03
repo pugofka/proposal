@@ -14,9 +14,9 @@ class AddNewFfieldsInCalculations extends Migration
     public function up()
     {
         Schema::table('calculations', function (Blueprint $table) {
-            $table->string('problem')->nullable();
-            $table->string('task')->nullable();
-            $table->string('target')->nullable();
+            $table->string('problem')->default('');
+            $table->string('task')->default('');
+            $table->string('target')->default('');
         });
     }
 
@@ -27,8 +27,6 @@ class AddNewFfieldsInCalculations extends Migration
      */
     public function down()
     {
-        Schema::table('calculations', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('calculations');
     }
 }

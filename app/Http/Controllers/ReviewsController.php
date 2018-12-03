@@ -12,7 +12,7 @@ class ReviewsController extends Controller
 
     public function index()
     {   
-        $reviews = Reviews::get();
+        $reviews  = Reviews::orderBy('sort')->get();
         return view('reviews.index', compact('reviews'));
     }
 
@@ -34,34 +34,26 @@ class ReviewsController extends Controller
      */
     public function store(Request $request)
     {
-        // $messages = [
-        //     'required' => 'Поле :attribute обязательно к заполнению.',
-        //     'numeric' => 'Поле :attribute должно быть числом',
-        // ];
-
-        // $this->validate($request, [
-        //     'name' => 'required|string|min:1',
-        //     'sort' => 'required|numeric',
-        // ], $messages);
+        $this->validate($request, [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name'  => 'required|string|max:255',
+            'sort'  => 'numeric'
+        ], [
+            '*.required' => 'Заполните обязательное поле',
+        ]);
+        
         $img = $request->file('image')->store('uploads', 'public');
     
         if ($request->active)
             $active = 1;
         else
             $active = 0;
-
-        //$pathToOptimizedImage = '/var/www/public/storage/uploads/optimaze/test.jpeg';
-        //dd(public_path().Storage::url($img));
-        ImageOptimizer::optimize(public_path().Storage::url($img));
         
-        // $img = Image::make(public_path().Storage::url($img));
-        // $img->fit(390, 490);
-        // $img->save(public_path().Storage::url($img));
-
         Reviews::create([
             'name'   => $request->name,
-            'active' =>$active,
-            'image'  =>$img
+            'active' => $active,
+            'image'  => $img,
+            'sort'   => $request->sort
         ]);
 
         return redirect(route('reviews.index'))->with('status', 'Отзыв успешно добавлен');
@@ -110,6 +102,7 @@ class ReviewsController extends Controller
             $active = 0;
 
         $reviews->name   = $request->input('name');
+        $reviews->sort   = $request->input('sort');
         $reviews->active = $active;
         $reviews->save();
         return redirect(route('reviews.index'))->with('status', 'Отзыв успешно обновлен');

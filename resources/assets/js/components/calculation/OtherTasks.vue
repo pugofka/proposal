@@ -3,12 +3,7 @@
     <h2>Дополнительные задачи</h2>
     <div class="task" v-for="(task,index) in otherTasks" :key="index">
       <div class="form-group is-empty">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Задача"
-          v-model="task.name"
-        >
+        <input type="text" class="form-control" placeholder="Задача" v-model="task.name">
       </div>
       <div class="form-group is-empty">
         <input
@@ -19,11 +14,11 @@
           v-model.number="task.hours"
         >
       </div>
-      <div class="task__price">
-        стоимость доп. задачи: {{ task.hours * hourPriceData }} руб.
-      </div>
+      <div class="task__price">стоимость доп. задачи: {{ task.hours * hourPriceData }} руб.</div>
     </div>
-    <button class="btn btn-success btn-fab" @click="addTask"><i class="material-icons">add</i></button>
+    <button class="btn btn-success btn-fab" @click="addTask">
+      <i class="material-icons">add</i>
+    </button>
   </div>
 </template>
 

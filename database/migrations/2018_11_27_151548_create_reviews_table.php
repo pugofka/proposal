@@ -18,6 +18,7 @@ class CreateReviewsTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->string('active');
+            $table->string('sort');
             $table->timestamps();
         });
     }
