@@ -150,7 +150,6 @@ class CalculationController extends Controller
                 $stageHours = 0;
                 $tasks = [];
                 foreach ($stage['tasks'] as $task) {
-                   
                     if ($task['deffered']) {
                         $deffered_tasks[] = [
                             'id' => $task['id'],
@@ -201,16 +200,13 @@ class CalculationController extends Controller
     {
         //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
         if ($request->ajax()) {
-            
             Validator::make($request->all(), [
                 'id' => 'required',
             ])->validate();
 
             // Получаем данные с расчетами по шаблону
             $calculateData = TemplateData::with('variant', 'task')->where('template_id', $request->id)->get();
-
             $result = $this->getDataForCalculateTemplate($calculateData);
-            
             return response($result, 200);
         }
     }
