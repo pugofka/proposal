@@ -114,8 +114,6 @@ export default {
   computed: {
     resultHours: function() {
       let tasksHours = [];
-      
-      
       if (this.stages) {
         for (var i = 0; i < this.stages.length; i++) {
           for (var j = 0; j < this.stages[i].tasks.length; j++) {
@@ -182,16 +180,17 @@ export default {
                   for (var j = 0; j < t.tasks.stages[i].tasks.length; j++) {
                     if (t.tasks.stages[i].tasks[j].id === task.id) {
                       task.hours = t.tasks.stages[i].tasks[j].hours;
-                      task.variant_name = t.tasks.stages[i].tasks[j].variant_name;
+                      task.variant_name =
+                        t.tasks.stages[i].tasks[j].variant_name;
                       task.variant_id = t.tasks.stages[i].tasks[j].variant_id;
                     }
                   }
-                });  
+                });
               }
             }
           }
         }
-        
+
         return item;
       });
 

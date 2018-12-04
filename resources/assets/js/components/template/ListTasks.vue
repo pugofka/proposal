@@ -1,6 +1,6 @@
 <template>
   <div class="template-wrapper">
-    <div class="template-task" v-for="task in tasksData">
+    <div class="template-task" v-for="(task,index) in tasksData" :key="index">
       <input name="checkbox" type="checkbox" checked="checked">
       {{ task.name }}
     </div>

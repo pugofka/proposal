@@ -1,8 +1,24 @@
 <template>
   <div class="pagination">
-    <button v-if="status != 'firstPage'" type="button" class="btn btn__back" @click="setPreviousPage">Назад</button>
-    <button v-if="status != 'lastPage'" type="button" class="btn btn-raised btn-success btn__next" @click="setNextPage">Продолжить</button>
-    <button v-if="status == 'lastPage'" type="button" class="btn btn-raised btn-success btn__next" @click="postData" :disabled="isInvalid">Отправить</button>
+    <button
+      v-if="status != 'firstPage'"
+      type="button"
+      class="btn btn__back"
+      @click="setPreviousPage"
+    >Назад</button>
+    <button
+      v-if="status != 'lastPage'"
+      type="button"
+      class="btn btn-raised btn-success btn__next"
+      @click="setNextPage"
+    >Продолжить</button>
+    <button
+      v-if="status == 'lastPage'"
+      type="button"
+      class="btn btn-raised btn-success btn__next"
+      @click="postData"
+      :disabled="isInvalid"
+    >Отправить</button>
   </div>
 </template>
 
