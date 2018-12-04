@@ -34,7 +34,7 @@
               <div class="form-group form-group-image-loader{{ $errors->has('image') ?  'has-error' : ''}}">
                   {{ Form::label('image', 'Картинка', ['class' => 'col-md-3 control-label']) }}
                   <div class="col-md-9">
-                    <img src="{{asset('/storage/')}}/{{$client->image}}" alt="" style="max-height:500px; width:auto;">
+                    <img src="{{asset('/storage/')}}/{{$client->image}}" alt="" style="height:auto; width:100%;">
                   </div>
               </div>
             @endif
