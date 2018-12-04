@@ -11,7 +11,7 @@ use App\TemplateData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
-
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use PDF;
 
 class CalculationController extends Controller
@@ -47,20 +47,15 @@ class CalculationController extends Controller
     public function store(Request $request)
     {
         if ($request->ajax()) {
-//            Validator::make($request->all(), [
-//                'id' => 'required',
-//            ])->validate();
-
             $deffered_tasks = [];
             $tasksData = [];
-
+            
             foreach ($request->stages as $stage) {
+                
                 $stageHours = 0;
                 $tasks = [];
-                foreach ($stage['tasks'] as $task) {
-
-//                    dd($task);
-
+                
+                foreach ($stage->tasks as $task) {
                     if ($task['deffered']) {
                         $deffered_tasks[] = [
                             'id' => $task['id'],
@@ -105,7 +100,7 @@ class CalculationController extends Controller
                 'task'              => $request->task,
                 'target'            => $request->target,
                 'template_id'       => $request->template_id,
-                'additional_tasks'  => $request->additional_tasks,
+                'additional_tasks'  => json_encode($request->additional_tasks),
                 'tasks'             => json_encode($tasksData),
                 'info'              => json_encode($request->info)
             ]);
@@ -148,36 +143,36 @@ class CalculationController extends Controller
     public function update(Request $request, Calculation $calculation)
     {
         if ($request->ajax()) {
-
             $defered_tasks = [];
             $tasksData = [];
-
+            
             foreach ($request->stages as $stage) {
                 $stageHours = 0;
                 $tasks = [];
-                foreach ($stage->tasks as $task) {
-                    if ($task->deffered) {
-                        $defered_tasks[] = [
-                            'id' => $task->id,
-                            'name' => $task->name,
+                foreach ($stage['tasks'] as $task) {
+                   
+                    if ($task['deffered']) {
+                        $deffered_tasks[] = [
+                            'id' => $task['id'],
+                            'name' => $task['name'],
                         ];
                     } else {
                         $tasks[] = [
-                            'id' => $task->id,
-                            'name' => $task->name,
-                            'variant_id' => $task->id,
-                            'variant_name' => $task->variant_name,
-                            'hours' => $task->hours,
+                            'id' => $task['id'],
+                            'name' => $task['name'],
+                            'variant_id' => $task['variant_id'],
+                            'variant_name' => $task['variant_name'],
+                            'hours' => $task['hours'],
                         ];
-                        $stageHours += $task->hours;
+                        $stageHours += $task['hours'];
                     }
                 }
 
                 $tasksData['stages'][] = [
-                    'stage_id' => $stage->id,
-                    'stage_name' => $stage->name,
+                    'stage_id' => $stage['id'],
+                    'stage_name' => $stage['name'],
                     'tasks' => $tasks,
-                    'stage_hours' => $stageHours,
+                    'stage_hours' => $stage['workers'],
                     'stage_price' => $request->cost_per_hour * $stageHours,
                 ];
                 unset($tasks, $stageHours);

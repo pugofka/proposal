@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Clients;
 use Illuminate\Http\Request;
-use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\Storage;
+
 
 class ClientsController extends Controller
 {
@@ -38,7 +38,6 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'name'  => 'required|string|max:255',
