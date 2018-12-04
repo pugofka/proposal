@@ -43,6 +43,11 @@ class ReviewsController extends Controller
         ]);
         
         $img = $request->file('image')->store('uploads', 'public');
+        $imgName = explode('/', $img);
+        $pathToOptimizedImage = public_path().Storage::url('opt/' . $imgName[1]);
+        $pathToImage = public_path().Storage::url($img);
+        ImageOptimizer::optimize($pathToImage);
+        
     
         if ($request->active)
             $active = 1;

@@ -39,7 +39,7 @@ class ClientsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:20000',
             'name'  => 'required|string|max:255',
             'sort'  => 'numeric'
         ], [
@@ -50,7 +50,7 @@ class ClientsController extends Controller
         $imgName = explode('/', $img);
         $pathToOptimizedImage = public_path().Storage::url('opt/' . $imgName[1]);
         $pathToImage = public_path().Storage::url($img);
-        ImageOptimizer::optimize($pathToImage, $pathToOptimizedImage);
+        ImageOptimizer::optimize($pathToImage);
         
         if ($request->active)
             $active = 1;
