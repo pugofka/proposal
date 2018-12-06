@@ -55,7 +55,7 @@ class CalculationController extends Controller
                 $stageHours = 0;
                 $tasks = [];
                 
-                foreach ($stage->tasks as $task) {
+                foreach ($stage['tasks'] as $task) {
                     if ($task['deffered']) {
                         $deffered_tasks[] = [
                             'id' => $task['id'],
