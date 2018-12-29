@@ -5,7 +5,7 @@
     @component('components.well')
         @slot('type') templates @endslot
 
-        {{ Form::open(['url' => route('stages.store'), 'class' => 'form-horizontal']) }}
+        {{ Form::open(['url' => route('templates.store'), 'class' => 'form-horizontal']) }}
         <fieldset>
             <legend>Создание нового шаблона</legend>
 

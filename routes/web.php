@@ -55,5 +55,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('reviews', 'ReviewsController');
     Route::resource('clients', 'ClientsController');
 });
-//Route::get('calculations/pdf', 'CalculationController@generatePdf');
+
 Route::get('calculations/{calculation}/pdf', 'CalculationController@generatePdf');
