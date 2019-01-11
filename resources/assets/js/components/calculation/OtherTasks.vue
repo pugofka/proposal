@@ -12,6 +12,7 @@
           min="0"
           placeholder="Часы"
           v-model.number="task.hours"
+          v-on:change="deleteOtherTasks(task.hours, task.name)"
         >
       </div>
       <div class="task__price">стоимость доп. задачи: {{ task.hours * hourPriceData }} руб.</div>
@@ -42,6 +43,13 @@ export default {
         hours: ""
       };
       this.otherTasks.push(clearTask);
+    },
+    deleteOtherTasks(val, name) {
+      if (val === "") {
+        this.otherTasks = this.otherTasks.filter(function (el) {
+          return el.name !== name;
+        });
+      }
     }
   }
 };

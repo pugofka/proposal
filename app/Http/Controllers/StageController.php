@@ -115,7 +115,7 @@ class StageController extends Controller
 
         $stage->save();
 
-        return redirect(url()->previous())->with('status', 'Успешно обновлено');
+        return redirect(route('stages.index'))->with('status', 'Успешно обновлено');
     }
 
     /**

@@ -52,7 +52,7 @@ class TemplateController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect(route('templates.edit', ['id' => $template->id]))->with('status', 'Шаблон ' . $template->name . ' успешно создан');
+        return redirect(route('templates.index'))->with('status', 'Шаблон ' . $template->name . ' успешно создан');
     }
 
     /**

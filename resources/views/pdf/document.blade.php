@@ -155,16 +155,12 @@
       margin-top: 50px;
     }
 
-    .section-calendar-plan__table td {
-      padding: 30px;
-    }
 
     .section-calendar-plan__table td {
       border: 1px solid #ececec;
     }
 
     .section-calendar-plan__table thead td {
-      padding: 15px;
       background-color: #ececec;
     }
 
@@ -525,7 +521,7 @@
       <table width="100%" class="section__table section-calendar-plan__table">
         <thead>
           <tr>
-             <td>Этап / неделя</td>
+             <td width="10%">Этап / неделя</td>
             @for ($i = 0; $i < $countWeeks; $i++)
               <td>{{$i + 1}}</td>
             @endfor

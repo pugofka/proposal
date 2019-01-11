@@ -15,8 +15,9 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Описание"
+              placeholder="сумма"
               v-model="task.price"
+              v-on:change="deleteExpensesCustomers(task.price, task.name)"
             >
             <span class="input-group-addon">руб.</span>
           </div>
@@ -45,6 +46,14 @@ export default {
         price: ""
       };
       this.expensesCustomers.push(clearTask);
+    },
+    deleteExpensesCustomers(price, name) {
+      console.log(price);
+      if (price === "") {
+        this.expensesCustomers = this.expensesCustomers.filter(function (el) {
+          return el.name !== name;
+        });
+      }
     }
   }
 };
