@@ -1,51 +1,37 @@
 <?php
-
+/**
+ * MyClass File Doc Comment
+ * php version 7.2
+ *
+ * @category MyClass
+ * @package  MyPackage
+ * @author   Pugofka <info@pugofka.com>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     http://www.hashbangcode.com/
+ */
 namespace App\Http\Controllers;
-
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+/**
+ * MyClass Class Doc Comment
+ *
+ * @category Class
+ * @package  MyPackage
+ * @author   Pugofka <info@pugofka.com>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     http://www.hashbangcode.com/
+ */
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show user
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
+     * @param User $user the comment
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show(User $user)
     {
@@ -56,8 +42,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param User    $user    the comment
+     * @param Request $request the comment
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function edit(User $user, Request $request)
     {
@@ -66,45 +54,27 @@ class UserController extends Controller
             'email' => 'Неверный формат e-mail',
         ];
 
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email'
-        ], $messages);
+        $this->validate(
+            $request, [
+                'name' => 'required',
+                'email' => 'required|email'
+            ],
+            $messages
+        );
 
         $user->name = $request->name;
         $user->email = $request->email;
 
-        if(($request->password) && ($request->password != '') ) {
-            Validator::make($request->all(), [
-                'password' => 'confirmed|min:6',
-                'password_confirmation' => 'same:password'
-            ])->validate();
+        if (($request->password) && ($request->password != '') ) {
+            Validator::make(
+                $request->all(), [
+                    'password' => 'confirmed|min:6',
+                    'password_confirmation' => 'same:password'
+                ]
+            )->validate();
             $user->password = Hash::make($request->password);
         }
         $user->save();
         return redirect(url()->previous())->with('status', 'Успешно обновлено');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }
