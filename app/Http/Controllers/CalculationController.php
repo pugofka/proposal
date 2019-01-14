@@ -1,7 +1,15 @@
 <?php
-
+/**
+ * MyClass File Doc Comment
+ * php version 7.2
+ *
+ * @category MyClass
+ * @package  MyPackage
+ * @author   Pugofka <info@pugofka.com>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     http://www.hashbangcode.com/
+ */
 namespace App\Http\Controllers;
-
 use App\Calculation;
 use App\Stage;
 use App\Template;
@@ -13,7 +21,15 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use PDF;
-
+/**
+ * MyClass Class Doc Comment
+ *
+ * @category Class
+ * @package  MyPackage
+ * @author   Pugofka <info@pugofka.com>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     http://www.hashbangcode.com/
+ */
 class CalculationController extends Controller
 {
     /**
@@ -41,7 +57,8 @@ class CalculationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request The comment
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -90,40 +107,31 @@ class CalculationController extends Controller
             unset($deffered_tasks);
             
             //Собственно сохранние данных
-            Calculation::create([
-                'name'              => $request->name,
-                'cost_per_hour'     => $request->cost_per_hour,
-                'user_name'         => $request->user_name,
-                'user_phone'        => $request->user_phone,
-                'user_email'        => $request->user_email,
-                'problem'           => $request->problem,
-                'task'              => $request->task,
-                'target'            => $request->target,
-                'template_id'       => $request->template_id,
-                'additional_tasks'  => json_encode($request->additional_tasks),
-                'tasks'             => json_encode($tasksData),
-                'info'              => json_encode($request->info)
-            ]);
+            Calculation::create(
+                [
+                    'name'              => $request->name,
+                    'cost_per_hour'     => $request->cost_per_hour,
+                    'user_name'         => $request->user_name,
+                    'user_phone'        => $request->user_phone,
+                    'user_email'        => $request->user_email,
+                    'problem'           => $request->problem,
+                    'task'              => $request->task,
+                    'target'            => $request->target,
+                    'template_id'       => $request->template_id,
+                    'additional_tasks'  => json_encode($request->additional_tasks),
+                    'tasks'             => json_encode($tasksData),
+                    'info'              => json_encode($request->info)
+                ]
+            );
             return response(['status' => 'Расчёт успешно создан'], 201);
         }
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Calculation $calculation
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Calculation $calculation)
-    {
-//        $calculateData = TemplateData::where('id', $calculation->id)->get();
-//        return view('calculations.show', compact('calculation'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Calculation $calculation
+     * @param \App\Calculation $calculation The comment
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Calculation $calculation)
@@ -136,9 +144,10 @@ class CalculationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Calculation $calculation
-     * @return \Illuminate\Http\Response
+     * @param Request     $request     The comment
+     * @param Calculation $calculation The comment
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, Calculation $calculation)
     {
@@ -194,25 +203,41 @@ class CalculationController extends Controller
             $calculation->info             = json_encode($request->info);
             $calculation->save();
         }
+
+        return redirect(route('calculations.index'));
     }
 
+    /**
+     * SelectTemplate
+     *
+     * @param Request $request The comment
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function selectTemplate(Request $request)
     {
         //Принимаем айдишник шаблона и отдаём в ответе Этапы->задачи->варианты
         if ($request->ajax()) {
-            Validator::make($request->all(), [
-                'id' => 'required',
-            ])->validate();
+            Validator::make(
+                $request->all(),
+                [
+                    'id' => 'required',
+                ]
+            )->validate();
 
             // Получаем данные с расчетами по шаблону
-            $calculateData = TemplateData::with('variant', 'task')->where('template_id', $request->id)->get();
+            $calculateData = TemplateData::with('variant', 'task')
+                ->where('template_id', $request->id)->get();
             $result = $this->getDataForCalculateTemplate($calculateData);
             return response($result, 200);
         }
     }
 
     /**
-     * @param TemplateData $calculateData
+     * Get Data For CalculateTemplate
+     *
+     * @param TemplateData $calculateData geting data for CalculateTemplate
+     *
      * @return array
      */
     protected function getDataForCalculateTemplate($calculateData)
@@ -220,13 +245,17 @@ class CalculationController extends Controller
         // Получаем спсок всех этапов
         $stages = Stage::with('tasks')->get();
 
-        // Формируем пустой массив, в который будем складывать данные в нужной структуре
+        // Формируем пустой массив,
+        // в который будем складывать данные в нужной структуре
         $result = [];
 
-        // Перебираем все этапы, так как нужна красивая группировка по этапам и данные по эатапам
+        // Перебираем все этапы,
+        // так как нужна красивая группировка по этапам и данные по эатапам
         foreach ($stages as $stage) {
             // фильтруем задачи этапа
-            $taskForStage = $calculateData->whereIn('task_id', $stage->tasks->pluck('id'))->groupBy('task_id');
+            $taskForStage = $calculateData
+                ->whereIn('task_id', $stage->tasks->pluck('id'))
+                ->groupBy('task_id');
             $resultTask = [];
             foreach ($taskForStage as $task) {
                 $resultVariant = [];
@@ -257,26 +286,43 @@ class CalculationController extends Controller
 
         return $result;
     }
-
+  
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\calculation $calculation
-     * @return \Illuminate\Http\Response
+     * @param Calculation $calculation The comment
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Calculation $calculation)
     {
         $calculation->delete();
-        return redirect(route('calculations.index'))->with('status', 'Расчёт удалён');
+        return redirect(
+            route('calculations.index')
+        )->with('status', 'Расчёт удалён');
     }
 
+    /**
+     * Function for generation PDF-file
+     *
+     * @param Calculation $calculation The comment
+     * @param Request     $request     The comment
+     *
+     * @return mixed
+     */
     public function generatePdf(Calculation $calculation, Request $request)
     {   
         $calculateData  = Calculation::where('id', $calculation->id)->first();
-        $reviews        = json_decode(Reviews::orderBy('sort')->where('active','=', 1)->get());
-        $clients        = json_decode(Clients::orderBy('sort')->where('active','=', 1)->get());
+        $reviews = json_decode(
+            Reviews::orderBy('sort')->where('active', '=', 1)->get()
+        );
+        $clients = json_decode(
+            Clients::orderBy('sort')->where('active', '=', 1)->get()
+        );
 
-        $additional_tasks = json_decode($calculateData->additional_tasks);   // Дополнительные задачи
+        // Дополнительные задачи
+        $additional_tasks = json_decode($calculateData->additional_tasks);
         $stage = json_decode($calculateData->tasks);
         $stages = $stage->stages;
        
@@ -286,15 +332,15 @@ class CalculationController extends Controller
         $totalHours = 0;
         $countWeeks = 0;
         $stageweeks = 0;
-        //dd($calculateData);
 
-        for ($i=0; $i < count($additional_tasks); $i++) { // подсчет часов задач
+        // подсчет часов задач
+        for ($i=0; $i < count($additional_tasks); $i++) {
             $taskHours += $additional_tasks[$i]->hours;
         }
-        
-        for ($i=0; $i < count($stages); $i++) {    // подсчет часов этапов
-           $stageHours+= $stages[$i]->stage_hours;
-           $stageweeks+= ceil($stages[$i]->stage_hours / 40) * 40;
+        // подсчет часов этапов
+        for ($i=0; $i < count($stages); $i++) {
+            $stageHours += $stages[$i]->stage_hours;
+            $stageweeks += ceil($stages[$i]->stage_hours / 40) * 40;
         }
         
         $additionalTasksHours = ceil($taskHours / 40) * 40;
@@ -304,7 +350,20 @@ class CalculationController extends Controller
          
 
         $info       = json_decode($calculateData->info);
-        $pdf = PDF::loadView('pdf.document', compact('calculateData', 'price', 'info', 'totalHours', 'stageHours', 'stages', 'countWeeks', 'reviews','clients'));
+        $pdf = PDF::loadView(
+            'pdf.document',
+            compact(
+                'calculateData',
+                'price',
+                'info', '
+                totalHours',
+                'stageHours',
+                'stages',
+                'countWeeks',
+                'reviews',
+                'clients'
+            )
+        );
         
         return $pdf->download($calculateData->name .'.pdf');
     }
