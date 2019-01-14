@@ -1,10 +1,26 @@
 <?php
-
+/**
+ * MyClass File Doc Comment
+ * php version 7.2
+ *
+ * @category MyClass
+ * @package  MyPackage
+ * @author   Pugofka <info@pugofka.com>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     http://www.hashbangcode.com/
+ */
 namespace App\Http\Controllers;
-
 use App\Stage;
 use Illuminate\Http\Request;
-
+/**
+ * MyClass Class Doc Comment
+ *
+ * @category Class
+ * @package  MyPackage
+ * @author   Pugofka <info@pugofka.com>
+ * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+ * @link     http://www.hashbangcode.com/
+ */
 class StageController extends Controller
 {
     /**
@@ -31,7 +47,8 @@ class StageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request The comment
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,43 +58,40 @@ class StageController extends Controller
             'numeric' => 'Поле :attribute должно быть числом',
         ];
 
+        $this->validate(
+            $request,
+            [
+                'name' => 'required|string|min:1',
+                'sort' => 'required|numeric',
+            ],
+            $messages
+        );
 
-        $this->validate($request, [
-            'name' => 'required|string|min:1',
-            'sort' => 'required|numeric',
-        ], $messages);
-
-        if ($request->active)
+        if ($request->active) {
             $active = 1;
-        else
+        } else {
             $active = 0;
+        }
 
-//        dd($request->all());
-
-        Stage::create([
-            'name' => $request->name,
-            'sort' => $request->sort,
-            'active' =>$active
-        ]);
-        return redirect(route('stages.index'))->with('status', 'Этап успешно создан');
+        Stage::create(
+            [
+                'name' => $request->name,
+                'sort' => $request->sort,
+                'active' =>$active
+            ]
+        );
+        return redirect(
+            route('stages.index')
+        )->with('status', 'Этап успешно создан');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param Stage $stage The comment
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Stage $stage)
     {
@@ -87,9 +101,10 @@ class StageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request The comment
+     * @param Stage   $stage   The comment
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Stage $stage)
     {
@@ -98,16 +113,20 @@ class StageController extends Controller
             'numeric' => 'Поле :attribute должно быть числом',
         ];
 
+        $this->validate(
+            $request,
+            [
+                'name' => 'required|string|min:1',
+                'sort' => 'required|numeric',
+            ],
+            $messages
+        );
 
-        $this->validate($request, [
-            'name' => 'required|string|min:1',
-            'sort' => 'required|numeric',
-        ], $messages);
-
-        if ($request->active)
+        if ($request->active) {
             $active = 1;
-        else
+        } else {
             $active = 0;
+        }
 
         $stage->name = $request->name;
         $stage->sort = $request->sort;
@@ -115,18 +134,24 @@ class StageController extends Controller
 
         $stage->save();
 
-        return redirect(url()->previous())->with('status', 'Успешно обновлено');
+        return redirect(
+            route('stages.index')
+        )->with('status', 'Успешно обновлено');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param Stage $stage The comment
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function destroy(Stage $stage)
     {
         $stage->delete();
-        return redirect(route('stages.index'))->with('status', 'Этап удалён с возможностью восстановления.');
+        return redirect(
+            route('stages.index')
+        )->with('status', 'Этап удалён с возможностью восстановления.');
     }
 }
