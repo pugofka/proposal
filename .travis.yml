@@ -1,0 +1,42 @@
+os:
+  - linux
+language: php
+php:
+  - "7.1"
+before_script:
+  - composer self-update
+  - composer install --no-interaction
+  - cp .env.travis .env
+  - php artisan key:generate
+  - php artisan migrate
+  - php artisan db:seed
+  - phpenv rehash
+  - nvm install 11.5.0
+  - yarn
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.7.0
+  - export PATH="$HOME/.yarn/bin:$PATH"
+  - mysql -e 'CREATE DATABASE homestead_test;'
+script:
+  - yarn run lint
+  - yarn run test
+  - yarn run production
+services:
+  - mysql
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - vendor
+deploy:
+  provider: script
+  script: bash scripts/deploy.sh
+  skip_cleanup: true
+  on:
+    branch: master
+env:
+  global:
+    secure: om6ioOM75ylUHNSzcH9K6tBV47b1sSQH30zfS4nprAEXcWmImLVzjHsGdtWg+x5ovmSRP2aA22pgZZF1jmGY9Qpw7gvDHSb3UcxJiqsBRKpKXv4JwmOTxkCRTIeP/OeTGp9dvI/HnDc5TKGmemkpT/Begf+QfxF3bORNdtB75Ts/vSanaztqLhURhC1mJz+G51vyQ3WGCETCD7MH2jLGzqckoBiB2jGfbC3Ym6NFOo6dTRMhCRjSF0TFPqZErSGnWlgxXFFSFngdJWtc3mndt4R43zszLuqcpntU1h/xyPbI40rG/TF0PAT1FDvYJOmbsk3iLZflLNJkztQNbXoAfUD9oQh5wvAtWcmgyJTHEKNQZVTmfeIuvRJrmkNVTl/v2Tm6bQWeNs9eodYDyydnz+YFCMgchxkWfmdd1sYT3d8q0bfZSb2/8t5lwL7OGnunMexTcplw/XAWRJqjMjHnqBJKCAb9GyGW6kqf5cEepuEcGHhc6VX8W8NG0RAxg/AsOpdSBJ+H8l+ggol8ycxaAQONM8EyX4er2f6R1RedGIZl3nP5loz25P+RZ2hNoWCN2TuNkEyRyG/sMU0VidWpDv9kYhM1NgqygPSgRxy/GK5Hx0FFOT5dIBuhWmwG6I5THWSe1DguzhYK67msgLL56po0WnBd8nnvQFN2gCfKwSA=
+notifications:
+  slack:
+    secure: OeWaKbv+pt+8QqWcBTbgvHxWKvt4242rQLZkCLZyB4nmIlI2Ya2ouQ6NJCko3TnzRt1IHdA36ib9SEZJi3Vjoi/HI9vS2PFI6h5S6qgDn1Es7NxhWDFQlJfdUjZa1HeYXaoEzrgWlq4fz2ULt4FWpiBWSYcEm8ljWzR9ZCnkyAf+dA6VtoQpgvSchh9U9bnLrbWsSA5u6yxsxMNSNrFWkliXCY/az8gX+ONKTGyRhZ8HRSb4IJoviFcr7rRS7gq/Gik49FvQCa+mj8KWw7jGm5EYXxNEFyfp1DXwnvkUaaQHXQmJefnthJ8YkmmhN7z8dciCKIeNzNr3bnexEQizXFcXmkBWYmqAueJ+U3c5wMi1+YTtrNj/WeeJK01UPuxtI5GYhNTxPY4yHzefE8XB6iyAfgvwOKFGR1c2mQUXVaeMqRGcMDF4G4KEEyLtr+DptM2u5toCBWBdiJyMN1tLZ5Et81f2s0Ru4f2QrQ3G4hLlbwuHzMNOHRtyq7CZ2J3jzJT3Fu58qTyDuikedmI6/D6JhO7hD8Jq7SFgjG9Ophu9mSI8xP4icb2C2RU1WstaNzIR5YBIOkYu8mbqiNmObHItLEHJq5ynjzmrXYqV0VgFH3Dv1HHkk+SqHaZWcDM6a3GEWOjB4iFjnP8dthR8qJ/8ib0N8BzFHaeZZ6OfcZc=
