@@ -58,16 +58,16 @@
 <script>
 export default {
   components: {
-    steps: require("./Steps.vue"),
-    pagination: require("./StepsPagination.vue"),
-    start: require("./Start.vue"),
-    stages: require("./StagesList.vue"),
-    "other-tasks": require("./OtherTasks.vue"),
-    "expenses-customers": require("./ExpensesCustomers.vue"),
-    result: require("./Result.vue")
+    steps: require("./Steps.vue").default,
+    pagination: require("./StepsPagination.vue").default,
+    start: require("./Start.vue").default,
+    stages: require("./StagesList.vue").default,
+    "other-tasks": require("./OtherTasks.vue").default,
+    "expenses-customers": require("./ExpensesCustomers.vue").default,
+    result: require("./Result.vue").default
   },
 
-  data: function() {
+  data: function () {
     return {
       steps: {
         current: 0,
@@ -112,7 +112,7 @@ export default {
   },
 
   computed: {
-    resultHours: function() {
+    resultHours: function () {
       let tasksHours = [];
       if (this.stages) {
         for (var i = 0; i < this.stages.length; i++) {
@@ -145,12 +145,12 @@ export default {
   },
 
   methods: {
-    setStages: function(stages) {
+    setStages: function (stages) {
       Vue.set(this, "stages", stages);
       this.mapStages();
     },
 
-    getStages: function() {
+    getStages: function () {
       const t = this;
       axios
         .get("/calculations/template", {
@@ -158,17 +158,17 @@ export default {
             id: this.calculateData.template_id
           }
         })
-        .then(function(response) {
+        .then(function (response) {
           t.setStages(response.data);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.error(error);
         });
     },
 
-    mapStages: function() {
+    mapStages: function () {
       const t = this;
-      this.stages.map(function(item) {
+      this.stages.map(function (item) {
         if (t.tasks.stages) {
           for (var i = 0; i < t.tasks.stages.length; i++) {
             if (t.tasks.stages[i].stage_id === item.id) {
@@ -176,7 +176,7 @@ export default {
               item.price = t.tasks.stages[i].stage_price;
               item.workers = t.tasks.stages[i].workers;
               if (item.tasks) {
-                item.tasks.map(function(task) {
+                item.tasks.map(function (task) {
                   for (var j = 0; j < t.tasks.stages[i].tasks.length; j++) {
                     if (t.tasks.stages[i].tasks[j].id === task.id) {
                       task.hours = t.tasks.stages[i].tasks[j].hours;
@@ -194,9 +194,9 @@ export default {
         return item;
       });
 
-      this.stages.map(function(item) {
+      this.stages.map(function (item) {
         for (var i = 0; i < t.tasks.deffered_tasks.length; i++) {
-          item.tasks.map(function(task) {
+          item.tasks.map(function (task) {
             if (t.tasks.deffered_tasks[i].id === task.id) {
               task.deffered = true;
             }

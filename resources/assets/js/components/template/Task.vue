@@ -5,10 +5,7 @@
       <div class="pull-right">
         <div class="togglebutton form-group">
           <label>
-            <input
-              type="checkbox"
-              v-model="active"
-              @change="sendActiveStatus">
+            <input type="checkbox" v-model="active" @change="sendActiveStatus">
             <span class="toggle"></span>
           </label>
         </div>
@@ -26,51 +23,51 @@
 </template>
 
 <script>
-  export default {
+export default {
 
-    components: {
-      "task-variant": require("./Variants.vue")
-    },
+  components: {
+    "task-variant": require("./Variants.vue").default
+  },
 
-    data: function () {
-      return {
-        active: this.activeData
-      }
-    },
-
-    props: {
-      taskData: {
-        type: Object,
-        required: true
-      },
-      activeData: {
-        type: Boolean,
-        required: true
-      },
-      templateId: {
-        type: Number,
-        required: true
-      },
-      variantsData: {
-        type: Array,
-        required: true
-      }
-    },
-
-    methods: {
-      sendActiveStatus: function () {
-        axios.put("/templates/" + this.templateId + "/edit/task-status", {
-          "task_id": this.taskData.id,
-          "template_id": this.templateId
-        })
-      }
+  data: function () {
+    return {
+      active: this.activeData
     }
+  },
 
+  props: {
+    taskData: {
+      type: Object,
+      required: true
+    },
+    activeData: {
+      type: Boolean,
+      required: true
+    },
+    templateId: {
+      type: Number,
+      required: true
+    },
+    variantsData: {
+      type: Array,
+      required: true
+    }
+  },
+
+  methods: {
+    sendActiveStatus: function () {
+      axios.put("/templates/" + this.templateId + "/edit/task-status", {
+        "task_id": this.taskData.id,
+        "template_id": this.templateId
+      })
+    }
   }
+
+}
 </script>
 
 <style scoped>
-  .togglebutton.form-group {
-    margin-top: 0;
-  }
+.togglebutton.form-group {
+  margin-top: 0;
+}
 </style>

@@ -1,16 +1,16 @@
 <template>
-  <div class="panel" :class="task.deffered ? 'panel-danger' : task.variant ? 'panel-success' : 'panel-default'">
+  <div
+    class="panel"
+    :class="task.deffered ? 'panel-danger' : task.variant ? 'panel-success' : 'panel-default'"
+  >
     <div class="panel-heading">
       <h3 class="panel-title">
-        {{ task.name }}<small>стоимость задачи: {{ taskPrice }} руб.</small>
+        {{ task.name }}
+        <small>стоимость задачи: {{ taskPrice }} руб.</small>
         <div class="pull-right">
           <div class="togglebutton form-group">
             <label>
-              <input
-                type="checkbox"
-                v-model="task.deffered"
-                @click="resetTask"
-              />
+              <input type="checkbox" v-model="task.deffered" @click="resetTask">
               <span class="toggle"></span>
               Отложить задачу
             </label>
@@ -19,7 +19,6 @@
       </h3>
     </div>
     <div class="panel-body" v-if="!task.deffered">
-
       <div class="row">
         <div class="col-md-6">
           <div class="task__variants row">
@@ -53,78 +52,77 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    components: {
-      'variant': require('./VariantItem.vue')
-    },
+export default {
+  components: {
+    'variant': require('./VariantItem.vue').default
+  },
 
-    data: function () {
-      return {
-        task: this.taskData
-      }
-    },
-
-    props: {
-      taskData: Object,
-      hourPriceData: Number
-    },
-
-    methods: {
-
-      setHours: function (hours) {
-        Vue.set(this.task, 'hours', hours);
-      },
-
-      setVariant: function (variant) {
-        Vue.set(this.task, 'variant_id', variant);
-      },
-
-      setVariantName: function (name) {
-        Vue.set(this.task, 'variant_name', name);
-      },
-
-      toggleDeffered: function () {
-        if(this.task.deffered) this.task.deffered = !this.task.deffered
-        else Vue.set(this.task, 'deffered', false)
-      },
-
-      resetTask: function () {
-        this.setHours(0);
-        this.setVariant(null);
-      }
-
-    },
-
-    computed: {
-      taskPrice: function () {
-        return this.task.hours * this.hourPriceData;
-      }
-    },
-
-    created() {
-      if(!this.task.hours) this.setHours(0);
-      if(!this.task.variant_id) this.setVariant(null);
-      if(!this.task.variant_name) this.setVariantName(null);
-      if(!this.task.deffered) this.toggleDeffered();
+  data: function () {
+    return {
+      task: this.taskData
     }
+  },
+
+  props: {
+    taskData: Object,
+    hourPriceData: Number
+  },
+
+  methods: {
+
+    setHours: function (hours) {
+      Vue.set(this.task, 'hours', hours);
+    },
+
+    setVariant: function (variant) {
+      Vue.set(this.task, 'variant_id', variant);
+    },
+
+    setVariantName: function (name) {
+      Vue.set(this.task, 'variant_name', name);
+    },
+
+    toggleDeffered: function () {
+      if (this.task.deffered) this.task.deffered = !this.task.deffered
+      else Vue.set(this.task, 'deffered', false)
+    },
+
+    resetTask: function () {
+      this.setHours(0);
+      this.setVariant(null);
+    }
+
+  },
+
+  computed: {
+    taskPrice: function () {
+      return this.task.hours * this.hourPriceData;
+    }
+  },
+
+  created() {
+    if (!this.task.hours) this.setHours(0);
+    if (!this.task.variant_id) this.setVariant(null);
+    if (!this.task.variant_name) this.setVariantName(null);
+    if (!this.task.deffered) this.toggleDeffered();
   }
+}
 </script>
 
 <style scoped lang="scss">
-  .panel-heading small {
-    font-size: .9em;
-    color: #ccc;
-    padding-left: 10px;
-  }
+.panel-heading small {
+  font-size: 0.9em;
+  color: #ccc;
+  padding-left: 10px;
+}
 
-  .togglebutton.form-group {
-    margin-top: 0;
-  }
+.togglebutton.form-group {
+  margin-top: 0;
+}
 </style>
