@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use \Illuminate\Database\Eloquent\Model;
 use \Illuminate\Support\Facades\DB;
+use App\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,13 +16,12 @@ class DatabaseSeeder extends Seeder
     {
 
         // $this->call(UsersTableSeeder::class);
-
-       DB::table('users')->truncate();
-       \App\User::create([
-          'name' => 'Name',
-          'email' => 'email@domain.com',
-          'password' => Hash::make('secret'),
-      ]);
+        DB::table('users')->truncate();
+        User::create([
+            'name' => 'Name',
+            'email' => 'email@domain.com',
+            'password' => Hash::make('secret'),
+        ]);
 
         Model::unguard();
         //disable foreign key check for this connection before running seeders

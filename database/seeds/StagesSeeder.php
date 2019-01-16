@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use App\Stage;
 
 class StagesSeeder extends Seeder
 {
@@ -12,25 +14,25 @@ class StagesSeeder extends Seeder
     public function run()
     {
         DB::table('stages')->truncate();
-        \App\Stage::create([
+        Stage::create([
             'name' => 'Проектирование',
             'sort' => '100',
             'active' => true,
         ]);
 
-        \App\Stage::create([
+        Stage::create([
             'name' => 'Дизайн',
             'sort' => '110',
             'active' => true,
         ]);
 
-        \App\Stage::create([
+        Stage::create([
             'name' => 'Вёрстка',
             'sort' => '120',
             'active' => true,
         ]);
 
-        \App\Stage::create([
+        Stage::create([
             'name' => 'Программирование',
             'sort' => '130',
             'active' => true,
