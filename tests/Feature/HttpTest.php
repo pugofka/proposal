@@ -13,9 +13,21 @@ use App\Variant;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 
 class HttpTest extends TestCase
 {
+    use RefreshDatabase;
+
+    /**
+     * setUp test with seeding database
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        Artisan::call('db:seed');
+    }
+
     /**
      * A basic test example.
      *
