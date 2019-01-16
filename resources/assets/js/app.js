@@ -14,16 +14,16 @@ window.Vue = require("vue");
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component("list-tasks", require("./components/ListTasks.vue"));
-Vue.component("template-name", require("./components/template/Name.vue"));
-// Vue.component('template-list-tasks', require('./components/template/ListTasks.vue'));
-Vue.component("template-task", require("./components/template/Task.vue"));
-Vue.component("task-variants", require("./components/template/Variants.vue"));
+Vue.component("list-tasks", require("./components/ListTasks.vue").default);
+Vue.component("template-name", require("./components/template/Name.vue").default);
+// Vue.component('template-list-tasks', require('./components/template/ListTasks.vue').default);
+Vue.component("template-task", require("./components/template/Task.vue").default);
+Vue.component("task-variants", require("./components/template/Variants.vue").default);
 Vue.component(
   "calculation-create",
-  require("./components/calculation/Create.vue")
+  require("./components/calculation/Create.vue").default
 );
-Vue.component("calculation-edit", require("./components/calculation/Edit.vue"));
+Vue.component("calculation-edit", require("./components/calculation/Edit.vue").default);
 
 const app = new Vue({
   el: "#app"
