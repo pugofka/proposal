@@ -14,10 +14,10 @@
 <script>
 export default {
   components: {
-    task: require("./Task.vue")
+    task: require("./Task.vue").default
   },
 
-  data: function() {
+  data: function () {
     return {
       tasks: this.tasksData,
       templates: this.templatesData,
@@ -40,7 +40,7 @@ export default {
   },
 
   methods: {
-    initStates: function() {
+    initStates: function () {
       if (this.tasks.length <= 0) {
         this.tasks = [
           {
@@ -59,7 +59,7 @@ export default {
       }
     },
 
-    addTask: function() {
+    addTask: function () {
       var clearTask = {
         id: null,
         name: null,
@@ -74,14 +74,14 @@ export default {
       this.tasks.push(clearTask);
     },
 
-    removeTask: function(data) {
+    removeTask: function (data) {
       this.tasks.splice(this.tasks.indexOf(data), 1);
     }
   },
 
   watch: {
     tasks: {
-      handler: function(e) {
+      handler: function (e) {
         if (!e[e.length - 1].name) this.isShowAddBtn = false;
         else this.isShowAddBtn = true;
       },

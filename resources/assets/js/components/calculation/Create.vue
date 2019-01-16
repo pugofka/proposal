@@ -1,9 +1,6 @@
 <template>
   <div>
-
-    <steps
-      :stepsData="steps"
-    />
+    <steps :stepsData="steps"/>
 
     <start
       v-if="steps.current == 0"
@@ -27,10 +24,7 @@
       :hourPriceData="calculate.hourPrice"
     />
 
-    <expenses-customers
-      v-if="steps.current == 3"
-      :expensesCustomersData="expensesCustomers"
-    />
+    <expenses-customers v-if="steps.current == 3" :expensesCustomersData="expensesCustomers"/>
 
     <result
       v-if="steps.current == 4"
@@ -55,23 +49,22 @@
         info: expensesCustomers
       }"
     />
-
   </div>
 </template>
 
 <script>
 export default {
   components: {
-    steps: require("./Steps.vue"),
-    pagination: require("./StepsPagination.vue"),
-    start: require("./Start.vue"),
-    stages: require("./StagesList.vue"),
-    "other-tasks": require("./OtherTasks.vue"),
-    "expenses-customers": require("./ExpensesCustomers.vue"),
-    result: require("./Result.vue")
+    steps: require("./Steps.vue").default,
+    pagination: require("./StepsPagination.vue").default,
+    start: require("./Start.vue").default,
+    stages: require("./StagesList.vue").default,
+    "other-tasks": require("./OtherTasks.vue").default,
+    "expenses-customers": require("./ExpensesCustomers.vue").default,
+    result: require("./Result.vue").default
   },
 
-  data: function() {
+  data: function () {
     return {
       steps: {
         current: 0,
@@ -112,7 +105,7 @@ export default {
   },
 
   computed: {
-    resultHours: function() {
+    resultHours: function () {
       let tasksHours = [];
 
       if (this.stages) {
@@ -146,7 +139,7 @@ export default {
   },
 
   methods: {
-    setStages: function(stages) {
+    setStages: function (stages) {
       Vue.set(this, "stages", stages);
     }
   }

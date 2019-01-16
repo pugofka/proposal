@@ -5,9 +5,18 @@
       <div class="row">
         <label for="templates" class="col-md-2 control-label">Шаблон</label>
         <div class="col-md-10">
-          <select id="templates" class="form-control" v-model="calculate.template" @change="getStages">
+          <select
+            id="templates"
+            class="form-control"
+            v-model="calculate.template"
+            @change="getStages"
+          >
             <option value="0" disabled>Выберите шаблон</option>
-            <option v-for="(template, index) in templatesData" :value="template.id" :key="index">{{ template.name }}</option>
+            <option
+              v-for="(template, index) in templatesData"
+              :value="template.id"
+              :key="index"
+            >{{ template.name }}</option>
           </select>
         </div>
       </div>
@@ -25,10 +34,10 @@
 <script>
 export default {
   components: {
-    stage: require("./StageItem.vue")
+    stage: require("./StageItem.vue").default
   },
 
-  data: function() {
+  data: function () {
     return {
       calculate: this.calculateData
     };
@@ -43,7 +52,7 @@ export default {
   },
 
   methods: {
-    getStages: function() {
+    getStages: function () {
       const t = this;
       axios
         .get("/calculations/template", {
@@ -51,10 +60,10 @@ export default {
             id: this.calculate.template
           }
         })
-        .then(function(response) {
+        .then(function (response) {
           t.setStagesCallback(response.data);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.error(error.response);
         });
     }
