@@ -180,7 +180,8 @@ class CalculationController extends Controller
                     'stage_id' => $stage['id'],
                     'stage_name' => $stage['name'],
                     'tasks' => $tasks,
-                    'stage_hours' => $stage['workers'],
+                    'workers' => $stage['workers'],
+                    'stage_hours' => $stageHours,
                     'stage_price' => $request->cost_per_hour * $stageHours,
                 ];
                 unset($tasks, $stageHours);
@@ -202,9 +203,9 @@ class CalculationController extends Controller
             $calculation->tasks            = json_encode($tasksData);
             $calculation->info             = json_encode($request->info);
             $calculation->save();
-        }
 
-        return redirect(route('calculations.index'));
+            return response(['status' => 'Расчёт успешно обновлен'], 201);
+        }
     }
 
     /**
