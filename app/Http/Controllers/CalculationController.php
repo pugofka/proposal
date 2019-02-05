@@ -356,8 +356,8 @@ class CalculationController extends Controller
             compact(
                 'calculateData',
                 'price',
-                'info', '
-                totalHours',
+                'info',
+                'totalHours',
                 'stageHours',
                 'stages',
                 'countWeeks',
@@ -365,7 +365,7 @@ class CalculationController extends Controller
                 'clients'
             )
         );
-        
+
         return $pdf->download($calculateData->name .'.pdf');
     }
 }
