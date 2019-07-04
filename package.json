@@ -12,7 +12,9 @@
     "lint": "npm run php-lint && npm run js-lint",
     "php-unit": "vendor/bin/phpunit --coverage-text",
     "php-lint": "vendor/bin/phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers",
-    "js-lint": "jshint resources/assets/js/*"
+    "js-lint": "jshint resources/assets/js/*",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "bootstrap-material-design": "^0.5.10",
@@ -20,7 +22,8 @@
     "chartkick": "^2.2.4",
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
-    "vue-chartkick": "^0.2.0"
+    "vue-chartkick": "^0.2.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "axios": "^0.16.2",
@@ -32,5 +35,6 @@
     "sass-loader": "^7.1.0",
     "vue": "^2.1.10",
     "vue-template-compiler": "^2.5.22"
-  }
+  },
+  "snyk": true
 }
